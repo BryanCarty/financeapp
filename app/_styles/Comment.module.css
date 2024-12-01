@@ -1,0 +1,51 @@
+.comment {
+  height: 150px;
+  margin: 15px;
+  border: 2px solid #353535;
+  width: 92%;
+  border: 2px solid #353535;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  background-color: #f4f4f4; /* Light background for contrast */
+  word-wrap: break-word; /* Ensures long text wraps */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds subtle depth */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.upperComment {
+  height: 20%;
+  border-bottom: 1px solid #353535;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.lowerComment {
+  height: 20%;
+  border-top: 1px solid #353535;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.upperSpan {
+  margin-left: 25px;
+}
+
+.lowerSpan {
+  margin-right: 25px;
+}
+
+.commentBody {
+  height: 60%;
+  font-size: 14px; /* Adjust to fit the overall design */
+  color: #353535; /* Dark gray for readability */
+  line-height: 1.6; /* Improve text spacing */
+  margin: 10px 10px; /* Add spacing around the comment body */
+  padding: 10px; /* Space inside the comment body */
+}

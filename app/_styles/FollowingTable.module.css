@@ -1,0 +1,101 @@
+/* styles.css or your preferred CSS file */
+.tableContainer {
+  border: 1px solid #353535;
+  border-radius: 8px;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow */
+}
+
+.profileTable {
+  width: 100%;
+  border-collapse: separate; /* Use separate borders to avoid conflict */
+  border-spacing: 0; /* Ensure no space between borders */
+}
+
+.profileTable th,
+.profileTable td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #353535; /* Add border between rows and columns */
+}
+
+.profileTable th {
+  font-weight: bold;
+}
+
+.followBtn {
+  border: 1px solid #353535;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  padding-top: 3px;
+}
+.followBtn:hover {
+  cursor: pointer;
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modalContent h3 {
+  margin-bottom: 20px;
+}
+
+.modalContent label {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.modalContent input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.btn {
+  padding: 3px 6px;
+  font-size: 15px;
+  color: #353535;
+  border: 1px solid #353535;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+  padding-bottom: 2px;
+}
+
+.btn:hover {
+  cursor: pointer;
+}

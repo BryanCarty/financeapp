@@ -1,0 +1,80 @@
+.pageHeader {
+  border-bottom: 3px solid #353535;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 35px;
+  padding: 0 0 5px 0;
+  background-color: #f7f7f7;
+}
+
+.leftOfHeader {
+  display: flex;
+  flex-direction: row;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 2rem;
+  text-decoration: none;
+  color: #353535;
+  letter-spacing: 0.15rem;
+  font-size: 2rem;
+}
+
+.typedSiteName {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid;
+  width: 0;
+  animation: typing 1.5s steps(30, end) forwards, blinking 1s infinite;
+  margin: 0px;
+  padding-top: 15px;
+  font-weight: 400;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blinking {
+  0% {
+    border-right-color: transparent;
+  }
+  50% {
+    border-right-color: #353535;
+  }
+  100% {
+    border-right-color: transparent;
+  }
+}
+
+.navButton {
+  text-decoration: none;
+  color: #353535;
+  font-size: 1.5rem;
+  border-right: 2px solid transparent;
+  margin: 0 15px;
+  cursor: pointer;
+  border-top: none;
+  border-left: none;
+  border-bottom: none;
+  background-color: #f7f7f7;
+}
+
+.navButton:hover {
+  border-right-color: #353535; /* Show border on hover */
+  animation: blinking 1s infinite; /* Flash animation */
+}
+
+.underline {
+  border-bottom: 3px solid #353535;
+}

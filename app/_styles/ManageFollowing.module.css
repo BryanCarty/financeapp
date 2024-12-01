@@ -1,0 +1,15 @@
+.searchContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.followingContainer {
+  margin-top: 50px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

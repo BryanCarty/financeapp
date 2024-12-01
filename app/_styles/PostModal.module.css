@@ -1,0 +1,178 @@
+.overlayStyle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.modalStyle {
+  background-color: #f7f7f7;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.9)
+    ),
+    /* White overlay with 80% opacity */ url("/images/background.svg");
+  background-repeat: no-repeat;
+  background-size: cover; /* Adjust the size */
+  background-position: center;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  height: 80%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modalHeading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 10%;
+
+  border-bottom: 3px dashed #353535;
+}
+
+.textareaStyle {
+  width: 70%;
+  height: 70%;
+  background-color: #f7f7f7;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.8)
+  );
+}
+
+.buttonContainerStyle {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 10%;
+}
+
+.buttonStyle {
+  border: 2px solid #353535;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #f7f7f7;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.8)
+  );
+  font-size: 25px;
+}
+
+.buttonStyle:hover {
+  border: 2px solid #353535;
+  background-color: #a3a3a3;
+}
+
+.typedSiteName {
+  border-right: 2px solid;
+  animation: blinking 1s infinite;
+  margin: 0px;
+  font-size: 50px;
+  color: #353535;
+}
+
+@keyframes blinking {
+  0% {
+    border-right-color: transparent;
+  }
+  50% {
+    border-right-color: #353535;
+  }
+  100% {
+    border-right-color: transparent;
+  }
+}
+
+.closeButton {
+  margin-top: -20px;
+  margin-left: auto;
+  font-size: 75px;
+  color: #353535;
+}
+
+.closeButton:hover {
+  cursor: pointer;
+}
+
+/* TickerForm.module.css */
+.claimSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 20px;
+}
+
+.because {
+  font-size: 25px;
+}
+
+.claimSection input,
+.claimSection select {
+  margin: 0 0.5rem;
+  padding: 0.3rem 0.6rem;
+  border: 3px solid #353535;
+  background-color: #f7f7f7;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.8)
+  );
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.claimSection span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.claimSection input::placeholder {
+  color: #888;
+}
+
+.claimSection select {
+  width: auto;
+}
+
+.claimSection button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #0070f3;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.claimSection button:hover {
+  background-color: #005bb5;
+}
+
+.modalBody {
+  height: 60%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+}

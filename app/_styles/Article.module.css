@@ -1,0 +1,143 @@
+.article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.articleBody {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.agreeDisagreeSection {
+  width: 100%;
+  height: 80px;
+  border: 2px solid #353535;
+  border-radius: 8px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.separator {
+  font-size: 30px;
+  text-align: center;
+}
+
+.agree {
+  color: #353535;
+  border: 1px solid #353535;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+.disagree {
+  color: #353535;
+  border: 1px solid #353535;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+.agree:hover,
+.disagree:hover {
+  cursor: pointer;
+
+  animation: wiggle 0.5s ease-in-out;
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.commentSection {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 2px solid #353535;
+  width: 100%;
+  border-radius: 8px;
+  background-color: #f7f7f7; /* Adds a light background for contrast */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.commentInput {
+  border: 2px solid #353535;
+  background-color: #f7f7f7;
+  height: 150px;
+  width: 92%;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  margin: 25px;
+  resize: none; /* Allows vertical resizing */
+  outline: none; /* Removes the default blue outline */
+  transition: border-color 0.3s ease; /* Smooth hover effect */
+}
+
+.commentInput:focus {
+  border-color: #a5a5a5; /* Highlights the border on focus */
+  box-shadow: 0 0 5px #a5a5a57e; /* Adds glow on focus */
+}
+
+.submitButton {
+  padding: 10px 20px;
+  background-color: #f7f7f7;
+  color: #353535;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-left: auto;
+  margin-right: 33px;
+  margin-bottom: 25px;
+  border: 1px solid #353535;
+}
+
+.submitButton:hover {
+  background-color: #353535;
+  color: #f7f7f7;
+}
+
+.submitButton:active {
+  background-color: #353535;
+}
+
+.hr {
+  border-top: 2px dashed #353535;
+  width: 92%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.commentContainer {
+  margin-top: 15px;
+  width: 92%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

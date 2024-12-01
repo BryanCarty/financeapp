@@ -1,0 +1,133 @@
+.background {
+  background-image: url("/images/background.svg");
+  background-repeat: no-repeat;
+  background-size: cover; /* Adjust the size */
+  background-position: center; /* Center the SVG */
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center; /* Center form horizontally */
+  align-items: center; /* Center form vertically */
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 15px 15px 15px;
+}
+
+.heading {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 50px;
+  border-bottom: 3px dashed #a5a5a5;
+}
+
+.headingSmall {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 40px;
+  border-bottom: 3px dashed #a5a5a5;
+}
+
+.signUpForm {
+  border: 5px solid #353535;
+  border-radius: 15px;
+  background-color: #f7f7f7;
+
+  width: 90%;
+}
+
+.formInput {
+  color: #353535;
+  margin: 20px;
+  width: 300px; /* Width of the input field */
+  height: 25px; /* Height of the input field */
+  font-size: 22px; /* Increases text size */
+  padding: 10px; /* Adds internal space around text */
+  border: 2px solid #ccc; /* Sets border width and color */
+  border-radius: 15px; /* Makes the border curved */
+  outline: none; /* Removes default focus outline */
+  box-shadow: 0 4px 6px #a5a5a5; /* Adds a subtle shadow */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Adds a smooth transition */
+}
+
+.formInput:focus {
+  border-color: #353535; /* Changes border color on focus */
+  box-shadow: 0 4px 8px #353535; /* Enhances shadow on focus */
+  color: #353535;
+}
+
+.submitButton {
+  margin-top: 15px;
+  padding: 5px 10px;
+  font-size: 25px;
+  color: #a5a5a5;
+  border: 3px solid #a5a5a5;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+}
+
+.submitButton:hover {
+  color: #353535;
+  border: 3px solid #353535;
+  cursor: pointer;
+}
+
+.dateOfBirthContainer {
+  display: flex;
+  flex-direction: column;
+  border-top: 3px dashed #a5a5a5;
+  border-bottom: 3px dashed #a5a5a5;
+}
+
+.dateOfBirthField {
+  color: #353535;
+  margin-left: 20px;
+  margin-top: 20px;
+  font-size: 22px; /* Increases text size */
+}
+
+.mainSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 30%;
+}
+
+.subSection {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.btn {
+  margin-top: 3px;
+  padding: 3px 6px;
+  font-size: 21px;
+  color: #a5a5a5;
+  border: 3px solid #a5a5a5;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+  text-decoration: none;
+}
+
+.btn:hover {
+  color: #353535;
+  border: 3px solid #353535;
+  cursor: pointer;
+}
+
+.error {
+  margin-top: 3px;
+  color: rgb(187, 75, 75);
+  text-align: center;
+}

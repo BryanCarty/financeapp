@@ -1,0 +1,52 @@
+.pageBody {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.subnavbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 25px;
+  margin: 15px 0;
+  background-color: #f7f7f7;
+  border-bottom: 2px dashed #353535;
+}
+
+.subnavitem {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  color: #353535;
+}
+
+.subnavitem:hover {
+  background-color: #eeeeee; /* Set your desired hover background color */
+  /* Change text color on hover */
+  border-color: #353535; /* Change border color on hover */
+  cursor: pointer;
+}
+
+.feed {
+  width: 60%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.active {
+  background-color: #eeeeee;
+}
+
+.leaderboardBody {
+  margin-top: 50px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
