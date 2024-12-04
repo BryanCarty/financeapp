@@ -5,6 +5,7 @@ import courierPrime from "./CourierPrime";
 import { useState } from "react";
 import "react-quill-new/dist/quill.snow.css";
 import ReactQuill from "react-quill-new";
+import submitPost from "../actions/postActions";
 
 const modules = {
   toolbar: [
@@ -19,6 +20,8 @@ const modules = {
 export default function PostModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [value, setValue] = useState("");
   const [formData, setFormData] = useState({
     ticker: "",
@@ -32,6 +35,29 @@ export default function PostModal({ isOpen, onClose }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleSubmit = async () => {
+    if (!formData.ticker || !formData.price || !formData.futureDate || !value) {
+      setError("All fields are required");
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Sending data to the server action
+      const postId = await submitPost({
+        ...formData,
+        reasoning: value, // Add the reasoning content
+      });
+      setError("");
+      onClose(); // Close the modal after successful submission
+    } catch (error) {
+      console.error("Error submitting post:", error);
+      setError("An unexpected error occurred!");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className={`${styles.overlayStyle} ${courierPrime.className}`}>
       <div className={styles.modalStyle}>
@@ -42,6 +68,7 @@ export default function PostModal({ isOpen, onClose }) {
           </div>
         </div>
         <div className={styles.modalBody}>
+          {error && <div className={styles.error}>{error}</div>}
           <div className={styles.claimSection}>
             <input
               className={courierPrime.className}
@@ -78,9 +105,15 @@ export default function PostModal({ isOpen, onClose }) {
               value={formData.futureDate}
               onChange={handleInputChange}
               className={courierPrime.className}
+              min={
+                new Date(new Date().setDate(new Date().getDate() + 1))
+                  .toISOString()
+                  .split("T")[0]
+              } // Set minimum to tomorrow
             />
           </div>
           <div className={styles.because}>because ...</div>
+
           <ReactQuill
             modules={modules}
             theme="snow"
@@ -94,11 +127,16 @@ export default function PostModal({ isOpen, onClose }) {
           <button
             onClick={onClose}
             className={`${styles.buttonStyle} ${courierPrime.className}`}
+            disabled={isSubmitting}
           >
             Cancel
           </button>
-          <button className={`${styles.buttonStyle} ${courierPrime.className}`}>
-            Post
+          <button
+            className={`${styles.buttonStyle} ${courierPrime.className}`}
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Posting..." : "Post"}
           </button>
         </div>
       </div>

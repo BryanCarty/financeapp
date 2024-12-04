@@ -1,17 +1,23 @@
 "use server";
-import { SignupFormSchema, LoginFormSchema } from "@/app/lib/definitions";
+import {
+  SignupFormSchema,
+  LoginFormSchema,
+  ResetPasswordFormSchema,
+} from "@/app/lib/definitions";
 import {
   createUser,
   getUserByEmailAndPassword,
   getUserByEmail,
   insertResetPasswordToken,
+  updatePasswordHash,
+  getUserIdByToken,
 } from "../lib/db/db_functions";
 import bcrypt from "bcrypt";
 import { createSession, verifySession } from "../lib/sessions";
 import { deleteSession } from "../lib/sessions";
-import { redirect } from "next/navigation";
 import { sendResetPasswordEmail } from "../lib/email";
 import { randomBytes } from "crypto";
+import { redirect } from "next/navigation";
 
 export async function signup(state, formData) {
   // Validate form fields
@@ -53,7 +59,7 @@ export async function signup(state, formData) {
   }
 
   console.log("Creating Session for: " + userId);
-  errors = await createSession(userId);
+  errors = await createSession(userId, username);
   if (errors) {
     return {
       errors: errors,
@@ -69,11 +75,9 @@ export async function logout() {
   redirect("/login");
 }
 
-export async function redirectIfAuthenticated() {
+export async function isAuthenticated() {
   let isLoggedIn = await verifySession();
-  if (isLoggedIn) {
-    redirect("/");
-  }
+  return isLoggedIn;
 }
 
 export async function login(state, formData) {
@@ -105,7 +109,7 @@ export async function login(state, formData) {
   }
 
   console.log("Creating Session for: " + user.user_id);
-  errors = await createSession(user.user_id);
+  errors = await createSession(user.user_id, user.username);
   if (errors) {
     return {
       errors: errors,
@@ -170,4 +174,44 @@ export async function resetPassword(state, formData) {
   return {
     success: true,
   };
+}
+
+export async function updatePassword(state, formData) {
+  // Validate form fields
+  const password = formData.get("password");
+  const token = formData.get("token");
+
+  const extractedData = {
+    password: password,
+  };
+
+  const validatedFields = ResetPasswordFormSchema.safeParse(extractedData);
+
+  // If any form fields are invalid, return early
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      values: extractedData,
+    };
+  }
+
+  let { userId, errors } = await getUserIdByToken(token);
+  if (errors || !userId) {
+    return {
+      errors: errors,
+      values: extractedData,
+    };
+  }
+
+  //update the users password
+  const hashedPassword = await bcrypt.hash(password, 10);
+  let { success, error } = await updatePasswordHash(userId, hashedPassword);
+  if (error || !success) {
+    return {
+      errors: error,
+      values: extractedData,
+    };
+  }
+
+  return { success: true };
 }

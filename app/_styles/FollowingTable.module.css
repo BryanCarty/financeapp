@@ -99,3 +99,9 @@
 .btn:hover {
   cursor: pointer;
 }
+
+.error {
+  margin-top: 3px;
+  color: rgb(187, 75, 75);
+  text-align: center;
+}

@@ -146,3 +146,697 @@ export async function insertResetPasswordToken(userId, resetPasswordToken) {
     };
   }
 }
+
+export async function getUserIdByToken(token) {
+  try {
+    // Insert user data into the 'users' table
+    const result = await sql`
+        select user_id, expires_at from reset_password_tokens WHERE token = ${token}`;
+
+    if (result.length != 1 || !result[0].user_id || !result[0].expires_at) {
+      return {
+        userId: false,
+        errors: { password: ["An unknown error occurred"] },
+      };
+    }
+
+    const now = new Date();
+    const expirationDate = new Date(result[0].expires_at);
+
+    if (expirationDate < now) {
+      return {
+        userId: false,
+        errors: { password: ["This token has expired"] },
+      };
+    }
+
+    return {
+      userId: result[0].user_id,
+      errors: null,
+    };
+  } catch (error) {
+    console.error("getUserIdByToken : Database Error Occurred:", error);
+    return {
+      userId: false,
+      errors: { password: ["An unknown error occurred"] },
+    };
+  }
+}
+
+export async function updatePasswordHash(userId, passwordHash) {
+  try {
+    // Update the password_hash column for the given user
+    const updatedUser = await sql`
+        update users
+        set password_hash = ${passwordHash}
+        where user_id = ${userId}
+        returning user_id;  -- Returning the user ID after update
+      `;
+
+    if (!updatedUser[0]?.user_id) {
+      return {
+        success: null,
+        error: { password: ["An unexpected error occurred"] },
+      };
+    }
+    return {
+      success: updatedUser[0].user_id, // Return the updated user ID if the update was successful
+      error: null,
+    };
+  } catch (error) {
+    console.error("updatePasswordHash : Database Error Occurred:", error);
+    return {
+      success: null,
+      error: { password: ["An unexpected error occurred"] },
+    };
+  }
+}
+
+export async function createPost(
+  ticker,
+  comparison,
+  price,
+  expiry,
+  content,
+  status,
+  authorId
+) {
+  try {
+    // Insert user data into the 'users' table
+    let condition = "comparison" === "<" ? ">" : "<";
+
+    const post = await sql`
+        insert into posts
+          (ticker, comparison, price, expiry, content, status, author_id)
+        values
+          (${ticker}, ${condition}, ${price}, ${expiry}, ${content}, ${status}, ${authorId})
+        returning id;
+      `;
+
+    return post[0].id;
+  } catch (error) {
+    console.log("createPost : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function getLeaderboard(myUserId) {
+  //TODO: Add in following status.
+  try {
+    // Insert user data into the 'users' table
+    const result = await sql`
+      SELECT u.user_id, u.username, u.accuracy, u.trades_count, u.followers_count,
+             CASE WHEN f.follower_id IS NOT NULL THEN true ELSE false END AS is_following
+      FROM users u
+      LEFT JOIN followers f ON f.followed_id = u.user_id AND f.follower_id = ${myUserId}
+      WHERE u.user_id != ${myUserId}
+      ORDER BY u.accuracy DESC LIMIT 10;
+    `;
+
+    if (!result) {
+      console.log("Failed to retrieve leaderboard data from the database");
+      return false;
+    }
+
+    const leaderboard = result.map((user) => {
+      return {
+        user_id: user.user_id,
+        profile: user.username, // Assuming 'username' is used as 'profile' name
+        accuracy: `${user.accuracy}%`, // Format accuracy as a percentage string
+        totalTrades: user.trades_count, // Assuming trades_count is equivalent to trades per week
+        followers: user.followers_count, // Use followers_count as 'followers'
+        is_following: user.is_following,
+      };
+    });
+
+    return leaderboard;
+  } catch (error) {
+    console.log("getLeaderboard : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function followUserDb(myUserId, otherUserId, notified) {
+  try {
+    // Insert the follower relationship and set the 'notified' column to false by default
+    const result = await sql`
+      INSERT INTO followers (follower_id, followed_id, notified)
+      VALUES (${myUserId}, ${otherUserId}, ${notified})  -- Set 'notified' to false initially
+      RETURNING created_at;  -- Return the created_at timestamp and the 'notified' value
+    `;
+
+    return {
+      success: result[0].created_at, // Access the created_at timestamp
+    };
+  } catch (error) {
+    console.error("followUser : Database Error Occurred:", error);
+    return {
+      success: false,
+    };
+  }
+}
+
+export async function unfollowUserDb(myUserId, otherUserId) {
+  try {
+    // Delete the follower relationship
+    const result = await sql`
+      DELETE FROM followers
+      WHERE follower_id = ${myUserId} AND followed_id = ${otherUserId}
+      RETURNING *;  
+    `;
+
+    // If a record was deleted, the result array will contain the deleted row.
+    if (result.length > 0) {
+      return {
+        success: true,
+        message: "Unfollowed successfully.",
+      };
+    } else {
+      return {
+        success: false,
+        message: "No such follow relationship found.",
+      };
+    }
+  } catch (error) {
+    console.error("unfollowUser : Database Error Occurred:", error);
+    return {
+      success: false,
+      message: "An error occurred while trying to unfollow the user.",
+    };
+  }
+}
+
+export async function getArticleById(articleId, currentUserId) {
+  try {
+    // Insert user data into the 'users' table
+    /*
+    const result = await sql`
+    SELECT posts.*, users.username, users.accuracy
+    FROM posts 
+    JOIN users ON posts.author_id = users.user_id
+    WHERE posts.id = ${articleId}`;*/
+
+    /**
+    const result = await sql`
+    SELECT 
+        posts.*, 
+        users.username, 
+        users.accuracy,
+        COALESCE(SUM(CASE WHEN agreement_status.agreement_status = 'true' THEN 1 ELSE 0 END), 0) AS total_agreements,
+        COALESCE(SUM(CASE WHEN agreement_status.agreement_status = 'false' THEN 1 ELSE 0 END), 0) AS total_disagreements,
+        COALESCE(
+            (SELECT agreement_status.agreement_status 
+             FROM agreement_status 
+             WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = ${currentUserId}
+            ), NULL
+        ) AS user_agreement_status
+    FROM posts 
+    JOIN users ON posts.author_id = users.user_id
+    LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+    WHERE posts.id = ${articleId}
+    GROUP BY posts.id, users.username, users.accuracy;
+`;**/
+    /**
+    const result = await sql`
+    SELECT 
+        posts.*, 
+        users.username, 
+        users.accuracy,
+        COALESCE(SUM(CASE WHEN agreement_status.agreement_status = 'true' THEN 1 ELSE 0 END), 0) AS total_agreements,
+        COALESCE(SUM(CASE WHEN agreement_status.agreement_status = 'false' THEN 1 ELSE 0 END), 0) AS total_disagreements,
+        COALESCE(
+            (SELECT agreement_status.agreement_status 
+             FROM agreement_status 
+             WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = ${currentUserId}
+            ), NULL
+        ) AS user_agreement_status,
+        COALESCE(
+            json_agg(
+                CASE 
+                    WHEN comments.id IS NOT NULL THEN json_build_object(
+                        'comment_id', comments.id,
+                        'user_id', comments.user_id,
+                        'text', comments.text,
+                        'created_at', comments.created_at
+                    )
+                END
+            ) FILTER (WHERE comments.id IS NOT NULL), 
+            '[]'
+        ) AS comments
+    FROM posts 
+    JOIN users ON posts.author_id = users.user_id
+    LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+    LEFT JOIN comments ON comments.article_id = posts.id
+    WHERE posts.id = ${articleId}
+    GROUP BY posts.id, users.username, users.accuracy;
+`;**/
+    /*
+    const result = await sql`
+      SELECT 
+          posts.*, 
+          users.username AS post_author_username, 
+          users.accuracy AS post_author_accuracy,
+          COALESCE(SUM(CASE WHEN agreement_status.agreement_status = 'true' THEN 1 ELSE 0 END), 0) AS total_agreements,
+          COALESCE(SUM(CASE WHEN agreement_status.agreement_status = 'false' THEN 1 ELSE 0 END), 0) AS total_disagreements,
+          COALESCE(
+              (SELECT agreement_status.agreement_status 
+              FROM agreement_status 
+              WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = ${currentUserId}
+              ), NULL
+          ) AS user_agreement_status,
+          COALESCE(
+              json_agg(
+                  CASE 
+                      WHEN comments.id IS NOT NULL THEN json_build_object(
+                          'comment_id', comments.id,
+                          'user_id', comments.user_id,
+                          'text', comments.text,
+                          'created_at', comments.created_at,
+                          'username', comment_users.username,
+                          'accuracy', comment_users.accuracy,
+                          'post_opinion', COALESCE(
+                              (
+                                  SELECT agreement_status.agreement_status
+                                  FROM agreement_status
+                                  WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = comments.user_id
+                                  LIMIT 1
+                              ), NULL
+                          )
+                      )
+                  END
+              ) FILTER (WHERE comments.id IS NOT NULL), 
+              '[]'
+          ) AS comments
+      FROM posts 
+      JOIN users ON posts.author_id = users.user_id
+      LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+      LEFT JOIN comments ON comments.article_id = posts.id
+      LEFT JOIN users AS comment_users ON comments.user_id = comment_users.user_id
+      WHERE posts.id = ${articleId}
+      GROUP BY posts.id, users.username, users.accuracy;
+      `;*/
+
+    const result = await sql`
+      SELECT 
+          posts.*, 
+          users.username AS post_author_username, 
+          users.accuracy AS post_author_accuracy,
+          COALESCE(
+              COUNT(DISTINCT CASE 
+                  WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+              END), 
+              0
+          ) AS total_agreements,
+          COALESCE(
+              COUNT(DISTINCT CASE 
+                  WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+              END), 
+              0
+          ) AS total_disagreements,
+          COALESCE(
+              (SELECT agreement_status.agreement_status 
+              FROM agreement_status 
+              WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = ${currentUserId}
+              ), NULL
+          ) AS user_agreement_status,
+          COALESCE(
+              json_agg(
+                  CASE 
+                      WHEN comments.id IS NOT NULL THEN json_build_object(
+                          'comment_id', comments.id,
+                          'user_id', comments.user_id,
+                          'text', comments.text,
+                          'created_at', comments.created_at,
+                          'username', comment_users.username,
+                          'accuracy', comment_users.accuracy,
+                          'post_opinion', COALESCE(
+                              (
+                                  SELECT agreement_status.agreement_status
+                                  FROM agreement_status
+                                  WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = comments.user_id
+                                  LIMIT 1
+                              ), NULL
+                          )
+                      )
+                  END
+              ) FILTER (WHERE comments.id IS NOT NULL), 
+              '[]'
+          ) AS comments
+      FROM posts 
+      JOIN users ON posts.author_id = users.user_id
+      LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+      LEFT JOIN comments ON comments.article_id = posts.id
+      LEFT JOIN users AS comment_users ON comments.user_id = comment_users.user_id
+      WHERE posts.id = ${articleId}
+      GROUP BY posts.id, users.username, users.accuracy;
+      `;
+
+    if (result.length != 1 || !result[0]) {
+      return false;
+    }
+
+    return result[0];
+  } catch (error) {
+    console.error("getArticleById : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function updateAgreementStatusDb(postId, userId, status) {
+  try {
+    if (status === 0) {
+      // Undo agreement: Delete the row
+      const result = await sql`DELETE FROM agreement_status 
+         WHERE article_id = ${postId} AND user_id = ${userId}`;
+
+      return true; // Returns true if a row was deleted
+    } else if (status === 1) {
+      // Agree: Insert or update agreement_status to true
+      const result =
+        await sql`INSERT INTO agreement_status (article_id, user_id, agreement_status)
+         VALUES (${postId}, ${userId}, TRUE)
+         ON CONFLICT (article_id, user_id)
+         DO UPDATE SET agreement_status = TRUE`;
+
+      return result.rowCount > 0; // Returns true if the operation succeeded
+    } else if (status === -1) {
+      // Disagree: Insert or update agreement_status to false
+      const result =
+        await sql`INSERT INTO agreement_status (article_id, user_id, agreement_status)
+         VALUES (${postId}, ${userId}, FALSE)
+         ON CONFLICT (article_id, user_id)
+         DO UPDATE SET agreement_status = FALSE`;
+
+      return result.rowCount > 0; // Returns true if the operation succeeded
+    } else {
+      throw new Error("Invalid status value");
+    }
+  } catch (error) {
+    console.error("Error updating agreement status:", error);
+    throw new Error("Failed to update agreement status");
+  }
+}
+
+export async function createComment(postId, userId, text) {
+  try {
+    // Insert user data into the 'users' table
+
+    const enrichedComment = await sql`
+    with inserted_comment as (
+        insert into comments (article_id, user_id, text)
+        values (${postId}, ${userId}, ${text})
+        returning *
+    )
+    select 
+        inserted_comment.*, 
+        users.username, 
+        users.accuracy, 
+        agreement_status.agreement_status
+    from inserted_comment
+    join users on users.user_id = inserted_comment.user_id
+    join agreement_status on agreement_status.user_id = inserted_comment.user_id
+                          and agreement_status.article_id = inserted_comment.article_id;
+`;
+
+    return enrichedComment[0];
+  } catch (error) {
+    console.log("createComment : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function getFollowerTable(myUserId) {
+  //TODO: Add in following status.
+  try {
+    // Insert user data into the 'users' table
+    const result = await sql`
+    SELECT 
+      u.user_id, 
+      u.username, 
+      u.accuracy, 
+      u.trades_count, 
+      u.followers_count,
+      CASE 
+        WHEN EXISTS (
+          SELECT 1 
+          FROM followers 
+          WHERE follower_id = ${myUserId} AND followed_id = u.user_id
+        ) THEN true
+        ELSE false
+      END AS is_following
+    FROM users u
+    INNER JOIN followers f ON f.follower_id = u.user_id
+    WHERE f.followed_id = ${myUserId}
+    ORDER BY u.accuracy DESC;
+  `;
+
+    if (!result) {
+      console.log("Failed to retrieve leaderboard data from the database");
+      return false;
+    }
+
+    const leaderboard = result.map((user) => {
+      return {
+        user_id: user.user_id,
+        profile: user.username, // Assuming 'username' is used as 'profile' name
+        accuracy: `${user.accuracy}%`, // Format accuracy as a percentage string
+        totalTrades: user.trades_count, // Assuming trades_count is equivalent to trades per week
+        followers: user.followers_count, // Use followers_count as 'followers'
+        is_following: user.is_following,
+      };
+    });
+
+    return leaderboard;
+  } catch (error) {
+    console.log("getLeaderboard : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function getFollowingTable(myUserId) {
+  //TODO: Add in following status.
+  try {
+    // Insert user data into the 'users' table
+    const result = await sql`
+    SELECT u.user_id, u.username, u.accuracy, u.trades_count, u.followers_count,
+           CASE 
+               WHEN EXISTS (
+                   SELECT 1 
+                   FROM followers f2
+                   WHERE f2.follower_id = ${myUserId} AND f2.followed_id = u.user_id
+               ) THEN true
+               ELSE false
+           END AS is_following
+    FROM users u
+    INNER JOIN followers f ON f.followed_id = u.user_id
+    WHERE f.follower_id = ${myUserId}
+    ORDER BY u.accuracy DESC;`;
+
+    if (!result) {
+      console.log("Failed to retrieve leaderboard data from the database");
+      return false;
+    }
+
+    const leaderboard = result.map((user) => {
+      return {
+        user_id: user.user_id,
+        profile: user.username, // Assuming 'username' is used as 'profile' name
+        accuracy: `${user.accuracy}%`, // Format accuracy as a percentage string
+        totalTrades: user.trades_count, // Assuming trades_count is equivalent to trades per week
+        followers: user.followers_count, // Use followers_count as 'followers'
+        is_following: user.is_following,
+      };
+    });
+
+    return leaderboard;
+  } catch (error) {
+    console.log("getLeaderboard : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function getSearchTable(myUserId, searchQuery) {
+  //TODO: Add in following status.
+  try {
+    // Insert user data into the 'users' table
+    const result = await sql`
+    SELECT u.user_id, u.username, u.accuracy, u.trades_count, u.followers_count,
+           CASE WHEN f.follower_id IS NOT NULL THEN true ELSE false END AS is_following
+    FROM users u
+    LEFT JOIN followers f ON f.followed_id = u.user_id AND f.follower_id = ${myUserId}
+    WHERE u.user_id != ${myUserId}
+      AND u.username ILIKE ${`%${searchQuery}%`}  -- Matching usernames based on the search query
+    ORDER BY
+      CASE WHEN u.username ILIKE ${`%${searchQuery}%`} THEN 1 ELSE 2 END,  -- Prioritize search matches
+      u.accuracy DESC  -- Order by accuracy as a secondary sort
+    LIMIT 10;
+  `;
+
+    console.log(result);
+    if (!result) {
+      console.log("Failed to retrieve leaderboard data from the database");
+      return false;
+    }
+
+    const leaderboard = result.map((user) => {
+      return {
+        user_id: user.user_id,
+        profile: user.username, // Assuming 'username' is used as 'profile' name
+        accuracy: `${user.accuracy}%`, // Format accuracy as a percentage string
+        totalTrades: user.trades_count, // Assuming trades_count is equivalent to trades per week
+        followers: user.followers_count, // Use followers_count as 'followers'
+        is_following: user.is_following,
+      };
+    });
+
+    return leaderboard;
+  } catch (error) {
+    console.log("getLeaderboard : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function getLatestFeed() {
+  try {
+    const results = await sql`
+    SELECT posts.*, 
+           users.username AS post_author_username, 
+           users.accuracy AS post_author_accuracy,
+           COALESCE(
+               COUNT(DISTINCT CASE 
+                   WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+               END), 
+               0
+           ) AS total_agreements,
+           COALESCE(
+               COUNT(DISTINCT CASE 
+                   WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+               END), 
+               0
+           ) AS total_disagreements,
+           COALESCE(COUNT(comments.article_id), 0) AS total_comments  -- Add total comments count
+    FROM posts
+    JOIN users ON posts.author_id = users.user_id
+    LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+    LEFT JOIN comments ON comments.article_id = posts.id  -- Join comments table
+    WHERE expiry >= CURRENT_DATE  -- Only include posts that don't expire before today
+    GROUP BY posts.id, users.username, users.accuracy  -- Ensure proper grouping for aggregates
+    ORDER BY post_date DESC;  -- Order by post_date in descending order (most recent first)
+`;
+
+    if (!results || !results[0]) {
+      return false;
+    }
+
+    return results;
+  } catch (error) {
+    console.error("getLatestFeed : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function getTrendingFeed() {
+  try {
+    const results = await sql`
+SELECT posts.*, 
+       users.username AS post_author_username, 
+       users.accuracy AS post_author_accuracy,
+       COALESCE(
+           COUNT(DISTINCT CASE 
+               WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+           END), 
+           0
+       ) AS total_agreements,
+       COALESCE(
+           COUNT(DISTINCT CASE 
+               WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+           END), 
+           0
+       ) AS total_disagreements,
+       COALESCE(COUNT(comments.article_id), 0) AS total_comments  -- Add total comments count
+FROM posts
+JOIN users ON posts.author_id = users.user_id
+LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+LEFT JOIN comments ON comments.article_id = posts.id  -- Join comments table
+WHERE expiry >= CURRENT_DATE  -- Only include posts that don't expire before today
+GROUP BY posts.id, users.username, users.accuracy  -- Ensure proper grouping for aggregates
+ORDER BY 
+    (COALESCE(
+        COUNT(DISTINCT CASE 
+            WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+        END), 
+        0
+    ) + 
+    COALESCE(
+        COUNT(DISTINCT CASE 
+            WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+        END), 
+        0
+    ) + 
+    COALESCE(COUNT(comments.article_id), 0)) DESC;  -- Order by engagement (sum of comments + agreements + disagreements)
+`;
+
+    if (!results || !results[0]) {
+      return false;
+    }
+
+    return results;
+  } catch (error) {
+    console.error("getLatestFeed : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function getPersonalFeed() {
+  try {
+    const results = await sql`
+    SELECT posts.*, 
+           users.username AS post_author_username, 
+           users.accuracy AS post_author_accuracy,
+           COALESCE(
+               COUNT(DISTINCT CASE 
+                   WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+               END), 
+               0
+           ) AS total_agreements,
+           COALESCE(
+               COUNT(DISTINCT CASE 
+                   WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+               END), 
+               0
+           ) AS total_disagreements,
+           COALESCE(COUNT(comments.article_id), 0) AS total_comments  -- Add total comments count
+    FROM posts
+    JOIN users ON posts.author_id = users.user_id
+    LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+    LEFT JOIN comments ON comments.article_id = posts.id  -- Join comments table
+    JOIN followers ON followers.followed_id = posts.author_id  -- Join followers table to get the users you're following
+    WHERE followers.follower_id = ${yourUserId}  -- Only include posts from users you're following
+      AND expiry >= CURRENT_DATE  -- Only include posts that don't expire before today
+    GROUP BY posts.id, users.username, users.accuracy  -- Ensure proper grouping for aggregates
+    ORDER BY 
+        (COALESCE(
+            COUNT(DISTINCT CASE 
+                WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+            END), 
+            0
+        ) + 
+        COALESCE(
+            COUNT(DISTINCT CASE 
+                WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+            END), 
+            0
+        ) + 
+        COALESCE(COUNT(comments.article_id), 0)) DESC;  -- Order by engagement (sum of comments + agreements + disagreements)
+    `;
+
+    if (!results || !results[0]) {
+      return false;
+    }
+
+    return results;
+  } catch (error) {
+    console.error("getLatestFeed : Database Error Occurred:", error);
+    return false;
+  }
+}

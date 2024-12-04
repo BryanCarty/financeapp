@@ -8,10 +8,33 @@ import courierPrime from "./CourierPrime";
 
 export default function () {
   const [activeTab, setActiveTab] = useState("following");
+  // State to hold the search query
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Function to update the search query
+  const handleSearchChange = (query) => {
+    setSearchQuery(query);
+  };
 
   return (
     <div className={styles.pageBody}>
       <div className={styles.subnavbar}>
+        <h5
+          className={`${courierPrime.className} ${styles.subnavitem} ${
+            activeTab === "posts" ? styles.active : ""
+          }`}
+          onClick={() => setActiveTab("posts")}
+        >
+          My Posts
+        </h5>
+        <h5
+          className={`${courierPrime.className} ${styles.subnavitem} ${
+            activeTab === "comments" ? styles.active : ""
+          }`}
+          onClick={() => setActiveTab("comments")}
+        >
+          My Comments
+        </h5>
         <h5
           className={`${courierPrime.className} ${styles.subnavitem} ${
             activeTab === "following" ? styles.active : ""
@@ -38,12 +61,18 @@ export default function () {
         </h5>
       </div>
       <div className={manageFollowingstyles.followingContainer}>
-        {activeTab == "following" && <FollowingTable />}
-        {activeTab == "followers" && <FollowingTable />}
+        {activeTab == "following" && (
+          <FollowingTable type={"fi"} searchQuery={null} />
+        )}
+        {activeTab == "followers" && (
+          <FollowingTable type={"fe"} searchQuery={null} />
+        )}
         {activeTab == "search" && (
           <div className={manageFollowingstyles.searchContainer}>
-            <SearchBar />
-            <FollowingTable />
+            {/* Pass the handler to the SearchBar to update the state */}
+            <SearchBar onSearchChange={handleSearchChange} />
+            {/* Pass the updated search query to the FollowingTable */}
+            <FollowingTable type={"se"} searchQuery={searchQuery} />
           </div>
         )}
       </div>

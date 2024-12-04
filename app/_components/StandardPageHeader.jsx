@@ -1,4 +1,69 @@
-"use client";
+"use server";
+
+import styles from "@/app/_styles/StandardPageHeader.module.css";
+import Link from "next/link";
+import courierPrime from "./CourierPrime";
+import PostModalButton from "./PostModalButton";
+import { isAuthenticated } from "../actions/auth";
+import HomeLink from "./HomeLink";
+
+export default async function () {
+  //Determine if the user is logged in
+  let isLoggedIn = await isAuthenticated();
+
+  return (
+    <header className={styles.pageHeader}>
+      <div className={styles.leftOfHeader}>
+        <Link className={styles.logo} href="/">
+          <h1 className={`${courierPrime.className} ${styles.typedSiteName}`}>
+            The Traders Journal
+          </h1>
+        </Link>
+      </div>
+      <div className={styles.rightOfHeader}>
+        <HomeLink />
+        <Link
+          className={`${styles.navButton} ${courierPrime.className}`}
+          href="/about"
+        >
+          About
+        </Link>
+        {isLoggedIn ? (
+          <>
+            <PostModalButton />
+            <Link
+              className={`${styles.navButton} ${courierPrime.className} ${styles.underline}`}
+              href="/settings"
+            >
+              {isLoggedIn.username}
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link
+              className={`${styles.navButton} ${courierPrime.className}`}
+              href="/login"
+            >
+              Log in
+            </Link>
+
+            <Link
+              className={`${styles.navButton} ${courierPrime.className} ${styles.underline}`}
+              href="/signup"
+            >
+              Sign up
+            </Link>
+          </>
+        )}
+      </div>
+    </header>
+  );
+}
+
+/**
+ * BACKUP
+ * 
+ * "use client";
 import styles from "@/app/_styles/StandardPageHeader.module.css";
 import Link from "next/link";
 import courierPrime from "./CourierPrime";
@@ -60,3 +125,6 @@ export default function () {
     </>
   );
 }
+
+ * 
+ */

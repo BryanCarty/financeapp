@@ -3,23 +3,36 @@ import comment from "@/app/_assets/comments.svg";
 import Image from "next/image";
 import courierPrime from "./CourierPrime";
 
-export default function ArticleHeader() {
+export default function ArticleHeader({
+  ticker,
+  comparison,
+  price,
+  expiry,
+  agreeCount,
+  disagreeCount,
+  status,
+  author,
+  postDate,
+  authorAccuracy,
+  commentCount,
+  daysUntilExpiry,
+}) {
   return (
     <div className={styles.articleHeader}>
       <div className={styles.summaryHeading}>
         <div className={`${styles.claim} ${courierPrime.className}`}>
           <span className={styles.claimText}>
-            AAPL &gt; 232.23 by Jan 5<sup>th</sup> 2024
+            {ticker} {comparison} {price} by {expiry}
           </span>
-          <span className={styles.claimExpiry}>(3 days)</span>
+          <span className={styles.claimExpiry}>({daysUntilExpiry} days)</span>
         </div>
         <div className={`${styles.profile} ${courierPrime.className}`}>
-          Jan 1<sup>st</sup> 2024 • JSmith123 • 96%
+          {postDate} • {author} • {authorAccuracy + "%"}
         </div>
       </div>
       <div className={styles.summaryFooter}>
         <div className={`${styles.leftFooter} ${courierPrime.className}`}>
-          Agree: 2/3 • Disagree: 1/3 • Status: 3% &gt; 232.23
+          Agree: {agreeCount} • Disagree: {disagreeCount} • Status: {status}
         </div>
 
         <div className={`${styles.rightFooter} ${courierPrime.className}`}>
@@ -31,7 +44,7 @@ export default function ArticleHeader() {
             width={35}
             height={35}
           />
-          <div className={styles.commentCount}>(6)</div>
+          <div className={styles.commentCount}>({commentCount})</div>
         </div>
       </div>
     </div>

@@ -2,10 +2,15 @@
 import styles from "@/app/_styles/SignUp.module.css";
 import LogInForm from "@/app/_components/LogInForm";
 import Footer from "../_components/Footer";
-import { redirectIfAuthenticated } from "../actions/auth";
+import { isAuthenticated } from "../actions/auth";
+import { redirect } from "next/navigation";
 
 export default async function SignUpPage() {
-  await redirectIfAuthenticated();
+  let isLoggedIn = await isAuthenticated();
+
+  if (isLoggedIn) {
+    redirect("/");
+  }
 
   return (
     <>

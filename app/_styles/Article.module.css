@@ -14,6 +14,10 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  border: 2px solid #353535;
+  border-radius: 15px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .agreeDisagreeSection {
@@ -140,4 +144,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.active {
+  background-color: #dadada;
 }

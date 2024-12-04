@@ -4,10 +4,25 @@ import Link from "next/link";
 import courierPrime from "./CourierPrime";
 import { updatePassword } from "@/app/actions/auth";
 import { useActionState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export default function NewPassword() {
   const [state, action, pending] = useActionState(updatePassword, {});
-  const { email } = state?.values || {};
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+
+  const [success, setSuccess] = useState(false);
+
+  // Effect to track successful execution
+  useEffect(() => {
+    console.log(state?.success);
+    if (state?.success) {
+      setSuccess(true);
+    } else {
+      setSuccess(false);
+    }
+  }, [state]);
 
   return (
     <div className={styles.mainSection}>
@@ -22,15 +37,39 @@ export default function NewPassword() {
               id="password"
               name="password"
               placeholder="New Password..."
-              value={formData.username}
-              onChange={handleChange}
               className={`${styles.formInput} ${courierPrime.className}`}
             />
-            {errors.username && (
-              <p style={{ color: "red" }}>{errors.username}</p>
+            {state?.errors?.password && (
+              <div className={`${styles.error} ${courierPrime.className}`}>
+                <div>password must:</div>
+                <div>
+                  {state.errors.password.map((error) => (
+                    <div key={error}>{error}</div>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
-
+          {token ? (
+            <div>
+              <input
+                type="hidden"
+                name="token"
+                value={token || ""} // Set the value from the URL token or an empty string if not available
+              />
+            </div>
+          ) : (
+            <div className={`${styles.error} ${courierPrime.className}`}>
+              No token!
+            </div>
+          )}
+          {success && (
+            <div
+              className={`${styles.successMessage} ${courierPrime.className}`}
+            >
+              Password updated successfully!
+            </div>
+          )}
           <div>
             <button
               className={`${styles.submitButton} ${courierPrime.className}`}
