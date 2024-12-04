@@ -13,3 +13,71 @@
   flex-direction: column;
   align-items: center;
 }
+
+/* styles.css or your preferred CSS file */
+.tableContainer {
+  border: 1px solid #353535;
+  border-radius: 8px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow */
+  margin-top: 35px;
+  margin-bottom: 25px;
+}
+
+.profileTable {
+  width: 100%;
+  border-collapse: separate; /* Use separate borders to avoid conflict */
+  border-spacing: 0; /* Ensure no space between borders */
+}
+
+.profileTable th,
+.profileTable td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #353535; /* Add border between rows and columns */
+}
+
+.profileTable caption {
+  font-weight: 700;
+  font-size: 20px;
+  border: 1px solid #353535;
+}
+
+.hr {
+  width: 60%;
+  border-bottom: 2px dashed #353535;
+  margin-top: 25px;
+  margin-bottom: 40px;
+}
+
+.logoutButtonContainer {
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.logoutButton {
+  padding: 6px 12px;
+  font-size: 20px;
+  color: #353535;
+  border: 1px solid #353535;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+}
+
+.logoutButton:hover {
+  cursor: pointer;
+}
+
+.feed {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

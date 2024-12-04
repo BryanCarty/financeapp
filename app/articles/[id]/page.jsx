@@ -5,6 +5,7 @@ import Footer from "@/app/_components/Footer";
 import { redirect } from "next/navigation";
 import fetchArticleById from "@/app/actions/articles";
 import ArticleDynamicContent from "@/app/_components/ArticleDyanmicContent";
+import { verifySession } from "@/app/lib/sessions";
 
 function formatDateToHumanReadable(dateString) {
   const date = new Date(dateString);
@@ -28,14 +29,21 @@ function formatDateToHumanReadable(dateString) {
   return formattedDate.replace(day, `${day}${suffix}`);
 }
 
-function makeHumanReadableDates(comments) {
+function makeHumanReadableDates(comments, loggedInUser) {
+  console.log(loggedInUser);
   return comments.map((comment) => ({
     ...comment,
     created_at: formatDateToHumanReadable(comment.created_at),
+    is_owner: comment.user_id === loggedInUser,
   }));
 }
 
 export default async function ArticlePage({ params }) {
+  const userId = await verifySession();
+  if (!userId) {
+    throw new Error("User is not logged in");
+  }
+
   const slug = (await params).id;
   let article;
   let loggedOut = false;
@@ -127,8 +135,9 @@ export default async function ArticlePage({ params }) {
   }
 
   if (comments) {
-    comments = makeHumanReadableDates(comments);
+    comments = makeHumanReadableDates(comments, userId.userId);
   }
+  console.log(comments);
 
   return (
     <div className={styles.pageBody}>

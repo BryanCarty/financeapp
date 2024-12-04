@@ -16,7 +16,9 @@ export default function PostModalButton() {
       >
         Post
       </button>
-      {isModalOpen && <PostModal isOpen={isModalOpen} onClose={closeModal} />}
+      {isModalOpen && (
+        <PostModal isOpen={isModalOpen} onClose={closeModal} data={null} />
+      )}
     </>
   );
 }

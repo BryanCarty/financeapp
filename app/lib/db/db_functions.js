@@ -212,34 +212,6 @@ export async function updatePasswordHash(userId, passwordHash) {
   }
 }
 
-export async function createPost(
-  ticker,
-  comparison,
-  price,
-  expiry,
-  content,
-  status,
-  authorId
-) {
-  try {
-    // Insert user data into the 'users' table
-    let condition = "comparison" === "<" ? ">" : "<";
-
-    const post = await sql`
-        insert into posts
-          (ticker, comparison, price, expiry, content, status, author_id)
-        values
-          (${ticker}, ${condition}, ${price}, ${expiry}, ${content}, ${status}, ${authorId})
-        returning id;
-      `;
-
-    return post[0].id;
-  } catch (error) {
-    console.log("createPost : Database Error Occurred:", error);
-    return false;
-  }
-}
-
 export async function getLeaderboard(myUserId) {
   //TODO: Add in following status.
   try {
@@ -565,6 +537,51 @@ export async function createComment(postId, userId, text) {
   }
 }
 
+//commentId, userId, text
+export async function updateCommentDb(commentId, userId, text) {
+  try {
+    // Update the comment and return only the comment_id if user_id and comment_id match a row in the database
+    const updatedComment = await sql`
+      update comments
+      set text = ${text}
+      where id = ${commentId} and user_id = ${userId}
+      returning id;
+    `;
+
+    // Ensure that a result was returned
+    if (updatedComment.length === 0) {
+      throw new Error("No matching comment found to update");
+    }
+
+    return updatedComment[0].id;
+  } catch (error) {
+    console.error("updateCommentDb: Database Error Occurred:", error);
+    return false;
+  }
+}
+
+//commentId, userId, text
+export async function removeCommentDb(commentId, userId) {
+  try {
+    // Update the comment and return only the comment_id if user_id and comment_id match a row in the database
+    const updatedComment = await sql`
+      Delete FROM comments
+      where id = ${commentId} and user_id = ${userId}
+      returning id;
+    `;
+
+    // Ensure that a result was returned
+    if (updatedComment.length === 0) {
+      throw new Error("No matching comment found to delete");
+    }
+
+    return updatedComment[0].id;
+  } catch (error) {
+    console.error("updateCommentDb: Database Error Occurred:", error);
+    return false;
+  }
+}
+
 export async function getFollowerTable(myUserId) {
   //TODO: Add in following status.
   try {
@@ -719,7 +736,6 @@ export async function getLatestFeed() {
     JOIN users ON posts.author_id = users.user_id
     LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
     LEFT JOIN comments ON comments.article_id = posts.id  -- Join comments table
-    WHERE expiry >= CURRENT_DATE  -- Only include posts that don't expire before today
     GROUP BY posts.id, users.username, users.accuracy  -- Ensure proper grouping for aggregates
     ORDER BY post_date DESC;  -- Order by post_date in descending order (most recent first)
 `;
@@ -787,7 +803,8 @@ ORDER BY
   }
 }
 
-export async function getPersonalFeed() {
+export async function getPersonalFeed(yourUserId) {
+  // Think this needs to be updated to order by latest not trending ?
   try {
     const results = await sql`
     SELECT posts.*, 
@@ -837,6 +854,165 @@ export async function getPersonalFeed() {
     return results;
   } catch (error) {
     console.error("getLatestFeed : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function getMyPosts(userId) {
+  try {
+    const results = await sql`
+    SELECT posts.*, 
+           users.username AS post_author_username, 
+           users.accuracy AS post_author_accuracy,
+           COALESCE(
+               COUNT(DISTINCT CASE 
+                   WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+               END), 
+               0
+           ) AS total_agreements,
+           COALESCE(
+               COUNT(DISTINCT CASE 
+                   WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+               END), 
+               0
+           ) AS total_disagreements,
+           COALESCE(COUNT(comments.article_id), 0) AS total_comments  -- Add total comments count
+    FROM posts
+    JOIN users ON posts.author_id = users.user_id
+    LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+    LEFT JOIN comments ON comments.article_id = posts.id  -- Join comments table
+    WHERE posts.author_id = ${userId}  -- Only include posts by the current user
+      AND expiry >= CURRENT_DATE  -- Only include posts that don't expire before today
+    GROUP BY posts.id, users.username, users.accuracy  -- Ensure proper grouping for aggregates
+    ORDER BY posts.post_date DESC;  -- Order by latest posts (assumes there is a 'created_at' field)
+    `;
+
+    if (!results || !results[0]) {
+      return false;
+    }
+
+    return results;
+  } catch (error) {
+    console.error("getLatestFeed : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+/**
+ * 
+ *       ticker,
+      condition,
+      price,
+      futureDate,
+      reasoning,
+      0.0,
+      userId,
+      articleId
+ */
+export async function updatePostDb(
+  ticker,
+  comparison,
+  price,
+  futureDate,
+  reasoning,
+  status,
+  userId,
+  articleId
+) {
+  try {
+    // Validate the input parameters
+
+    let condition = comparison === "greater than" ? ">" : "<";
+
+    if (
+      !ticker ||
+      !condition ||
+      !price ||
+      !futureDate ||
+      !reasoning ||
+      status === undefined ||
+      !userId ||
+      !articleId
+    ) {
+      throw new Error("Invalid parameters provided to updatePost");
+    }
+
+    // Perform the update only if the user_id matches the author_id of the post
+    const updatedPost = await sql`
+      update posts
+      set
+        ticker = ${ticker},
+        comparison = ${condition},
+        price = ${price},
+        expiry = ${futureDate},
+        content = ${reasoning},
+        status = ${status}
+      where
+        id = ${articleId} and author_id = ${userId}
+      returning id;
+    `;
+
+    // Check if the update was successful
+    if (updatedPost.length === 0) {
+      console.log(
+        "updatePost: No matching post found or unauthorized update attempt."
+      );
+      return false;
+    }
+
+    return updatedPost[0].id;
+  } catch (error) {
+    console.log("updatePost: Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function createPost(
+  ticker,
+  comparison,
+  price,
+  expiry,
+  content,
+  status,
+  authorId
+) {
+  try {
+    // Insert user data into the 'users' table
+    let condition = comparison === "greater than" ? ">" : "<";
+
+    const post = await sql`
+        insert into posts
+          (ticker, comparison, price, expiry, content, status, author_id)
+        values
+          (${ticker}, ${condition}, ${price}, ${expiry}, ${content}, ${status}, ${authorId})
+        returning id;
+      `;
+
+    return post[0].id;
+  } catch (error) {
+    console.log("createPost : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function deletePostDb(userId, articleId) {
+  try {
+    const post = await sql`
+      delete from posts
+      where id = ${articleId} and author_id = ${userId}
+      returning id;
+    `;
+
+    if (post.length === 0) {
+      console.log(
+        "deletePost: No matching post found or unauthorized delete attempt."
+      );
+      return false;
+    }
+
+    return post[0].id;
+  } catch (error) {
+    console.log("deletePost : Database Error Occurred:", error);
     return false;
   }
 }

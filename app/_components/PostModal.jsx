@@ -5,7 +5,7 @@ import courierPrime from "./CourierPrime";
 import { useState } from "react";
 import "react-quill-new/dist/quill.snow.css";
 import ReactQuill from "react-quill-new";
-import submitPost from "../actions/postActions";
+import { submitPost, updatePost } from "../actions/postActions";
 
 const modules = {
   toolbar: [
@@ -17,17 +17,35 @@ const modules = {
   ],
 };
 
-export default function PostModal({ isOpen, onClose }) {
+export default function PostModal({ isOpen, onClose, data }) {
   if (!isOpen) return null;
+
+  let isUpdate = false;
+  if (data) {
+    isUpdate = true;
+  }
+
+  let {
+    ticker = "",
+    comparison = "",
+    price = "",
+    expiry = "",
+    content = "",
+    articleId = "",
+  } = data || {};
 
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(content || "");
   const [formData, setFormData] = useState({
-    ticker: "",
-    condition: "greater than", // default value
-    price: "",
-    futureDate: "",
+    ticker: ticker || "",
+    condition: comparison
+      ? comparison == ">"
+        ? "greater than"
+        : "less than"
+      : "greater than", // default value
+    price: price || "",
+    futureDate: expiry ? expiry.toISOString().split("T")[0] : "",
   });
 
   const handleInputChange = (e) => {
@@ -44,10 +62,19 @@ export default function PostModal({ isOpen, onClose }) {
 
     try {
       // Sending data to the server action
-      const postId = await submitPost({
-        ...formData,
-        reasoning: value, // Add the reasoning content
-      });
+      if (isUpdate) {
+        const postId = await updatePost({
+          ...formData,
+          reasoning: value, // Add the reasoning content
+          articleId: articleId,
+        });
+      } else {
+        const postId = await submitPost({
+          ...formData,
+          reasoning: value, // Add the reasoning content
+        });
+      }
+
       setError("");
       onClose(); // Close the modal after successful submission
     } catch (error) {
@@ -62,7 +89,9 @@ export default function PostModal({ isOpen, onClose }) {
     <div className={`${styles.overlayStyle} ${courierPrime.className}`}>
       <div className={styles.modalStyle}>
         <div className={styles.modalHeading}>
-          <span className={` ${styles.typedSiteName}`}>Create a Post</span>
+          <span className={` ${styles.typedSiteName}`}>
+            {isUpdate ? "Update a Post" : "Create a Post"}
+          </span>
           <div className={styles.closeButton} onClick={onClose}>
             &times;
           </div>
@@ -136,7 +165,13 @@ export default function PostModal({ isOpen, onClose }) {
             onClick={handleSubmit}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Posting..." : "Post"}
+            {isUpdate
+              ? isSubmitting
+                ? "Updating..."
+                : "Update"
+              : isSubmitting
+              ? "Posting..."
+              : "Post"}
           </button>
         </div>
       </div>

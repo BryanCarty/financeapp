@@ -163,6 +163,8 @@ export default function ArticleDynamicContent({
                     ? "Agree"
                     : "Disagree"
                 }
+                commentId={comment.comment_id}
+                isOwner={comment.is_owner}
                 key={comment.comment_id}
               />
             ))}
