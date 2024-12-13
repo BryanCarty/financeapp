@@ -161,7 +161,7 @@ export async function resetPassword(state, formData) {
   let result = await sendResetPasswordEmail(
     user.email,
     user.username,
-    "http://localhost:3000/new-password?token=" + randomToken
+    process.env.DOMAIN + "/new-password?token=" + randomToken
   );
 
   if (!result.success) {

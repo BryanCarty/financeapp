@@ -41,7 +41,7 @@ function makeHumanReadableDates(comments, loggedInUser) {
 export default async function ArticlePage({ params }) {
   const userId = await verifySession();
   if (!userId) {
-    throw new Error("User is not logged in");
+    redirect("/login");
   }
 
   const slug = (await params).id;
@@ -50,38 +50,15 @@ export default async function ArticlePage({ params }) {
   try {
     article = await fetchArticleById(slug);
   } catch (error) {
-    if (error.message === "User is not logged in") {
-      loggedOut = true;
-    } else throw error;
-  }
-
-  if (loggedOut) {
-    redirect("/login");
-  } else if (!article) {
+    console.log(
+      "An error occurred fetching article by id: " + slug + ": " + error
+    );
     redirect("/");
   }
 
-  /*
-{
-  id: 2,
-  ticker: 'AAPL',
-  comparison: '<',
-  price: '222.00',
-  expiry: 2024-12-12T00:00:00.000Z,
-  content: `<h1><u>This is a sample post</u></h1><p><br></p><p>Paragraph 1...
-  disagree_count: 0,
-  status: '0.00',
-  comments: null,
-  author_id: 49,
-  post_date: 2024-12-01T19:57:31.434Z,
-  username: 'bryancarty',
-  accuracy: '0.00',
-  total_agreements: '0',
-  total_disagreements: '0',.
-  user_agreement_status: null
-}
-}
-  */
+  if (!article) {
+    redirect("/");
+  }
 
   let {
     id,
@@ -92,7 +69,6 @@ export default async function ArticlePage({ params }) {
     content,
     status,
     comments,
-    author_id,
     post_date,
     post_author_username,
     post_author_accuracy,
@@ -119,7 +95,6 @@ export default async function ArticlePage({ params }) {
     day: "numeric", // Day of the month (e.g., '1')
   });
   post_date = formatDateToHumanReadable(post_date);
-  let comment_count = 0;
   if (status > 0) {
     status = `${status}% above ${price}`;
   } else {
@@ -141,7 +116,7 @@ export default async function ArticlePage({ params }) {
 
   return (
     <div className={styles.pageBody}>
-      <StandardPageHeader />
+      <StandardPageHeader isLoggedIn={userId} />
       <ArticleDynamicContent
         id={id}
         ticker={ticker}
@@ -152,8 +127,6 @@ export default async function ArticlePage({ params }) {
         content={content}
         status={status}
         comments={comments}
-        comment_count={comment_count}
-        author_id={author_id}
         post_date={post_date}
         username={post_author_username}
         accuracy={post_author_accuracy}

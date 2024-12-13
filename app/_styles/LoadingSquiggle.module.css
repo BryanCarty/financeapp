@@ -1,0 +1,27 @@
+.svg {
+  margin: auto;
+  display: block;
+  position: relative;
+}
+
+.path {
+  stroke: #353535;
+  fill: none;
+  fill-rule: evenodd;
+  stroke-width: 6px;
+  stroke-linecap: round;
+  stroke-linejoin: miter;
+  stroke-opacity: 1;
+  stroke-dasharray: 50, 1774.630126953125; /* Adjusted stroke-dasharray */
+  stroke-dashoffset: 1774.630126953125; /* Initial dashoffset set to path length */
+  animation: logo 7s linear infinite;
+}
+
+@keyframes logo {
+  0% {
+    stroke-dashoffset: 1774.630126953125;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}

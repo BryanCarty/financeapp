@@ -1,7 +1,9 @@
+"use server";
+
 import Link from "next/link";
 import styles from "@/app/_styles/Footer.module.css";
 import courierPrime from "./CourierPrime";
-export default function Footer() {
+export default async function Footer() {
   return (
     <div className={`${styles.footer} ${courierPrime.className}`}>
       <div className={styles.leftFooter}>

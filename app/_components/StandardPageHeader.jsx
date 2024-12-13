@@ -4,12 +4,11 @@ import styles from "@/app/_styles/StandardPageHeader.module.css";
 import Link from "next/link";
 import courierPrime from "./CourierPrime";
 import PostModalButton from "./PostModalButton";
-import { isAuthenticated } from "../actions/auth";
+
 import HomeLink from "./HomeLink";
 
-export default async function () {
+export default async function ({ isLoggedIn }) {
   //Determine if the user is logged in
-  let isLoggedIn = await isAuthenticated();
 
   return (
     <header className={styles.pageHeader}>

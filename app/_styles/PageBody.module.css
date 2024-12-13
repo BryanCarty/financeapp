@@ -50,3 +50,7 @@
   flex-direction: column;
   align-items: center;
 }
+
+.mainContent {
+  flex: 1;
+}

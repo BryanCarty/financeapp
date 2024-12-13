@@ -8,7 +8,6 @@
 }
 
 .articleBody {
-  padding: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,6 +17,8 @@
   border-radius: 15px;
   margin-top: 50px;
   margin-bottom: 50px;
+  width: 90%;
+  padding: 5%;
 }
 
 .agreeDisagreeSection {
@@ -147,5 +148,5 @@
 }
 
 .active {
-  background-color: #dadada;
+  background-color: #e4e4e4;
 }

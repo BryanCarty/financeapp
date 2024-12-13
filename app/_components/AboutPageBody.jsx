@@ -1,6 +1,7 @@
+"use server";
 import styles from "@/app/_styles/About.module.css";
 import courierPrime from "./CourierPrime";
-export default function AboutPageBody() {
+export default async function AboutPageBody() {
   return (
     <div className={styles.container}>
       <div className={`${styles.mainBody} ${courierPrime.className}`}>

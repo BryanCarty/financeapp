@@ -89,15 +89,21 @@
 }
 
 .btn {
-  padding: 3px 6px;
-  font-size: 15px;
-  color: #353535;
-  border: 1px solid #353535;
-  border-radius: 5px;
-  background-color: #f7f7f7;
-  padding-bottom: 2px;
 }
 
 .btn:hover {
+  cursor: pointer;
+}
+
+.editDelBtnSpace {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.delBtn {
+  margin-right: 5px;
+}
+
+.delBtn:hover {
   cursor: pointer;
 }

@@ -6,17 +6,16 @@ import FollowingTable from "./FollowingTable";
 import SearchBar from "./SearchBar";
 import courierPrime from "./CourierPrime";
 import { useEffect } from "react";
-import loadFeed from "../actions/feed";
-import ArticleSummary from "./ArticleSummary";
+import getUserStats from "../actions/stats";
 import PostModal from "./PostModal";
+import { logout } from "../actions/auth";
+import Feed from "./Feed";
 
-export default function () {
+export default function ({ isLoggedIn }) {
   const [activeTab, setActiveTab] = useState("following");
-  // State to hold the search query
   const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState();
-  const [loadingError, setLoadingError] = useState();
-  const [feed, setFeed] = useState([]);
+  const [userStats, setUserStats] = useState();
+
   const [editPostModalData, setEditPostModalData] = useState();
 
   // Function to update the search query
@@ -24,29 +23,26 @@ export default function () {
     setSearchQuery(query);
   };
 
+  const logoutUser = async () => {
+    await logout();
+  };
+
   useEffect(() => {
-    const fetchFeed = async () => {
+    const fetchStats = async () => {
       try {
-        setLoading(true);
-        console.log(1);
-        const feedData = await loadFeed(activeTab); // Your backend API route
-        console.log(feedData);
-        if (!feedData) throw new Error("Failed to feed data");
-        setFeed(feedData);
-        setLoading(false);
+        const userStats = await getUserStats();
+        if (!userStats) throw new Error("Failed to fetch user stats");
+        setUserStats(userStats);
       } catch (error) {
-        setLoadingError(error.message);
-        console.log("Error fetching table:", error);
+        console.log("Error fetching user stats:", error);
       }
     };
-    if (activeTab == "myPosts") {
-      fetchFeed();
-    }
-  }, [activeTab]);
+    fetchStats();
+  }, []);
 
   return (
     <>
-      <div className={styles.pageBody}>
+      <div className={`${styles.pageBody} ${styles.mainContent}`}>
         <div
           className={`${manageFollowingstyles.tableContainer} ${courierPrime.className}`}
         >
@@ -55,25 +51,33 @@ export default function () {
             <thead>
               <tr>
                 <th>Accuracy</th>
-                <th>Total Trades</th>
                 <th>Followers</th>
                 <th>Total Posts</th>
                 <th>Total Comments</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>2</td>
-                <td>3</td>
-              </tr>
+              {userStats ? (
+                <tr>
+                  <td>{userStats.accuracy}%</td>
+                  <td>{userStats.follower_count}</td>
+                  <td>{userStats.post_count}</td>
+                  <td>{userStats.comment_count}</td>
+                </tr>
+              ) : (
+                <tr>
+                  <td>~~~</td>
+                  <td>~~~</td>
+                  <td>~~~</td>
+                  <td>~~~</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
         <div className={manageFollowingstyles.logoutButtonContainer}>
           <button
+            onClick={logoutUser}
             className={`${manageFollowingstyles.logoutButton} ${courierPrime.className}`}
           >
             Logout
@@ -89,14 +93,7 @@ export default function () {
           >
             My Posts
           </h5>
-          <h5
-            className={`${courierPrime.className} ${styles.subnavitem} ${
-              activeTab === "comments" ? styles.active : ""
-            }`}
-            onClick={() => setActiveTab("comments")}
-          >
-            My Comments
-          </h5>
+
           <h5
             className={`${courierPrime.className} ${styles.subnavitem} ${
               activeTab === "following" ? styles.active : ""
@@ -122,44 +119,31 @@ export default function () {
             Search
           </h5>
         </div>
+
+        {activeTab == "myPosts" && (
+          <Feed
+            key={"myPosts"}
+            type={"myPosts"}
+            setEditPostData={setEditPostModalData}
+          />
+        )}
         <div className={manageFollowingstyles.followingContainer}>
-          {activeTab == "myPosts" && (
-            <div className={manageFollowingstyles.feed}>
-              {feed.map((article, index) => (
-                <ArticleSummary
-                  key={index} // Use a unique key (index is fine for now, but if your data has a unique ID, use that)
-                  articleId={article.id}
-                  ticker={article.ticker}
-                  comparison={article.comparison}
-                  price={article.price}
-                  expiry={article.expiry} // needs modifying
-                  postDate={article.post_date} // needs modifying
-                  username={article.post_author_username}
-                  accuracy={article.post_author_accuracy + "%"}
-                  content={article.content} // needs modifying
-                  agreeCount={article.total_agreements}
-                  disagreeCount={article.total_disagreements}
-                  priceStatus={article.status}
-                  commentCount={article.total_comments}
-                  setEditPostData={
-                    article.owned_by_me ? setEditPostModalData : null
-                  }
-                />
-              ))}
-            </div>
-          )}
           {activeTab == "following" && (
-            <FollowingTable type={"fi"} searchQuery={null} />
+            <FollowingTable key={"fi"} type={"fi"} searchQuery={null} />
           )}
           {activeTab == "followers" && (
-            <FollowingTable type={"fe"} searchQuery={null} />
+            <FollowingTable key={"fe"} type={"fe"} searchQuery={null} />
           )}
           {activeTab == "search" && (
             <div className={manageFollowingstyles.searchContainer}>
               {/* Pass the handler to the SearchBar to update the state */}
               <SearchBar onSearchChange={handleSearchChange} />
               {/* Pass the updated search query to the FollowingTable */}
-              <FollowingTable type={"se"} searchQuery={searchQuery} />
+              <FollowingTable
+                key={"se:" + searchQuery}
+                type={"se"}
+                searchQuery={searchQuery}
+              />
             </div>
           )}
         </div>

@@ -6,20 +6,23 @@ import {
   getMyPosts,
 } from "../lib/db/db_functions";
 import { verifySession } from "../lib/sessions";
+import { redirect } from "next/navigation";
 
 function calculateStatus(value) {
   return "3% above 232.23";
 }
 
-export default async function loadFeed(type) {
+export default async function loadFeed(type, page) {
   // Simulate database or external API call
   const { userId, username } = await verifySession();
-  if (!userId) {
-    throw new Error("User is not logged in");
-  }
+
   switch (type) {
     case "latest": //follower
-      const latestFeed = await getLatestFeed(userId);
+      if (!userId) {
+        redirect("/login");
+      }
+      const latestFeed = await getLatestFeed(page);
+
       //need to calculate status
       for (let i = 0; i < latestFeed.length; i++) {
         const value = latestFeed[i].value;
@@ -33,7 +36,10 @@ export default async function loadFeed(type) {
       }
       return latestFeed;
     case "trending":
-      const trendingFeed = await getTrendingFeed(userId);
+      if (!userId) {
+        redirect("/login");
+      }
+      const trendingFeed = await getTrendingFeed(page);
       //need to calculate status
       for (let i = 0; i < trendingFeed.length; i++) {
         const value = trendingFeed[i].value;
@@ -47,7 +53,10 @@ export default async function loadFeed(type) {
       }
       return trendingFeed;
     case "personalFeed":
-      const personalFeed = await getPersonalFeed(userId);
+      if (!userId) {
+        redirect("/login");
+      }
+      const personalFeed = await getPersonalFeed(userId, page);
       //need to calculate status
       for (let i = 0; i < personalFeed.length; i++) {
         const value = personalFeed[i].value;
@@ -61,7 +70,10 @@ export default async function loadFeed(type) {
       }
       return personalFeed;
     case "myPosts":
-      const myPosts = await getMyPosts(userId);
+      if (!userId) {
+        redirect("/login");
+      }
+      const myPosts = await getMyPosts(userId, page);
       //need to calculate status
       for (let i = 0; i < myPosts.length; i++) {
         const value = myPosts[i].value;

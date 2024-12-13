@@ -62,8 +62,11 @@ export default function LogInForm() {
         </form>
       </div>
       <div className={styles.subSection}>
-        <Link className={`${styles.btn} ${courierPrime.className}`} href="/">
-          Return Home
+        <Link
+          className={`${styles.btn} ${courierPrime.className}`}
+          href="/signup"
+        >
+          Sign up
         </Link>
         <Link
           className={`${styles.btn} ${courierPrime.className}`}

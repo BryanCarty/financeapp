@@ -5,29 +5,8 @@ import ArticleBody from "@/app/_components/ArticleBody";
 import AgreeDisagreeSection from "@/app/_components/AgreeDisagreeSection";
 import Comment from "@/app/_components/Comment";
 import { useState } from "react";
-import submitComment from "../actions/comments";
-
-function formatDateToHumanReadable(dateString) {
-  const date = new Date(dateString);
-
-  // Format the date (e.g., Dec 2nd, 2024)
-  const options = { month: "short", day: "numeric", year: "numeric" };
-  const formattedDate = new Intl.DateTimeFormat("en-US", options).format(date);
-
-  // Add suffix to the day (1st, 2nd, 3rd, etc.)
-  const day = date.getDate();
-  const suffix =
-    day === 1 || day === 21 || day === 31
-      ? "st"
-      : day === 2 || day === 22
-      ? "nd"
-      : day === 3 || day === 23
-      ? "rd"
-      : "th";
-
-  // Return the formatted date with the suffix
-  return formattedDate.replace(day, `${day}${suffix}`);
-}
+import { submitComment } from "../actions/comments";
+import { formatDateToHumanReadable } from "../client_utils/utils";
 
 export default function ArticleDynamicContent({
   id,
@@ -39,8 +18,6 @@ export default function ArticleDynamicContent({
   content,
   status,
   comments,
-  comment_count,
-  author_id,
   post_date,
   username,
   accuracy,
@@ -97,10 +74,10 @@ export default function ArticleDynamicContent({
         ]);
         setNewComment(""); // Clear the input field
       } else {
-        console.error("Failed to save comment");
+        console.log("Failed to save comment");
       }
     } catch (error) {
-      console.error("Error submitting comment:", error);
+      console.log("Error submitting comment:" + error);
     }
   };
 

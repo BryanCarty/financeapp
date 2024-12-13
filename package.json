@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@svgr/webpack": "^8.1.0",
     "bcrypt": "^5.1.1",
     "jose": "^5.9.6",
     "next": "15.0.3",

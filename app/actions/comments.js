@@ -5,11 +5,12 @@ import {
   updateCommentDb,
   removeCommentDb,
 } from "../lib/db/db_functions";
+import { redirect } from "next/navigation";
 
 export async function submitComment(postId, text) {
   const { userId, username } = await verifySession();
   if (!userId) {
-    throw new Error("User is not logged in");
+    redirect("/login");
   }
 
   const comment = await createComment(postId, userId, text);
@@ -19,7 +20,7 @@ export async function submitComment(postId, text) {
 export async function updateComment(commentId, text) {
   const { userId, username } = await verifySession();
   if (!userId) {
-    throw new Error("User is not logged in");
+    redirect("/login");
   }
   let result = await updateCommentDb(commentId, userId, text);
   return result;
@@ -28,7 +29,7 @@ export async function updateComment(commentId, text) {
 export async function removeComment(commentId) {
   const { userId, username } = await verifySession();
   if (!userId) {
-    throw new Error("User is not logged in");
+    redirect("/login");
   }
   let result = await removeCommentDb(commentId, userId);
   return result;

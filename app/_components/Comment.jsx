@@ -45,7 +45,7 @@ export default function Comment({
       <div className={styles.comment}>
         <div className={`${styles.upperComment} ${courierPrime.className}`}>
           <span className={styles.upperSpan}>
-            {created_at} • {author} • {accuracy}
+            {created_at} | {author} | {accuracy}
           </span>
         </div>
 
@@ -66,11 +66,17 @@ export default function Comment({
           {isOwner && (
             <>
               {editText ? (
-                <div onClick={saveComment}>Save</div>
+                <div onClick={saveComment} className={styles.btn}>
+                  Save
+                </div>
               ) : (
-                <div onClick={editComment}>Edit</div>
+                <div onClick={editComment} className={styles.btn}>
+                  Edit
+                </div>
               )}
+              <div className={styles.editDelBtnSpace}>|</div>
               <div
+                className={styles.delBtn}
                 onClick={() => {
                   setShowDeleteModal(true);
                 }}

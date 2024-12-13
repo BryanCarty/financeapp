@@ -1,20 +1,25 @@
+"use client";
+
 import styles from "@/app/_styles/FollowingTable.module.css";
 import courierPrime from "./CourierPrime";
 import { useState, useEffect } from "react";
 import loadTable from "../actions/tables";
 import { followUser, unfollowUser } from "../actions/following";
+import LoadingSquiggle from "./LoadingSquiggle";
+import { useRouter } from "next/navigation";
 
-export default function FollowingTable({ type, searchQuery }) {
+export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
   const [selectedFollowProfile, setSelectedFollowProfile] = useState(null);
   const [selectedUnfollowProfile, setSelectedUnfollowProfile] = useState(null);
   const [emailAlerts, setEmailAlerts] = useState(false);
-  const [profiles, setProfiles] = useState([]); // To store fetched data
-  const [loading, setLoading] = useState(true); // Loading state
-  const [loadingError, setLoadingError] = useState(""); // Loading state
+  const [profiles, setProfiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadingError, setLoadingError] = useState("");
+  const router = useRouter();
 
   const followUserClient = async (selectedFollowProfile, emailAlerts) => {
     try {
-      const success = await followUser(selectedFollowProfile, emailAlerts); // Your backend API route
+      const success = await followUser(selectedFollowProfile, emailAlerts);
       if (!success) throw new Error("Failed to follow user");
       setProfiles((prevProfiles) =>
         prevProfiles.map((profile) =>
@@ -24,8 +29,7 @@ export default function FollowingTable({ type, searchQuery }) {
         )
       );
     } catch (error) {
-      setLoading(true);
-      setLoadingError(error.message);
+      setLoadingError("An Unexpected Error Occurred (Follow)");
       console.log("Error attempting to follow user:", error);
     }
   };
@@ -43,7 +47,7 @@ export default function FollowingTable({ type, searchQuery }) {
         )
       );
     } catch (error) {
-      setLoadingError(error.message);
+      setLoadingError("An Unexpected Error Occurred (UnFollow)");
       console.log("Error attempting to unfollow user:", error);
     }
   };
@@ -52,13 +56,19 @@ export default function FollowingTable({ type, searchQuery }) {
     const fetchProfiles = async () => {
       try {
         setLoading(true);
-        const tableData = await loadTable(type, searchQuery); // Your backend API route
-        if (!tableData) throw new Error("Failed to fetch data");
+        const tableData = await loadTable(type, searchQuery);
+        if (!tableData || tableData.length === 0) {
+          console.log(tableData);
+          setLoadingError("Hmm.. There appears to be no data 😞");
+          setLoading(false);
+          return;
+        }
         setProfiles(tableData);
-        setLoading(false); // Stop loading
+        setLoading(false);
       } catch (error) {
-        setLoadingError(error.message);
-        console.log("Error fetching table:", error);
+        setLoadingError("An Unexpected Error Occurred!");
+        setLoading(false);
+        console.log("Error fetching table data:", error);
       }
     };
 
@@ -97,12 +107,16 @@ export default function FollowingTable({ type, searchQuery }) {
   if (loading) {
     return (
       <div>
-        <div>Loading profiles...</div>
-        {loadingError && <div className={styles.error}>{loadingError}</div>}
+        <LoadingSquiggle />
       </div>
-    ); // Display loading state
+    );
   }
 
+  if (loadingError) {
+    return <div className={`${courierPrime.className}`}>{loadingError}</div>;
+  }
+
+  if (type == "se" && !searchQuery) return null;
   return (
     <div className={`${styles.tableContainer} ${courierPrime.className}`}>
       <table className={styles.profileTable}>

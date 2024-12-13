@@ -27,12 +27,12 @@ export default function ArticleHeader({
           <span className={styles.claimExpiry}>({daysUntilExpiry} days)</span>
         </div>
         <div className={`${styles.profile} ${courierPrime.className}`}>
-          {postDate} • {author} • {authorAccuracy + "%"}
+          {postDate} | {author} | {authorAccuracy + "%"}
         </div>
       </div>
       <div className={styles.summaryFooter}>
         <div className={`${styles.leftFooter} ${courierPrime.className}`}>
-          Agree: {agreeCount} • Disagree: {disagreeCount} • Status: {status}
+          Agree: {agreeCount} | Disagree: {disagreeCount} | Status: {status}
         </div>
 
         <div className={`${styles.rightFooter} ${courierPrime.className}`}>

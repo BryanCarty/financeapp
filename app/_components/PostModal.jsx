@@ -69,17 +69,19 @@ export default function PostModal({ isOpen, onClose, data }) {
           articleId: articleId,
         });
       } else {
-        const postId = await submitPost({
+        const { success, message } = await submitPost({
           ...formData,
           reasoning: value, // Add the reasoning content
         });
+        if (!success && message) {
+          setError(message);
+        } else {
+          setError("");
+          onClose();
+        }
       }
-
-      setError("");
-      onClose(); // Close the modal after successful submission
     } catch (error) {
-      console.error("Error submitting post:", error);
-      setError("An unexpected error occurred!");
+      console.log("Error submitting post:", error);
     } finally {
       setIsSubmitting(false);
     }
