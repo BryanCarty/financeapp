@@ -16,7 +16,6 @@ export default function NewPassword() {
 
   // Effect to track successful execution
   useEffect(() => {
-    console.log(state?.success);
     if (state?.success) {
       setSuccess(true);
     } else {

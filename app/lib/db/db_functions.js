@@ -643,9 +643,6 @@ export async function getLatestFeed(pageNumber) {
     ORDER BY post_date DESC  -- Order by post_date in descending order (most recent first)
     LIMIT ${postsPerPage} OFFSET ${offset};  -- Add LIMIT and OFFSET for pagination
 `;
-    console.log("Results:");
-    console.log(results);
-    console.log("----------");
 
     if (!results || !results[0]) {
       return false;
@@ -662,9 +659,6 @@ export async function getTrendingFeed(pageNumber) {
   try {
     const postsPerPage = 10;
     const offset = (pageNumber - 1) * postsPerPage;
-    console.log("-------");
-    console.log(postsPerPage);
-    console.log(offset);
 
     const results = await sql`
 SELECT posts.*, 
@@ -705,7 +699,7 @@ ORDER BY
     COALESCE(COUNT(comments.article_id), 0)) DESC  -- Order by engagement (sum of comments + agreements + disagreements)
 LIMIT ${postsPerPage} OFFSET ${offset}; 
 `;
-    console.log(results);
+
     if (!results || !results[0]) {
       return false;
     }

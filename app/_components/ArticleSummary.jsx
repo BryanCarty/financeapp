@@ -57,7 +57,12 @@ export default function ArticleSummary({
 
   return (
     <>
-      <div className={styles.articleSummary} onClick={handleArticleClick}>
+      <div
+        className={styles.articleSummary}
+        onClick={handleArticleClick}
+        data-article-ticker={ticker}
+        data-article-id={articleId}
+      >
         <div className={styles.summaryHeading}>
           <div className={`${styles.claim} ${courierPrime.className}`}>
             <span className={styles.claimText}>

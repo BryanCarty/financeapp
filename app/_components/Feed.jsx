@@ -87,7 +87,7 @@ export default function Feed({ type, setEditPostData, isLoggedIn }) {
 
 "use client";
 import ArticleSummary from "./ArticleSummary";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import loadFeed from "../actions/feed";
 import LoadingSquiggle from "./LoadingSquiggle";
 import styles from "@/app/_styles/PageBody.module.css";
@@ -100,18 +100,16 @@ export default function Feed({ type, setEditPostData }) {
   const [page, setPage] = useState(1); // Add pagination state
   const [hasMore, setHasMore] = useState(true); // Track if there are more posts to load
   const [noMorePosts, setNoMorePosts] = useState(false); // Track if there are more posts to load
+  const activeTickers = useRef(new Map()); // Track visible articles
+  const [priceMap, setPriceMap] = useState({});
 
   const fetchFeed = useCallback(
     async (page) => {
       try {
-        console.log("loading page: " + page);
         const feedData = await loadFeed(type, page); // Pass page for pagination
-        console.log("----------");
-        console.log(feedData);
         if (!feedData || feedData.length === 0) {
           setHasMore(false); // No more posts to load
           setNoMorePosts(true);
-
           return;
         }
         setFeed((prevFeed) => [...prevFeed, ...feedData]); // Append new posts to feed
@@ -128,6 +126,19 @@ export default function Feed({ type, setEditPostData }) {
     [type]
   );
 
+  const fetchPricesForTickers = async (tickers) => {
+    // Create an empty object to hold the ticker-price pairs
+    const prices = {};
+
+    // Iterate over each ticker and add a key-value pair to the object
+    tickers.forEach((ticker) => {
+      prices[ticker] = (Math.random() * 100).toFixed(2); // Assign a random price for demonstration
+    });
+
+    // Return the object with ticker-price pairs
+    return prices;
+  };
+
   useEffect(() => {
     fetchFeed(page);
   }, [page, fetchFeed]);
@@ -135,7 +146,6 @@ export default function Feed({ type, setEditPostData }) {
   const loadMorePosts = useCallback(
     ([entry]) => {
       if (entry.isIntersecting && hasMore) {
-        console.log(page);
         setPage((prevPage) => prevPage + 1); // Increment page to load more
       }
     },
@@ -158,15 +168,52 @@ export default function Feed({ type, setEditPostData }) {
       }
     };
   }, [loadMorePosts]);
-  /*
-  if (loading) {
-    return (
-      <div className={styles.mainContent}>
-        <LoadingSquiggle />
-      </div>
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const articleId = entry.target.getAttribute("data-article-id");
+          const ticker = entry.target.getAttribute("data-article-ticker");
+          if (entry.isIntersecting) {
+            activeTickers.current.set(articleId, ticker); // Add visible article ID
+          } else {
+            activeTickers.current.delete(articleId); // Remove article ID when not visible
+          }
+        });
+      },
+      { threshold: 0.01 } // At least 1% of the article should be visible
     );
-  }
-*/
+
+    // Observe each article
+    const articleIds = document.querySelectorAll("[data-article-id]");
+    articleIds.forEach((element) => observer.observe(element));
+
+    return () => {
+      // Cleanup observer
+      articleIds.forEach((element) => observer.unobserve(element));
+    };
+  }, [feed]); // Re-run when feed updates
+
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+      // Get active Tickers
+      const tickers = Array.from(activeTickers.current.values());
+
+      // Step 3: Load latest prices for each ticker
+      try {
+        // Assuming you have an API endpoint to fetch the prices based on tickers
+        const pricesMap = await fetchPricesForTickers(tickers);
+        // Step 4: Update the state with the new price map
+        setPriceMap(pricesMap);
+      } catch (error) {
+        console.error("Error fetching ticker prices:", error);
+      }
+    }, 1000); // Update prices every 5 seconds
+
+    return () => clearInterval(intervalId); // Cleanup interval on unmount
+  }, []); // Empty dependency array to run only once when the component mounts
+
   if (loadingError) {
     return (
       <div
@@ -193,7 +240,11 @@ export default function Feed({ type, setEditPostData }) {
           content={article.content}
           agreeCount={article.total_agreements}
           disagreeCount={article.total_disagreements}
-          priceStatus={article.status}
+          priceStatus={
+            activeTickers.current.has(String(article.id))
+              ? priceMap[article.ticker]
+              : article.status
+          }
           commentCount={article.total_comments}
           setEditPostData={article.owned_by_me ? setEditPostData : null}
         />

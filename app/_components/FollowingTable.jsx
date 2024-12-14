@@ -58,7 +58,6 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
         setLoading(true);
         const tableData = await loadTable(type, searchQuery);
         if (!tableData || tableData.length === 0) {
-          console.log(tableData);
           setLoadingError("Hmm.. There appears to be no data 😞");
           setLoading(false);
           return;
