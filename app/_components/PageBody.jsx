@@ -1,15 +1,36 @@
 "use client";
 import styles from "@/app/_styles/PageBody.module.css";
 import courierPrime from "./CourierPrime";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FollowingTable from "./FollowingTable";
 import PostModal from "./PostModal";
 import Feed from "./Feed";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 export default function ({ isLoggedIn }) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  let tab = searchParams.get("tab");
+  if (
+    tab != "trending" &&
+    tab != "personalFeed" &&
+    tab != "latest" &&
+    tab != "leaderboard"
+  ) {
+    tab = null;
+  }
+
   const [activeTab, setActiveTab] = useState(
-    isLoggedIn ? "trending" : "leaderboard"
+    tab ? tab : isLoggedIn ? "trending" : "leaderboard"
   );
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    params.set("tab", activeTab);
+    router.push(`${pathname}?${params.toString()}`);
+  }, [activeTab]);
 
   const [editPostData, setEditPostData] = useState();
 

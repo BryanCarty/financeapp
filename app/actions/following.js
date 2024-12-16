@@ -4,19 +4,29 @@ import { followUserDb, unfollowUserDb } from "../lib/db/db_functions";
 import { verifySession } from "../lib/sessions";
 
 export async function followUser(otherUserId, notified) {
-  const { userId, username } = await verifySession();
-  if (!userId) {
-    redirect("/login");
+  try {
+    const { userId, username } = await verifySession();
+    if (!userId) {
+      redirect("/login");
+    }
+    const success = await followUserDb(userId, otherUserId, notified);
+    return success;
+  } catch (error) {
+    console.log("An error occurred in followUser: " + error);
+    return false;
   }
-  const success = await followUserDb(userId, otherUserId, notified);
-  return success;
 }
 
 export async function unfollowUser(otherUserId) {
-  const { userId, username } = await verifySession();
-  if (!userId) {
-    redirect("/login");
+  try {
+    const { userId, username } = await verifySession();
+    if (!userId) {
+      redirect("/login");
+    }
+    const { success, message } = await unfollowUserDb(userId, otherUserId);
+    return success;
+  } catch (error) {
+    console.log("An error occurred in unfollowUser: " + error);
+    return false;
   }
-  const { success, message } = await unfollowUserDb(userId, otherUserId);
-  return success;
 }

@@ -62,23 +62,25 @@ export default function PostModal({ isOpen, onClose, data }) {
 
     try {
       // Sending data to the server action
+      let success, message;
       if (isUpdate) {
-        const postId = await updatePost({
+        ({ success, message } = await updatePost({
           ...formData,
           reasoning: value, // Add the reasoning content
           articleId: articleId,
-        });
+        }));
       } else {
-        const { success, message } = await submitPost({
+        ({ success, message } = await submitPost({
           ...formData,
           reasoning: value, // Add the reasoning content
-        });
-        if (!success && message) {
-          setError(message);
-        } else {
-          setError("");
-          onClose();
-        }
+        }));
+      }
+      if (!success && message) {
+        setError(message);
+      } else {
+        setError("");
+        onClose();
+        window.location.reload();
       }
     } catch (error) {
       console.log("Error submitting post:", error);
@@ -109,6 +111,7 @@ export default function PostModal({ isOpen, onClose, data }) {
               onChange={handleInputChange}
               placeholder="Ticker e.g. AAPL"
               maxLength={8}
+              disabled={isUpdate}
             />
             will be
             <select
@@ -116,6 +119,7 @@ export default function PostModal({ isOpen, onClose, data }) {
               name="condition"
               value={formData.condition}
               onChange={handleInputChange}
+              disabled={isUpdate}
             >
               <option value="greater than">greater than</option>
               <option value="less than">less than</option>
@@ -128,6 +132,7 @@ export default function PostModal({ isOpen, onClose, data }) {
               placeholder="price e.g. 234.20"
               step={0.01}
               className={courierPrime.className}
+              disabled={isUpdate}
             />
             by market close on the
             <input
@@ -141,6 +146,7 @@ export default function PostModal({ isOpen, onClose, data }) {
                   .toISOString()
                   .split("T")[0]
               } // Set minimum to tomorrow
+              disabled={isUpdate}
             />
           </div>
           <div className={styles.because}>because ...</div>

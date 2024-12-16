@@ -10,13 +10,32 @@ import getUserStats from "../actions/stats";
 import PostModal from "./PostModal";
 import { logout } from "../actions/auth";
 import Feed from "./Feed";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 export default function ({ isLoggedIn }) {
-  const [activeTab, setActiveTab] = useState("following");
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  let tab = searchParams.get("tab");
+  if (
+    tab != "myPosts" &&
+    tab != "following" &&
+    tab != "followers" &&
+    tab != "search"
+  ) {
+    tab = "myPosts";
+  }
+
+  const [activeTab, setActiveTab] = useState(tab);
   const [searchQuery, setSearchQuery] = useState("");
   const [userStats, setUserStats] = useState();
-
   const [editPostModalData, setEditPostModalData] = useState();
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    params.set("tab", activeTab);
+    router.push(`${pathname}?${params.toString()}`);
+  }, [activeTab]);
 
   // Function to update the search query
   const handleSearchChange = (query) => {

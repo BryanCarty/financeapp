@@ -2,10 +2,26 @@
 import { verifySession } from "../lib/sessions";
 import { createPost, updatePostDb, deletePostDb } from "../lib/db/db_functions";
 import { redirect } from "next/navigation";
+import DOMPurify from "isomorphic-dompurify";
 
 import fs from "fs/promises";
 
 let tickers = null; // Initialize tickers to null for clarity
+function sanitizePostData(postData) {
+  const sanitizedData = {
+    ticker: DOMPurify.sanitize(postData.ticker),
+    condition: DOMPurify.sanitize(postData.condition),
+    price: DOMPurify.sanitize(postData.price.toString()), // Convert to string before sanitizing
+    futureDate: DOMPurify.sanitize(postData.futureDate), // Assuming it's a string; if it's a Date object, validate it
+    reasoning: DOMPurify.sanitize(postData.reasoning),
+  };
+
+  if (postData.articleId) {
+    sanitizedData.articleId = DOMPurify.sanitize(postData.articleId);
+  }
+
+  return sanitizedData;
+}
 
 async function loadTickers() {
   try {
@@ -41,7 +57,9 @@ export async function submitPost(postData) {
     if (!userId) {
       redirect("/login");
     }
-    const { ticker, condition, price, futureDate, reasoning } = postData;
+
+    let { ticker, condition, price, futureDate, reasoning } =
+      sanitizePostData(postData);
 
     if (!ticker || typeof ticker !== "string" || ticker.trim() === "") {
       return {
@@ -146,9 +164,14 @@ export async function submitPost(postData) {
     if (!postId) {
       return { success: false, message: "Unable to create post" };
     }
+
     return { success: true, message: "Success" }; // Return the result for further use
   } catch (error) {
     console.error("Failed to submit post:" + error);
+    return {
+      success: false,
+      message: "An internal server error occurred",
+    };
   }
 }
 
@@ -159,8 +182,9 @@ export async function updatePost(postData) {
       redirect("/login");
     }
     // Destructure and validate data
-    const { ticker, condition, price, futureDate, reasoning, articleId } =
-      postData;
+
+    let { ticker, condition, price, futureDate, reasoning, articleId } =
+      sanitizePostData(postData);
 
     if (!articleId) {
       throw new Error("ArticleId must be provided");
@@ -190,23 +214,17 @@ export async function updatePost(postData) {
       throw new Error("Reasoning is required and must be a non-empty string.");
     }
 
-    const postId = await updatePostDb(
-      ticker,
-      condition,
-      price,
-      futureDate,
-      reasoning,
-      0.0,
-      userId,
-      articleId
-    );
+    const postId = await updatePostDb(reasoning, userId, articleId);
     if (!postId) {
       throw new Error("Unable to update post");
     }
-    return postId; // Return the result for further use
+    return { success: true, message: "Success" }; // Return the result for further use
   } catch (error) {
     console.log("Failed to update post:", error);
-    throw error; // Propagate the error so the UI can handle it
+    return {
+      success: false,
+      message: "An internal server error occurred",
+    };
   }
 }
 
@@ -228,6 +246,6 @@ export async function deletePostRequest(articleId) {
     return postId; // Return the result for further use
   } catch (error) {
     console.log("Failed to update post:", error);
-    throw error; // Propagate the error so the UI can handle it
+    return false;
   }
 }

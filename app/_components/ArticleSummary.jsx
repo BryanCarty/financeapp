@@ -54,6 +54,14 @@ export default function ArticleSummary({
       setShowDeleteModal(null);
     }
   }
+  const percentageDifference = ((priceStatus - price) / price) * 100;
+  const formattedPercentageDifference = percentageDifference.toFixed(2); // Ensures 2 decimal places
+  let color = null;
+  if (comparison == ">") {
+    color = formattedPercentageDifference >= 0 ? styles.green : styles.red;
+  } else if (comparison == "<") {
+    color = formattedPercentageDifference >= 0 ? styles.red : styles.green;
+  }
 
   return (
     <>
@@ -83,7 +91,9 @@ export default function ArticleSummary({
         <div className={styles.summaryFooter}>
           <div className={`${styles.leftFooter} ${courierPrime.className}`}>
             Agree: {agreeCount} | Disagree: {disagreeCount} | Status:
-            {priceStatus}
+            <span className={color}>
+              {priceStatus} ({formattedPercentageDifference}%)
+            </span>
           </div>
 
           <div

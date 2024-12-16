@@ -78,7 +78,6 @@ export default async function ArticlePage({ params }) {
     current_user_id,
   } = article;
 
-  comparison = comparison == "greater than" ? ">" : "<";
   expiry = new Date(expiry);
 
   const currentDate = new Date();
@@ -112,7 +111,6 @@ export default async function ArticlePage({ params }) {
   if (comments) {
     comments = makeHumanReadableDates(comments, userId.userId);
   }
-  console.log(comments);
 
   return (
     <div className={styles.pageBody}>

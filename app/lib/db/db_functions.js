@@ -822,31 +822,11 @@ export async function getMyPosts(userId, pageNumber) {
       userId,
       articleId
  */
-export async function updatePostDb(
-  ticker,
-  comparison,
-  price,
-  futureDate,
-  reasoning,
-  status,
-  userId,
-  articleId
-) {
+export async function updatePostDb(reasoning, userId, articleId) {
   try {
     // Validate the input parameters
 
-    let condition = comparison === "greater than" ? ">" : "<";
-
-    if (
-      !ticker ||
-      !condition ||
-      !price ||
-      !futureDate ||
-      !reasoning ||
-      status === undefined ||
-      !userId ||
-      !articleId
-    ) {
+    if (!reasoning || !userId || !articleId) {
       throw new Error("Invalid parameters provided to updatePost");
     }
 
@@ -854,12 +834,7 @@ export async function updatePostDb(
     const updatedPost = await sql`
       update posts
       set
-        ticker = ${ticker},
-        comparison = ${condition},
-        price = ${price},
-        expiry = ${futureDate},
-        content = ${reasoning},
-        status = ${status}
+        content = ${reasoning}
       where
         id = ${articleId} and author_id = ${userId}
       returning id;
