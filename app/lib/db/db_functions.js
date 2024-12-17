@@ -1,6 +1,52 @@
 "server-only";
+import initiateStockFeed from "../initiateStockFeed";
 import sql from "./db";
 import bcrypt from "bcrypt";
+
+const ws = initiateStockFeed();
+ws.onmessage = async (msg) => {
+  const parsedMessage = JSON.parse(msg.data);
+
+  if (
+    parsedMessage[0].ev === "status" &&
+    parsedMessage[0].status === "auth_success"
+  ) {
+    console.log("Subscribing to the minute aggregates channel for ticker AAPL");
+    ws.send(JSON.stringify({ action: "subscribe", params: "AM.*" }));
+  }
+
+  for (const entry of parsedMessage) {
+    if (entry.ev === "AM") {
+      const ticker = entry.sym;
+      const closePrice = entry.c;
+      const lastUpdatedTime = new Date(entry.e).toISOString(); // Convert timestamp to ISO format
+
+      try {
+        await updateDBStockData(ticker, closePrice, lastUpdatedTime);
+      } catch (err) {
+        console.error("Error updating database:", err);
+      }
+    }
+  }
+};
+
+async function updateDBStockData(ticker, price, last_updated) {
+  try {
+    await sql`
+      INSERT INTO stock_data (ticker, close_price, last_updated_time)
+      VALUES (${ticker}, ${price}, ${last_updated})
+      ON CONFLICT (ticker)
+      DO UPDATE SET
+        close_price = EXCLUDED.close_price,
+        last_updated_time = EXCLUDED.last_updated_time;
+    `;
+  } catch (error) {
+    console.error(
+      "An error occurred attempting to update the stock price DB:",
+      error
+    );
+  }
+}
 
 export async function createUser({
   username,

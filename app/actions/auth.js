@@ -209,14 +209,13 @@ export async function resetPassword(state, formData) {
 }
 
 export async function updatePassword(state, formData) {
+  const extractedData = {
+    password: password,
+  };
   try {
     // Validate form fields
     const password = formData.get("password");
     const token = formData.get("token");
-
-    const extractedData = {
-      password: password,
-    };
 
     const validatedFields = ResetPasswordFormSchema.safeParse(extractedData);
 
