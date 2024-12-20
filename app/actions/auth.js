@@ -15,25 +15,25 @@ import {
 import bcrypt from "bcrypt";
 import { createSession, verifySession } from "../lib/sessions";
 import { deleteSession } from "../lib/sessions";
-import { sendResetPasswordEmail } from "../lib/email";
+import { sendResetPasswordEmail, sendWelcomeEmail } from "../lib/email";
 import { randomBytes } from "crypto";
 import { redirect } from "next/navigation";
 
 export async function signup(state, formData) {
+  // Validate form fields
+  const username = formData.get("username");
+  const email = formData.get("email");
+  const password = formData.get("password");
+  const dateOfBirth = formData.get("dateOfBirth");
+
+  const extractedData = {
+    username: username,
+    email: email,
+    password: password,
+    dateOfBirth: dateOfBirth,
+  };
+
   try {
-    // Validate form fields
-    const username = formData.get("username");
-    const email = formData.get("email");
-    const password = formData.get("password");
-    const dateOfBirth = formData.get("dateOfBirth");
-
-    const extractedData = {
-      username: username,
-      email: email,
-      password: password,
-      dateOfBirth: dateOfBirth,
-    };
-
     const validatedFields = SignupFormSchema.safeParse(extractedData);
 
     // If any form fields are invalid, return early
@@ -67,9 +67,13 @@ export async function signup(state, formData) {
         values: extractedData,
       };
     }
+
+    let result = await sendWelcomeEmail(email, username);
+
     // 5. Redirect user
     redirect("/");
   } catch (error) {
+    if (error.message === "NEXT_REDIRECT") throw error;
     console.log("An error occurred in signup: " + error);
     return {
       errors: { username: ["An Internal Server Error Occurred"] },
@@ -80,7 +84,7 @@ export async function signup(state, formData) {
 
 export async function logout() {
   try {
-    deleteSession();
+    await deleteSession();
     redirect("/login");
   } catch (error) {
     console.log("An error occurred in logout: " + error);
@@ -98,16 +102,15 @@ export async function isAuthenticated() {
 }
 
 export async function login(state, formData) {
+  // Validate form fields
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  const extractedData = {
+    email: email,
+    password: password,
+  };
   try {
-    // Validate form fields
-    const email = formData.get("email");
-    const password = formData.get("password");
-
-    const extractedData = {
-      email: email,
-      password: password,
-    };
-
     const validatedFields = LoginFormSchema.safeParse(extractedData);
 
     // If any form fields are invalid, return early

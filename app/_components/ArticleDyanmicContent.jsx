@@ -14,6 +14,7 @@ export default function ArticleDynamicContent({
   comparison,
   price,
   expiry,
+  rawExpiry,
   daysUntilExpiry,
   content,
   status,
@@ -25,6 +26,7 @@ export default function ArticleDynamicContent({
   total_disagreements,
   user_agreement_status,
   current_user_id,
+  result,
 }) {
   const [agreeDisagreeStatus, setAgreeDisagreeStatus] = useState(
     user_agreement_status
@@ -89,6 +91,7 @@ export default function ArticleDynamicContent({
           comparison={comparison}
           price={price}
           expiry={expiry}
+          rawExpiry={rawExpiry}
           agreeCount={agreeCount}
           disagreeCount={disagreeCount}
           status={status}
@@ -97,6 +100,7 @@ export default function ArticleDynamicContent({
           authorAccuracy={accuracy}
           commentCount={commentsList.length}
           daysUntilExpiry={daysUntilExpiry}
+          result={result}
         />
         <ArticleBody body={content} />
 

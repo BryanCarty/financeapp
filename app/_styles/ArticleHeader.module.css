@@ -5,6 +5,14 @@
   border-radius: 8px;
 }
 
+.redGlow {
+  box-shadow: 0px 0px 15px 5px rgba(255, 0, 0, 0.8) !important; /* Red glow effect */
+}
+
+.greenGlow {
+  box-shadow: 0px 0px 15px 5px rgba(0, 255, 0, 0.8) !important; /* Green glow effect */
+}
+
 .summaryHeading {
   height: 20%;
   display: flex;
@@ -46,6 +54,11 @@
 
 .profile {
   margin-right: 25px;
+}
+
+.profileUsername:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .summaryFooter {

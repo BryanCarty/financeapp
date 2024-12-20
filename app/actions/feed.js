@@ -8,10 +8,6 @@ import {
 import { verifySession } from "../lib/sessions";
 import { redirect } from "next/navigation";
 
-function calculateStatus(value) {
-  return "3% above 232.23";
-}
-
 export default async function loadFeed(type, page) {
   try {
     // Simulate database or external API call
@@ -26,9 +22,9 @@ export default async function loadFeed(type, page) {
 
         //need to calculate status
         for (let i = 0; i < latestFeed.length; i++) {
-          const value = latestFeed[i].value;
-          const status = calculateStatus(value);
-          latestFeed[i]["status"] = status;
+          //const value = latestFeed[i].value;
+          //const status = calculateStatus(value);
+          //latestFeed[i]["status"] = status;
           if (latestFeed[i]["author_id"] == userId) {
             latestFeed[i]["owned_by_me"] = true;
           } else {
@@ -43,9 +39,9 @@ export default async function loadFeed(type, page) {
         const trendingFeed = await getTrendingFeed(page);
         //need to calculate status
         for (let i = 0; i < trendingFeed.length; i++) {
-          const value = trendingFeed[i].value;
-          const status = calculateStatus(value);
-          trendingFeed[i]["status"] = status;
+          //const value = trendingFeed[i].value;
+          //const status = calculateStatus(value);
+          //trendingFeed[i]["status"] = status;
           if (trendingFeed[i]["author_id"] == userId) {
             trendingFeed[i]["owned_by_me"] = true;
           } else {
@@ -60,9 +56,9 @@ export default async function loadFeed(type, page) {
         const personalFeed = await getPersonalFeed(userId, page);
         //need to calculate status
         for (let i = 0; i < personalFeed.length; i++) {
-          const value = personalFeed[i].value;
-          const status = calculateStatus(value);
-          personalFeed[i]["status"] = status;
+          //const value = personalFeed[i].value;
+          //const status = calculateStatus(value);
+          //personalFeed[i]["status"] = status;
           if (personalFeed[i]["author_id"] == userId) {
             personalFeed[i]["owned_by_me"] = true;
           } else {
@@ -77,9 +73,9 @@ export default async function loadFeed(type, page) {
         const myPosts = await getMyPosts(userId, page);
         //need to calculate status
         for (let i = 0; i < myPosts.length; i++) {
-          const value = myPosts[i].value;
-          const status = calculateStatus(value);
-          myPosts[i]["status"] = status;
+          //const value = myPosts[i].value;
+          //const status = calculateStatus(value);
+          //myPosts[i]["status"] = status;
           myPosts[i]["owned_by_me"] = true;
         }
 
@@ -89,6 +85,7 @@ export default async function loadFeed(type, page) {
     }
   } catch (error) {
     console.log("An error occurred in loadFeed(): " + error);
+    if (error.message === "NEXT_REDIRECT") throw error;
     return false;
   }
 }

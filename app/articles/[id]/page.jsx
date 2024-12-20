@@ -76,9 +76,11 @@ export default async function ArticlePage({ params }) {
     total_disagreements,
     user_agreement_status,
     current_user_id,
+    true_claim,
   } = article;
 
   expiry = new Date(expiry);
+  let rawExpiry = expiry;
 
   const currentDate = new Date();
 
@@ -94,11 +96,6 @@ export default async function ArticlePage({ params }) {
     day: "numeric", // Day of the month (e.g., '1')
   });
   post_date = formatDateToHumanReadable(post_date);
-  if (status > 0) {
-    status = `${status}% above ${price}`;
-  } else {
-    status = `${status}% below ${price}`;
-  }
 
   if (user_agreement_status === true) {
     user_agreement_status = 1;
@@ -121,6 +118,7 @@ export default async function ArticlePage({ params }) {
         comparison={comparison}
         price={price}
         expiry={expiry}
+        rawExpiry={rawExpiry}
         daysUntilExpiry={daysUntilExpiry}
         content={content}
         status={status}
@@ -132,6 +130,7 @@ export default async function ArticlePage({ params }) {
         total_disagreements={total_disagreements}
         user_agreement_status={user_agreement_status}
         current_user_id={current_user_id}
+        result={true_claim}
       />
       <Footer />
     </div>

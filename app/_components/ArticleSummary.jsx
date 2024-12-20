@@ -27,6 +27,7 @@ export default function ArticleSummary({
   priceStatus,
   commentCount,
   setEditPostData,
+  result,
 }) {
   const router = useRouter();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -42,6 +43,17 @@ export default function ArticleSummary({
     // Redirect to the comment section of the article page
     router.push(`/articles/${articleId}#comments`);
   };
+
+  let glow = null;
+  const now = new Date();
+  let finalResult = null;
+
+  // Compare the two dates
+  if (now > expiry) {
+    glow = result ? styles.greenGlow : styles.redGlow;
+    finalResult = result ? "ACCURATE FORECAST" : "MISSED PROJECTION";
+  }
+
   const humanReadableExpiry = formatDateToHumanReadable(expiry);
   const humanReadablePostDate = formatDateToHumanReadable(postDate);
   const daysUntilExpiry = calculateDaysUntilExpiry(expiry);
@@ -52,21 +64,30 @@ export default function ArticleSummary({
     const id = await deletePostRequest(postId);
     if (id) {
       setShowDeleteModal(null);
+      window.location.reload();
     }
   }
   const percentageDifference = ((priceStatus - price) / price) * 100;
   const formattedPercentageDifference = percentageDifference.toFixed(2); // Ensures 2 decimal places
   let color = null;
-  if (comparison == ">") {
-    color = formattedPercentageDifference >= 0 ? styles.green : styles.red;
-  } else if (comparison == "<") {
-    color = formattedPercentageDifference >= 0 ? styles.red : styles.green;
+  if (now <= expiry) {
+    if (comparison == ">") {
+      color = formattedPercentageDifference >= 0 ? styles.green : styles.red;
+    } else if (comparison == "<") {
+      color = formattedPercentageDifference >= 0 ? styles.red : styles.green;
+    }
+  } else {
+    color = result ? styles.green : styles.red;
+  }
+
+  function redirectToUserInfo() {
+    router.push(`/settings?tab=search&query=${username}`);
   }
 
   return (
     <>
       <div
-        className={styles.articleSummary}
+        className={`${styles.articleSummary} ${glow}`}
         onClick={handleArticleClick}
         data-article-ticker={ticker}
         data-article-id={articleId}
@@ -79,7 +100,17 @@ export default function ArticleSummary({
             <span className={styles.claimExpiry}>({daysUntilExpiry} days)</span>
           </div>
           <div className={`${styles.profile} ${courierPrime.className}`}>
-            {humanReadablePostDate} | {username} ({accuracy})
+            {humanReadablePostDate} |&nbsp;
+            <span
+              className={styles.profileUsername}
+              onClick={(e) => {
+                e.stopPropagation();
+                redirectToUserInfo();
+              }}
+            >
+              {username}
+            </span>
+            ({accuracy})
           </div>
         </div>
         <div className={`${styles.summaryBody} ${courierPrime.className}`}>
@@ -92,7 +123,8 @@ export default function ArticleSummary({
           <div className={`${styles.leftFooter} ${courierPrime.className}`}>
             Agree: {agreeCount} | Disagree: {disagreeCount} | Status:
             <span className={color}>
-              {priceStatus} ({formattedPercentageDifference}%)
+              {finalResult ||
+                `${priceStatus} (${formattedPercentageDifference}%)`}
             </span>
           </div>
 

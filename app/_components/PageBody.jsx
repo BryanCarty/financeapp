@@ -17,7 +17,8 @@ export default function ({ isLoggedIn }) {
     tab != "trending" &&
     tab != "personalFeed" &&
     tab != "latest" &&
-    tab != "leaderboard"
+    tab != "leaderboard" &&
+    tab != "search"
   ) {
     tab = null;
   }
@@ -70,6 +71,14 @@ export default function ({ isLoggedIn }) {
           >
             Leaderboard
           </h5>
+          <h5
+            className={`${courierPrime.className} ${styles.subnavitem} ${
+              activeTab === "search" ? styles.active : ""
+            }`}
+            onClick={() => setActiveTab("search")}
+          >
+            Search
+          </h5>
         </div>
         {(activeTab == "trending" ||
           activeTab == "personalFeed" ||
@@ -88,6 +97,29 @@ export default function ({ isLoggedIn }) {
               searchQuery={null}
               isLoggedIn={isLoggedIn}
             />
+          </div>
+        )}
+        {activeTab == "search" && (
+          <div className={styles.searchBar}>
+            <input
+              type="text"
+              placeholder="Ticker..."
+              className={`${styles.searchInput} ${courierPrime.className}`}
+            />
+            <input
+              type="date"
+              min={
+                new Date(new Date().setDate(new Date().getDate() + 1))
+                  .toISOString()
+                  .split("T")[0]
+              } // Calculate tomorrow's date
+              className={`${styles.dateInput} ${courierPrime.className}`}
+            />
+            <button
+              className={`${styles.searchButton} ${courierPrime.className}`}
+            >
+              Search
+            </button>
           </div>
         )}
       </div>

@@ -1,10 +1,15 @@
 "use server";
 import { verifySession } from "../lib/sessions";
-import { createPost, updatePostDb, deletePostDb } from "../lib/db/db_functions";
+import {
+  createPost,
+  updatePostDb,
+  deletePostDb,
+  getValidTickers,
+  getFollowerEmailsAndName,
+} from "../lib/db/db_functions";
 import { redirect } from "next/navigation";
 import DOMPurify from "isomorphic-dompurify";
-
-import fs from "fs/promises";
+import { sendNewPostEmail } from "../lib/email";
 
 let tickers = null; // Initialize tickers to null for clarity
 function sanitizePostData(postData) {
@@ -23,30 +28,33 @@ function sanitizePostData(postData) {
   return sanitizedData;
 }
 
-async function loadTickers() {
+async function isValidTickerPrice(specificTicker, price, condition) {
   try {
-    const data = await fs.readFile(process.env.TICKER_DATA_DIR, "utf8");
-    tickers = JSON.parse(data).tickers;
-    console.log("Tickers loaded:", tickers);
+    console.log("Validating ticker:", specificTicker);
+    const result = await getValidTickers();
+    const entry = result.find(({ ticker }) => ticker === specificTicker);
+
+    if (!entry) {
+      return { validTicker: false, message: "Unrecognized Ticker" };
+    }
+
+    if (condition == "greater than" && price < entry.close_price) {
+      return {
+        validTicker: false,
+        message: "Price must be greater than current price",
+      };
+    } else if (condition == "less than" && price > entry.close_price) {
+      return {
+        validTicker: false,
+        message: "Price must be less than current price",
+      };
+    }
+
+    return { validTicker: true, message: "Success" };
   } catch (error) {
-    console.error("Failed to load tickers:", error);
+    console.log("Error checking if ticker exists: " + error);
+    return { validTicker: false, message: "Internal Server Error" };
   }
-}
-
-async function ensureTickersLoaded() {
-  if (!tickers) {
-    console.log("Tickers not loaded, loading now...");
-    await loadTickers();
-  }
-}
-
-async function isValidTicker(ticker) {
-  await ensureTickersLoaded(); // Ensure tickers are loaded before accessing
-  if (!tickers) {
-    throw new Error("Tickers data could not be loaded");
-  }
-  console.log("Validating ticker:", ticker);
-  return tickers.includes(ticker.toUpperCase());
 }
 
 export async function submitPost(postData) {
@@ -60,6 +68,7 @@ export async function submitPost(postData) {
 
     let { ticker, condition, price, futureDate, reasoning } =
       sanitizePostData(postData);
+    ticker = ticker.toUpperCase();
 
     if (!ticker || typeof ticker !== "string" || ticker.trim() === "") {
       return {
@@ -68,9 +77,15 @@ export async function submitPost(postData) {
       };
     }
 
-    if (!(await isValidTicker(ticker))) {
-      return { success: false, message: "Invalid ticker" };
+    const { validTicker, message } = await isValidTickerPrice(
+      ticker,
+      price,
+      condition
+    );
+    if (!validTicker) {
+      return { success: false, message: message };
     }
+
     if (!["greater than", "less than"].includes(condition)) {
       return {
         success: false,
@@ -126,15 +141,23 @@ export async function submitPost(postData) {
       };
     }
 
+    let removedTags = reasoning.replace(/<[^>]*>/g, "");
     if (
       !reasoning ||
       typeof reasoning !== "string" ||
       reasoning.trim() === "" ||
-      reasoning.replace(/<[^>]*>/g, "") === ""
+      removedTags === ""
     ) {
       return {
         success: false,
         message: "Reasoning is required and must be a non-empty string.",
+      };
+    }
+
+    if (removedTags.length <= 250) {
+      return {
+        success: false,
+        message: "Reasoning must be greater than 250 characters in length",
       };
     }
 
@@ -165,6 +188,16 @@ export async function submitPost(postData) {
       return { success: false, message: "Unable to create post" };
     }
 
+    //Send Alert message to followers
+    const followerEmailsAndNames = await getFollowerEmailsAndName(userId);
+    if (followerEmailsAndNames && followerEmailsAndNames.length) {
+      let success = await sendNewPostEmail(
+        followerEmailsAndNames,
+        username,
+        postId
+      );
+    }
+
     return { success: true, message: "Success" }; // Return the result for further use
   } catch (error) {
     console.error("Failed to submit post:" + error);
@@ -185,6 +218,7 @@ export async function updatePost(postData) {
 
     let { ticker, condition, price, futureDate, reasoning, articleId } =
       sanitizePostData(postData);
+    ticker = ticker.toUpperCase();
 
     if (!articleId) {
       throw new Error("ArticleId must be provided");

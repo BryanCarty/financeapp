@@ -2,7 +2,7 @@
 import initiateStockFeed from "../initiateStockFeed";
 import sql from "./db";
 import bcrypt from "bcrypt";
-
+/*
 const ws = initiateStockFeed();
 ws.onmessage = async (msg) => {
   const parsedMessage = JSON.parse(msg.data);
@@ -11,7 +11,7 @@ ws.onmessage = async (msg) => {
     parsedMessage[0].ev === "status" &&
     parsedMessage[0].status === "auth_success"
   ) {
-    console.log("Subscribing to the minute aggregates channel for ticker AAPL");
+    console.log("Subscribing to the minute aggregates channel for tickers");
     ws.send(JSON.stringify({ action: "subscribe", params: "AM.*" }));
   }
 
@@ -28,7 +28,185 @@ ws.onmessage = async (msg) => {
       }
     }
   }
-};
+};*/
+
+const { DateTime } = require("luxon");
+
+let ws; // WebSocket instance
+let isWebSocketConnected = false;
+
+function scheduleWebSocketLifecycle() {
+  checkAndScheduleWebSocket(); // Initial check for the current day
+
+  // Recheck at midnight ET to handle the next day
+  const nowET = DateTime.now().setZone("America/New_York");
+  const midnightET = nowET.plus({ days: 1 }).startOf("day");
+  const timeUntilMidnight = midnightET.diff(nowET).as("milliseconds");
+
+  console.log(
+    `Scheduling next day's check in ${timeUntilMidnight / 1000} seconds.`
+  );
+  setTimeout(() => {
+    scheduleWebSocketLifecycle(); // Recursive call for the next day
+  }, timeUntilMidnight);
+}
+
+async function checkAndScheduleWebSocket() {
+  const nowET = DateTime.now().setZone("America/New_York");
+
+  // Define market open and close times in ET
+  const marketOpenTimeET = nowET.set({
+    hour: 9,
+    minute: 30,
+    second: 0,
+    millisecond: 0,
+  });
+  const marketCloseTimeET = nowET.set({
+    hour: 16,
+    minute: 0,
+    second: 0,
+    millisecond: 0,
+  });
+
+  // Handle current day's WebSocket lifecycle
+  if (nowET >= marketOpenTimeET && nowET < marketCloseTimeET) {
+    console.log("Market is open. Ensuring WebSocket is connected.");
+    connectWebSocket();
+  } else {
+    console.log("Market is closed. Ensuring WebSocket is disconnected.");
+    disconnectWebSocket();
+  }
+
+  // Schedule connection for market open
+  if (nowET < marketOpenTimeET) {
+    const timeUntilOpen = marketOpenTimeET.diff(nowET).as("milliseconds");
+    console.log(
+      `Scheduling WebSocket connection in ${timeUntilOpen / 1000} seconds.`
+    );
+    setTimeout(connectWebSocket, timeUntilOpen);
+  }
+
+  // Schedule disconnection for market close
+  if (nowET < marketCloseTimeET) {
+    const timeUntilClose = marketCloseTimeET.diff(nowET).as("milliseconds");
+    console.log(
+      `Scheduling WebSocket disconnection in ${timeUntilClose / 1000} seconds.`
+    );
+    setTimeout(disconnectWebSocket, timeUntilClose);
+    setTimeout(await updatePostStatusesAndAuthorAccuracy, timeUntilClose);
+  }
+}
+
+function connectWebSocket() {
+  if (isWebSocketConnected) {
+    console.log("WebSocket is already connected.");
+    return;
+  }
+
+  ws = initiateStockFeed();
+  isWebSocketConnected = true;
+
+  ws.onmessage = async (msg) => {
+    const parsedMessage = JSON.parse(msg.data);
+
+    if (
+      parsedMessage[0].ev === "status" &&
+      parsedMessage[0].status === "auth_success"
+    ) {
+      console.log("Subscribing to the minute aggregates channel for tickers");
+      ws.send(JSON.stringify({ action: "subscribe", params: "AM.*" }));
+    }
+
+    for (const entry of parsedMessage) {
+      if (entry.ev === "AM") {
+        const ticker = entry.sym;
+        const closePrice = entry.c;
+        const lastUpdatedTime = new Date(entry.e).toISOString(); // Convert timestamp to ISO format
+
+        try {
+          await updateDBStockData(ticker, closePrice, lastUpdatedTime);
+        } catch (err) {
+          console.error("Error updating database:", err);
+        }
+      }
+    }
+  };
+
+  ws.onclose = () => {
+    console.log("WebSocket closed.");
+    isWebSocketConnected = false;
+  };
+
+  console.log("WebSocket connection established.");
+}
+
+function disconnectWebSocket() {
+  if (ws && isWebSocketConnected) {
+    ws.close();
+    isWebSocketConnected = false;
+    console.log("WebSocket connection closed.");
+  } else {
+    console.log("WebSocket is already disconnected.");
+  }
+}
+
+async function updatePostStatusesAndAuthorAccuracy() {
+  try {
+    await sql`
+      -- Update the true_claim column in posts
+      UPDATE posts
+      SET true_claim = (
+          CASE
+              WHEN (comparison = '>' AND stock_data.close_price > price)
+                OR (comparison = '<' AND stock_data.close_price < price)
+              THEN TRUE
+              ELSE FALSE
+          END
+      )
+      FROM stock_data
+      WHERE
+          posts.expiry = CURRENT_DATE
+          AND posts.ticker = stock_data.ticker;
+
+      -- Calculate updated post statistics
+      WITH updated_posts AS (
+          SELECT
+              author_id,
+              COUNT(*) FILTER (WHERE true_claim = TRUE) AS correct_predictions,
+              COUNT(*) AS total_predictions
+          FROM posts
+          WHERE expiry = CURRENT_DATE
+          GROUP BY author_id
+      ),
+      -- Aggregate lifetime user statistics
+      user_post_counts AS (
+          SELECT
+              author_id,
+              SUM(CASE WHEN true_claim THEN 1 ELSE 0 END) AS lifetime_correct,
+              COUNT(*) AS lifetime_total
+          FROM posts
+          GROUP BY author_id
+      )
+      -- Update user accuracy
+      UPDATE users
+      SET accuracy = (
+          (user_post_counts.lifetime_correct + COALESCE(updated_posts.correct_predictions, 0)) * 100.0
+          / (user_post_counts.lifetime_total + COALESCE(updated_posts.total_predictions, 0))
+      )
+      FROM user_post_counts
+      LEFT JOIN updated_posts
+        ON user_post_counts.author_id = updated_posts.author_id
+      WHERE users.id = user_post_counts.author_id;
+    `;
+  } catch (error) {
+    console.error(
+      "An error occurred attempting to update the post statuses and author accuracies:",
+      error
+    );
+  }
+}
+// Start the scheduler
+scheduleWebSocketLifecycle();
 
 async function updateDBStockData(ticker, price, last_updated) {
   try {
@@ -45,6 +223,32 @@ async function updateDBStockData(ticker, price, last_updated) {
       "An error occurred attempting to update the stock price DB:",
       error
     );
+  }
+}
+
+export async function getTickerPrices(tickers) {
+  const tickerToPriceMap = {};
+
+  try {
+    // Query the database for the prices of the given tickers
+    const rows = await sql`
+      SELECT ticker, close_price
+      FROM stock_data
+      WHERE ticker = ANY(${tickers});
+    `;
+
+    // Populate the map with ticker-price pairs from the query results
+    for (const row of rows) {
+      tickerToPriceMap[row.ticker] = row.close_price;
+    }
+
+    return tickerToPriceMap;
+  } catch (error) {
+    console.error(
+      "An error occurred while fetching ticker prices from the database:",
+      error
+    );
+    return false;
   }
 }
 
@@ -356,6 +560,64 @@ export async function unfollowUserDb(myUserId, otherUserId) {
 export async function getArticleById(articleId, currentUserId) {
   try {
     const result = await sql`
+        SELECT 
+            posts.*, 
+            users.username AS post_author_username, 
+            users.accuracy AS post_author_accuracy,
+            COALESCE(
+                COUNT(DISTINCT CASE 
+                    WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+                END), 
+                0
+            ) AS total_agreements,
+            COALESCE(
+                COUNT(DISTINCT CASE 
+                    WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+                END), 
+                0
+            ) AS total_disagreements,
+            COALESCE(
+                (SELECT agreement_status.agreement_status 
+                FROM agreement_status 
+                WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = ${currentUserId}
+                ), NULL
+            ) AS user_agreement_status,
+            COALESCE(
+                json_agg(
+                    CASE 
+                        WHEN comments.id IS NOT NULL THEN json_build_object(
+                            'comment_id', comments.id,
+                            'user_id', comments.user_id,
+                            'text', comments.text,
+                            'created_at', comments.created_at,
+                            'username', comment_users.username,
+                            'accuracy', comment_users.accuracy,
+                            'post_opinion', COALESCE(
+                                (
+                                    SELECT agreement_status.agreement_status
+                                    FROM agreement_status
+                                    WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = comments.user_id
+                                    LIMIT 1
+                                ), NULL
+                            )
+                        )
+                    END
+                ) FILTER (WHERE comments.id IS NOT NULL), 
+                '[]'
+            ) AS comments,
+            COALESCE(stock_data.close_price, NULL) AS status
+        FROM posts 
+        JOIN users ON posts.author_id = users.user_id
+        LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+        LEFT JOIN comments ON comments.article_id = posts.id
+        LEFT JOIN users AS comment_users ON comments.user_id = comment_users.user_id
+        LEFT JOIN stock_data ON stock_data.ticker = posts.ticker
+        WHERE posts.id = ${articleId}
+        GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price;
+      `;
+
+    /*
+    const result = await sql`
       SELECT 
           posts.*, 
           users.username AS post_author_username, 
@@ -409,7 +671,7 @@ export async function getArticleById(articleId, currentUserId) {
       WHERE posts.id = ${articleId}
       GROUP BY posts.id, users.username, users.accuracy;
       `;
-
+*/
     if (result.length != 1 || !result[0]) {
       return false;
     }
@@ -663,7 +925,7 @@ export async function getLatestFeed(pageNumber) {
   try {
     const postsPerPage = 10;
     const offset = (pageNumber - 1) * postsPerPage;
-
+    /*
     const results = await sql`
     SELECT posts.*, 
            users.username AS post_author_username, 
@@ -688,7 +950,34 @@ export async function getLatestFeed(pageNumber) {
     GROUP BY posts.id, users.username, users.accuracy  -- Ensure proper grouping for aggregates
     ORDER BY post_date DESC  -- Order by post_date in descending order (most recent first)
     LIMIT ${postsPerPage} OFFSET ${offset};  -- Add LIMIT and OFFSET for pagination
-`;
+`;*/
+    const results = await sql`
+    SELECT posts.*, 
+          users.username AS post_author_username, 
+          users.accuracy AS post_author_accuracy,
+          COALESCE(
+              COUNT(DISTINCT CASE 
+                  WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+              END), 
+              0
+          ) AS total_agreements,
+          COALESCE(
+              COUNT(DISTINCT CASE 
+                  WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+              END), 
+              0
+          ) AS total_disagreements,
+          COALESCE(COUNT(comments.article_id), 0) AS total_comments, -- Add total comments count
+          stock_data.close_price AS status -- Add stock close price from stock_data
+    FROM posts
+    JOIN users ON posts.author_id = users.user_id
+    LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+    LEFT JOIN comments ON comments.article_id = posts.id -- Join comments table
+    LEFT JOIN stock_data ON stock_data.ticker = posts.ticker -- Join stock_data table on ticker
+    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price -- Ensure proper grouping for aggregates
+    ORDER BY post_date DESC -- Order by post_date in descending order (most recent first)
+    LIMIT ${postsPerPage} OFFSET ${offset}; -- Add LIMIT and OFFSET for pagination
+    `;
 
     if (!results || !results[0]) {
       return false;
@@ -705,7 +994,7 @@ export async function getTrendingFeed(pageNumber) {
   try {
     const postsPerPage = 10;
     const offset = (pageNumber - 1) * postsPerPage;
-
+    /*
     const results = await sql`
 SELECT posts.*, 
        users.username AS post_author_username, 
@@ -744,6 +1033,48 @@ ORDER BY
     ) + 
     COALESCE(COUNT(comments.article_id), 0)) DESC  -- Order by engagement (sum of comments + agreements + disagreements)
 LIMIT ${postsPerPage} OFFSET ${offset}; 
+`;*/
+
+    const results = await sql`
+SELECT posts.*, 
+       users.username AS post_author_username, 
+       users.accuracy AS post_author_accuracy,
+       COALESCE(
+           COUNT(DISTINCT CASE 
+               WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+           END), 
+           0
+       ) AS total_agreements,
+       COALESCE(
+           COUNT(DISTINCT CASE 
+               WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+           END), 
+           0
+       ) AS total_disagreements,
+       COALESCE(COUNT(comments.article_id), 0) AS total_comments, -- Add total comments count
+       stock_data.close_price AS status -- Add stock close price from stock_data
+FROM posts
+JOIN users ON posts.author_id = users.user_id
+LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+LEFT JOIN comments ON comments.article_id = posts.id -- Join comments table
+LEFT JOIN stock_data ON stock_data.ticker = posts.ticker -- Join stock_data table on ticker
+WHERE posts.expiry >= CURRENT_DATE -- Only include posts that don't expire before today
+GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price -- Ensure proper grouping for aggregates
+ORDER BY 
+    (COALESCE(
+        COUNT(DISTINCT CASE 
+            WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+        END), 
+        0
+    ) + 
+    COALESCE(
+        COUNT(DISTINCT CASE 
+            WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+        END), 
+        0
+    ) + 
+    COALESCE(COUNT(comments.article_id), 0)) DESC -- Order by engagement (sum of comments + agreements + disagreements)
+LIMIT ${postsPerPage} OFFSET ${offset}; 
 `;
 
     if (!results || !results[0]) {
@@ -762,6 +1093,51 @@ export async function getPersonalFeed(yourUserId, pageNumber) {
   try {
     const postsPerPage = 10;
     const offset = (pageNumber - 1) * postsPerPage;
+    const results = await sql`
+    SELECT posts.*, 
+           users.username AS post_author_username, 
+           users.accuracy AS post_author_accuracy,
+           COALESCE(
+               COUNT(DISTINCT CASE 
+                   WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+               END), 
+               0
+           ) AS total_agreements,
+           COALESCE(
+               COUNT(DISTINCT CASE 
+                   WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+               END), 
+               0
+           ) AS total_disagreements,
+           COALESCE(COUNT(comments.article_id), 0) AS total_comments,  -- Add total comments count
+           stock_data.close_price AS status -- Add stock close price from stock_data
+    FROM posts
+    JOIN users ON posts.author_id = users.user_id
+    LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+    LEFT JOIN comments ON comments.article_id = posts.id  -- Join comments table
+    JOIN followers ON followers.followed_id = posts.author_id  -- Join followers table to get the users you're following
+    LEFT JOIN stock_data ON stock_data.ticker = posts.ticker -- Join stock_data table on ticker
+    WHERE followers.follower_id = ${yourUserId}  -- Only include posts from users you're following
+      AND expiry >= CURRENT_DATE  -- Only include posts that don't expire before today
+    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price  -- Ensure proper grouping for aggregates
+    ORDER BY 
+        (COALESCE(
+            COUNT(DISTINCT CASE 
+                WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+            END), 
+            0
+        ) + 
+        COALESCE(
+            COUNT(DISTINCT CASE 
+                WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+            END), 
+            0
+        ) + 
+        COALESCE(COUNT(comments.article_id), 0)) DESC  -- Order by engagement (sum of comments + agreements + disagreements)
+    LIMIT ${postsPerPage} OFFSET ${offset}; 
+`;
+
+    /*
     const results = await sql`
     SELECT posts.*, 
            users.username AS post_author_username, 
@@ -802,7 +1178,7 @@ export async function getPersonalFeed(yourUserId, pageNumber) {
         ) + 
         COALESCE(COUNT(comments.article_id), 0)) DESC  -- Order by engagement (sum of comments + agreements + disagreements)
         LIMIT ${postsPerPage} OFFSET ${offset}; 
-    `;
+    `;*/
 
     if (!results || !results[0]) {
       return false;
@@ -819,6 +1195,7 @@ export async function getMyPosts(userId, pageNumber) {
   try {
     const postsPerPage = 10;
     const offset = (pageNumber - 1) * postsPerPage;
+    /*
     const results = await sql`
     SELECT posts.*, 
            users.username AS post_author_username, 
@@ -844,7 +1221,35 @@ export async function getMyPosts(userId, pageNumber) {
     GROUP BY posts.id, users.username, users.accuracy  -- Ensure proper grouping for aggregates
     ORDER BY posts.post_date DESC  -- Order by latest posts (assumes there is a 'created_at' field)
     LIMIT ${postsPerPage} OFFSET ${offset}; 
-    `;
+    `;*/
+    const results = await sql`
+    SELECT posts.*, 
+           users.username AS post_author_username, 
+           users.accuracy AS post_author_accuracy,
+           COALESCE(
+               COUNT(DISTINCT CASE 
+                   WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+               END), 
+               0
+           ) AS total_agreements,
+           COALESCE(
+               COUNT(DISTINCT CASE 
+                   WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+               END), 
+               0
+           ) AS total_disagreements,
+           COALESCE(COUNT(comments.article_id), 0) AS total_comments, -- Add total comments count
+           stock_data.close_price AS status -- Add stock close price from stock_data
+    FROM posts
+    JOIN users ON posts.author_id = users.user_id
+    LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+    LEFT JOIN comments ON comments.article_id = posts.id -- Join comments table
+    LEFT JOIN stock_data ON stock_data.ticker = posts.ticker -- Join stock_data table on ticker
+    WHERE posts.author_id = ${userId} -- Only include posts by the current user
+    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price -- Ensure proper grouping for aggregates
+    ORDER BY posts.post_date DESC -- Order by latest posts
+    LIMIT ${postsPerPage} OFFSET ${offset}; 
+`;
 
     if (!results || !results[0]) {
       return false;
@@ -974,6 +1379,45 @@ export async function loadUserStats(userId) {
     return result[0];
   } catch (error) {
     console.error("getUserStats : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function getValidTickers() {
+  try {
+    const lastWeekDate = new Date();
+    lastWeekDate.setDate(lastWeekDate.getDate() - 7);
+
+    const result = await sql`
+      SELECT ticker, close_price from stock_data WHERE last_updated_time >= ${lastWeekDate};
+    `;
+
+    if (result.length == 0 || !result[0]) {
+      return false;
+    }
+    return result;
+  } catch (error) {
+    console.error("getValidTickers : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function getFollowerEmailsAndName(userId) {
+  try {
+    const result = await sql`
+      SELECT u.email, u.username, 
+      FROM users u
+      JOIN followers f ON f.follower_id = u.id
+      WHERE f.followed_id = ${userId} 
+      AND f.notified = true;
+    `;
+
+    if (result.length == 0 || !result[0]) {
+      return false;
+    }
+    return result;
+  } catch (error) {
+    console.error("getFollowerEmails : Database Error Occurred:", error);
     return false;
   }
 }

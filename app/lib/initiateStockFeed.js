@@ -11,7 +11,5 @@ export default function initiateStockFeed() {
 
   ws.onerror = (err) => console.log("Failed to connect", err);
 
-  ws.onclose = (code, reason) => console.log("Connection closed", code, reason);
-
   return ws;
 }

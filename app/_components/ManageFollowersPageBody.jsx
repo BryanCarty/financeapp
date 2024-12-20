@@ -25,9 +25,10 @@ export default function ({ isLoggedIn }) {
   ) {
     tab = "myPosts";
   }
+  let searchQueryText = searchParams.get("query");
 
   const [activeTab, setActiveTab] = useState(tab);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(searchQueryText || "");
   const [userStats, setUserStats] = useState();
   const [editPostModalData, setEditPostModalData] = useState();
 
