@@ -6,11 +6,14 @@ import FollowingTable from "./FollowingTable";
 import PostModal from "./PostModal";
 import Feed from "./Feed";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import ConscensusSearch from "./ConscensusSearch";
+import ConscensusCharts from "./ConscensusCharts";
 
 export default function ({ isLoggedIn }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
 
   let tab = searchParams.get("tab");
   if (
@@ -34,6 +37,11 @@ export default function ({ isLoggedIn }) {
   }, [activeTab]);
 
   const [editPostData, setEditPostData] = useState();
+
+  // Function to update the search query
+  const handleSearchChange = (query) => {
+    setSearchQuery(query);
+  };
 
   return (
     <>
@@ -77,7 +85,7 @@ export default function ({ isLoggedIn }) {
             }`}
             onClick={() => setActiveTab("search")}
           >
-            Search
+            Consensus Search
           </h5>
         </div>
         {(activeTab == "trending" ||
@@ -100,26 +108,12 @@ export default function ({ isLoggedIn }) {
           </div>
         )}
         {activeTab == "search" && (
-          <div className={styles.searchBar}>
-            <input
-              type="text"
-              placeholder="Ticker..."
-              className={`${styles.searchInput} ${courierPrime.className}`}
+          <div className={styles.conscensusSearchContainer}>
+            <ConscensusSearch onSearchChange={handleSearchChange} />
+            <ConscensusCharts
+              key={"se:" + searchQuery}
+              searchQuery={searchQuery}
             />
-            <input
-              type="date"
-              min={
-                new Date(new Date().setDate(new Date().getDate() + 1))
-                  .toISOString()
-                  .split("T")[0]
-              } // Calculate tomorrow's date
-              className={`${styles.dateInput} ${courierPrime.className}`}
-            />
-            <button
-              className={`${styles.searchButton} ${courierPrime.className}`}
-            >
-              Search
-            </button>
           </div>
         )}
       </div>

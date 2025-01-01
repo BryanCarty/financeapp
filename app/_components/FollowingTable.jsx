@@ -15,11 +15,21 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
   const [profiles, setProfiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingError, setLoadingError] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
   const router = useRouter();
 
   const followUserClient = async (selectedFollowProfile, emailAlerts) => {
     try {
-      const success = await followUser(selectedFollowProfile, emailAlerts);
+      const { success, message } = await followUser(
+        selectedFollowProfile,
+        emailAlerts
+      );
+      if (message == "Follow Inelligibillity") {
+        setLoadingError(
+          "Your account type cannot follow more users 😔 Consider upgrading your account. 🚀"
+        );
+        return;
+      }
       if (!success) throw new Error("Failed to follow user");
       setProfiles((prevProfiles) =>
         prevProfiles.map((profile) =>
@@ -56,13 +66,29 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
     const fetchProfiles = async () => {
       try {
         setLoading(true);
-        const tableData = await loadTable(type, searchQuery);
+        const { tableData, userId } = await loadTable(type, searchQuery);
         if (!tableData || tableData.length === 0) {
-          setLoadingError("Hmm.. There appears to be no data 😞");
+          let errorText = "Hmm.. There appears to be no data 😞";
+          switch (type) {
+            case "se":
+              errorText =
+                "Hmm.. There appears to be no user matching your search 😞";
+              break;
+            case "fe":
+              errorText =
+                "Hmm.. looks like you've no followers yet. Try make a post.";
+              break;
+            case "fi":
+              errorText = "Hmm.. Looks like you haven't followed anyone yet 😞";
+              break;
+          }
+          setLoadingError(errorText);
           setLoading(false);
           return;
         }
+        console.log(tableData);
         setProfiles(tableData);
+        setLoggedIn(userId);
         setLoading(false);
       } catch (error) {
         setLoadingError("An Unexpected Error Occurred!");
@@ -75,10 +101,16 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
   }, [type, searchQuery]);
 
   const handleFollowClick = (profile) => {
+    if (!loggedIn) {
+      router.push("/login");
+    }
     setSelectedFollowProfile(profile);
   };
 
   const handleUnfollowClick = (profile) => {
+    if (!loggedIn) {
+      router.push("/login");
+    }
     setSelectedUnfollowProfile(profile);
   };
 
@@ -123,7 +155,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
           <tr>
             <th>Profile</th>
             <th>Accuracy</th>
-            <th>Total Trades</th>
+            <th>Total Posts (Expired)</th>
             <th>Followers</th>
             <th>Connect</th>
           </tr>
@@ -146,7 +178,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
                       })
                     }
                   >
-                    UnFollow
+                    Unfollow
                   </button>
                 </td>
               ) : (

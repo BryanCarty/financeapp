@@ -82,6 +82,7 @@
   flex-direction: column;
   border-top: 3px dashed #a5a5a5;
   border-bottom: 3px dashed #a5a5a5;
+  margin-bottom: 10px;
 }
 
 .dateOfBirthField {
@@ -130,4 +131,54 @@
   margin-top: 3px;
   color: rgb(187, 75, 75);
   text-align: center;
+}
+
+.loginButton {
+  padding: 6px 12px;
+
+  color: #353535;
+  border: 1px solid #353535;
+  border-radius: 5px;
+  background-color: #e4e4e4;
+  text-decoration: none;
+  margin: 15px;
+  font-size: 25px;
+}
+
+.loginButton:hover {
+  cursor: pointer;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.dots span {
+  width: 12px;
+  height: 12px;
+  background-color: #353535;
+  border-radius: 50%;
+  animation: bounce 0.6s infinite;
+}
+
+.dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
 }

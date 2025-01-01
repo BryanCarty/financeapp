@@ -154,7 +154,7 @@ export default function Feed({ type, setEditPostData }) {
             No posts found 😥. Start following people!
           </div>
         ) : (
-          <div className={`${courierPrime.className} `}>
+          <div className={`${courierPrime.className} ${styles.margin}`}>
             No more posts found 😥
           </div>
         ))}

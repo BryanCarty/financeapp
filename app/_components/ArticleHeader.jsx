@@ -22,6 +22,9 @@ export default function ArticleHeader({
   commentCount,
   daysUntilExpiry,
   result,
+  setEditPost,
+  setDeletePostModal,
+  scrollToComments,
 }) {
   const [livePrice, setLivePrice] = useState(status);
   const router = useRouter();
@@ -110,6 +113,7 @@ export default function ArticleHeader({
 
         <div className={`${styles.rightFooter} ${courierPrime.className}`}>
           <Image
+            onClick={scrollToComments}
             className={`${styles.commentIcon}`}
             src={comment}
             alt="A comments icon"
@@ -118,6 +122,31 @@ export default function ArticleHeader({
             height={35}
           />
           <div className={styles.commentCount}>({commentCount})</div>
+
+          {setEditPost && (
+            <>
+              <div className={styles.editDelBtnSpace}>|</div>
+              <div
+                className={styles.btn}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setEditPost(true);
+                }}
+              >
+                Edit
+              </div>
+              <div className={styles.editDelBtnSpace}>|</div>
+              <div
+                className={styles.btn}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDeletePostModal(true);
+                }}
+              >
+                Delete
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

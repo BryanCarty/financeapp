@@ -1,11 +1,9 @@
 .pageHeader {
-  border-bottom: 3px solid #353535;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 35px;
-  padding: 0 0 5px 0;
+  padding: 10px 35px;
   background-color: #f7f7f7;
 }
 
@@ -75,6 +73,65 @@
   animation: blinking 1s infinite; /* Flash animation */
 }
 
+.profileCircle {
+  text-decoration: none;
+  color: #353535;
+  font-size: 1.7rem;
+  border: 2px dashed #353535;
+  text-align: center;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  display: inline-block;
+  margin: 0 15px;
+  margin-left: 50px;
+}
+
+/* Pseudo-element for showing the username */
+.profileCircle::after {
+  content: attr(data-username); /* Fetch the username from a data attribute */
+  position: absolute;
+  top: 100%; /* Initially position below the circle */
+  left: 50%;
+  transform: translate(-50%, 0); /* Center horizontally */
+  background-color: #353535; /* Background color for the tooltip */
+  color: white;
+  font-size: 1rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap; /* Prevent text wrapping */
+  opacity: 0; /* Make it invisible initially */
+  pointer-events: none; /* Prevent interaction */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Show the username on hover */
+.profileCircle:hover::after {
+  top: 120%; /* Move above the circle */
+  opacity: 1; /* Make it visible */
+  transform: translate(-50%, 0); /* Keep it centered */
+}
+
+.postButton {
+  text-decoration: none;
+  color: #353535;
+  font-size: 1.5rem;
+  border: 2px solid #353535;
+  margin: 0 15px;
+  cursor: pointer;
+  background-color: #f7f7f7;
+  border-radius: 15px;
+  padding: 5px 10px;
+}
+
 .underline {
   border-bottom: 3px solid #353535;
+}
+
+.separator {
+  border-bottom: 3px solid #353535;
+  margin: 0px;
+  margin-left: 40px;
+  margin-right: 40px;
 }

@@ -52,22 +52,33 @@ export default function ResetPassword() {
             </div>
           )}
           <div>
-            <button
-              disabled={pending}
-              className={`${styles.submitButton} ${courierPrime.className}`}
-              type="submit"
-            >
-              Reset
-            </button>
+            {!pending ? (
+              <button
+                disabled={pending}
+                className={`${styles.loginButton} ${courierPrime.className}`}
+                type="submit"
+              >
+                Reset
+              </button>
+            ) : (
+              <div className={styles.dots}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            )}
           </div>
         </form>
       </div>
       <div className={styles.subSection}>
-        <Link className={`${styles.btn} ${courierPrime.className}`} href="/">
+        <Link
+          className={`${styles.loginButton} ${courierPrime.className}`}
+          href="/"
+        >
           Return Home
         </Link>
         <Link
-          className={`${styles.btn} ${courierPrime.className}`}
+          className={`${styles.loginButton} ${courierPrime.className}`}
           href="/login"
         >
           Login

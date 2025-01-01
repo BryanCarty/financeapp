@@ -3,3 +3,14 @@ body {
   margin: 0;
   padding: 0;
 }
+
+:root {
+  --card-line-height: 1.2em;
+  --card-padding: 1em;
+  --card-radius: 0.5em;
+  --color-green: #353535;
+  --color-gray: #353535;
+  --color-dark-gray: #353535;
+  --radio-border-width: 2px;
+  --radio-size: 1.5em;
+}

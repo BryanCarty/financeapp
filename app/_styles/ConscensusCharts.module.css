@@ -1,0 +1,22 @@
+.histogramContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 75%;
+}
+
+.barContainer {
+  height: 400px;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #353535;
+}
+
+.font {
+  color: #353535;
+  text-align: center;
+}

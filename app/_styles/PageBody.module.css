@@ -5,6 +5,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+}
+
+.pageBody::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("/images/background.svg") repeat;
+  background-size: contain;
+  pointer-events: none; /* Make sure it doesn't interfere with user interactions */
+  z-index: -1; /* Place it behind content */
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0) 25%,
+    rgba(0, 0, 0, 0) 75%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
 }
 
 .subnavbar {
@@ -88,4 +116,17 @@
   font-size: 16px;
   border: 1px solid #353535;
   border-radius: 4px;
+}
+
+.conscensusSearchContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.margin {
+  margin: 30px;
 }

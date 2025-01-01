@@ -12,7 +12,7 @@ export default function PostModalButton() {
     <>
       <button
         onClick={openModal}
-        className={`${styles.navButton} ${courierPrime.className} `}
+        className={`${styles.postButton} ${courierPrime.className} `}
       >
         Post
       </button>

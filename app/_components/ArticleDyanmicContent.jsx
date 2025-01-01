@@ -7,6 +7,11 @@ import Comment from "@/app/_components/Comment";
 import { useState } from "react";
 import { submitComment } from "../actions/comments";
 import { formatDateToHumanReadable } from "../client_utils/utils";
+import courierPrime from "./CourierPrime";
+import PostModal from "./PostModal";
+import { useRouter } from "next/navigation";
+import { deletePostRequest } from "../actions/postActions";
+import { useRef } from "react";
 
 export default function ArticleDynamicContent({
   id,
@@ -27,7 +32,10 @@ export default function ArticleDynamicContent({
   user_agreement_status,
   current_user_id,
   result,
+  isPostOwner,
 }) {
+  const router = useRouter();
+
   const [agreeDisagreeStatus, setAgreeDisagreeStatus] = useState(
     user_agreement_status
   );
@@ -39,6 +47,8 @@ export default function ArticleDynamicContent({
   );
 
   const [commentsList, setCommentsList] = useState(comments);
+  const [editPostModal, setEditPostModal] = useState(false);
+  const [deletePostModal, setDeletePostModal] = useState(false);
 
   // State to store the new comment input by the user
   const [newComment, setNewComment] = useState("");
@@ -58,21 +68,24 @@ export default function ArticleDynamicContent({
       const savedComment = await submitComment(id, newComment);
 
       // Check if the response is savedCommentful
+
       if (savedComment) {
         // Update the comments list with the new comment
 
         let alteredComment = {
-          created_at: formatDateToHumanReadable(savedComment.created_at),
+          created_at: formatDateToHumanReadable(savedComment.created_at, true),
           username: savedComment.username,
           accuracy: savedComment.accuracy,
           text: savedComment.text,
           post_opinion: savedComment.agreement_status,
           comment_id: savedComment.id,
+          is_owner: true,
         };
 
         setCommentsList((prevComments) => [
+          alteredComment,
           ...prevComments,
-          alteredComment, // Add the newly added comment to the list
+          // Add the newly added comment to the top of the list
         ]);
         setNewComment(""); // Clear the input field
       } else {
@@ -83,8 +96,65 @@ export default function ArticleDynamicContent({
     }
   };
 
+  async function deletePost() {
+    const postId = id;
+    const success = await deletePostRequest(postId);
+    if (success) {
+      setDeletePostModal(null);
+      router.push("/");
+    }
+  }
+
+  const commentsRef = useRef(null);
+
+  const scrollToComments = () => {
+    if (commentsRef.current) {
+      commentsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <>
+      {deletePostModal && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h3>Delete {ticker} Post</h3>
+
+            <div className={styles.modalActions}>
+              <button
+                className={`${styles.btn} ${courierPrime.className}`}
+                onClick={() => {
+                  setDeletePostModal(null);
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                className={`${styles.btn} ${courierPrime.className}`}
+                onClick={deletePost}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {editPostModal && (
+        <PostModal
+          isOpen={editPostModal}
+          onClose={() => {
+            setEditPostModal(null);
+          }}
+          data={{
+            ticker,
+            comparison,
+            price,
+            expiry,
+            content,
+            articleId: id,
+          }}
+        />
+      )}
       <div className={styles.article}>
         <ArticleHeader
           ticker={ticker}
@@ -101,6 +171,9 @@ export default function ArticleDynamicContent({
           commentCount={commentsList.length}
           daysUntilExpiry={daysUntilExpiry}
           result={result}
+          setEditPost={isPostOwner ? setEditPostModal : null}
+          setDeletePostModal={isPostOwner ? setDeletePostModal : null}
+          scrollToComments={scrollToComments}
         />
         <ArticleBody body={content} />
 
@@ -120,16 +193,20 @@ export default function ArticleDynamicContent({
             rows="6"
             aria-label="Comment Input"
             value={newComment} // Bind the textarea value to the state
-            onChange={handleCommentChange}
+            onChange={(e) => {
+              if (e.target.value.length <= 1000) {
+                handleCommentChange(e); // Update the state only if the input length is <= 1000
+              }
+            }}
           ></textarea>
           <button
-            className={styles.submitButton}
+            className={`${styles.commentButton} ${courierPrime.className}`}
             type="button"
             onClick={handleSubmitComment}
           >
             Submit Comment
           </button>
-          <div id="comments" className={styles.hr}></div>
+          <div id="comments" className={styles.hr} ref={commentsRef}></div>
           <div className={styles.commentContainer}>
             {commentsList.map((comment) => (
               <Comment
@@ -146,6 +223,7 @@ export default function ArticleDynamicContent({
                 }
                 commentId={comment.comment_id}
                 isOwner={comment.is_owner}
+                setCommentsList={setCommentsList}
                 key={comment.comment_id}
               />
             ))}

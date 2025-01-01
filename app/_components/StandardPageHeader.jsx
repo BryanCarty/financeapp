@@ -11,51 +11,55 @@ export default async function ({ isLoggedIn }) {
   //Determine if the user is logged in
 
   return (
-    <header className={styles.pageHeader}>
-      <div className={styles.leftOfHeader}>
-        <Link className={styles.logo} href="/">
-          <h1 className={`${courierPrime.className} ${styles.typedSiteName}`}>
-            The Traders Journal
-          </h1>
-        </Link>
-      </div>
-      <div className={styles.rightOfHeader}>
-        <HomeLink />
-        <Link
-          className={`${styles.navButton} ${courierPrime.className}`}
-          href="/about"
-        >
-          About
-        </Link>
-        {isLoggedIn ? (
-          <>
-            <PostModalButton />
-            <Link
-              className={`${styles.navButton} ${courierPrime.className} ${styles.underline}`}
-              href="/settings"
-            >
-              {isLoggedIn.username}
-            </Link>
-          </>
-        ) : (
-          <>
-            <Link
-              className={`${styles.navButton} ${courierPrime.className}`}
-              href="/login"
-            >
-              Log in
-            </Link>
+    <>
+      <header className={styles.pageHeader}>
+        <div className={styles.leftOfHeader}>
+          <Link className={styles.logo} href="/">
+            <h1 className={`${courierPrime.className} ${styles.typedSiteName}`}>
+              The Traders Journal
+            </h1>
+          </Link>
+        </div>
+        <div className={styles.rightOfHeader}>
+          <HomeLink />
+          <Link
+            className={`${styles.navButton} ${courierPrime.className}`}
+            href="/about"
+          >
+            About
+          </Link>
+          {isLoggedIn ? (
+            <>
+              <PostModalButton />
+              <Link
+                className={`${styles.profileCircle} ${courierPrime.className}`}
+                href="/settings"
+                data-username="John Doe"
+              >
+                {isLoggedIn.username[0].toUpperCase()}
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                className={`${styles.navButton} ${courierPrime.className}`}
+                href="/login"
+              >
+                Log in
+              </Link>
 
-            <Link
-              className={`${styles.navButton} ${courierPrime.className} ${styles.underline}`}
-              href="/signup"
-            >
-              Sign up
-            </Link>
-          </>
-        )}
-      </div>
-    </header>
+              <Link
+                className={`${styles.navButton} ${courierPrime.className} ${styles.underline}`}
+                href="/signup"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
+        </div>
+      </header>
+      <div className={styles.separator}></div>
+    </>
   );
 }
 

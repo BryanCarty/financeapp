@@ -11,6 +11,14 @@ export default async function fetchArticleById(articleId) {
     }
     const article = await getArticleById(articleId, userId);
     article["current_user_id"] = userId;
+
+    // If comments exist, order them by latest created_at
+    if (article.comments && Array.isArray(article.comments)) {
+      article.comments.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+    }
+
     return article;
   } catch (error) {
     console.log("An error occurred in fetchArticleById: " + error);

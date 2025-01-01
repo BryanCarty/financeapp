@@ -6,6 +6,7 @@ import {
   deletePostDb,
   getValidTickers,
   getFollowerEmailsAndName,
+  eligibleToPost,
 } from "../lib/db/db_functions";
 import { redirect } from "next/navigation";
 import DOMPurify from "isomorphic-dompurify";
@@ -30,7 +31,6 @@ function sanitizePostData(postData) {
 
 async function isValidTickerPrice(specificTicker, price, condition) {
   try {
-    console.log("Validating ticker:", specificTicker);
     const result = await getValidTickers();
     const entry = result.find(({ ticker }) => ticker === specificTicker);
 
@@ -172,6 +172,14 @@ export async function submitPost(postData) {
       return {
         success: false,
         message: "Reasoning must be less than 5MB in size.",
+      };
+    }
+
+    const isEligibleToPost = await eligibleToPost(userId);
+    if (!isEligibleToPost) {
+      return {
+        success: false,
+        message: "Looks like you've exceeded the limit of 5 posts/day",
       };
     }
 

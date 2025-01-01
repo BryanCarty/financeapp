@@ -24,10 +24,10 @@ export async function decrypt(session) {
   }
 }
 
-export async function createSession(userId, username) {
+export async function createSession(userId, username, email) {
   const expiresAt = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
 
-  const session = await encrypt({ userId, username, expiresAt });
+  const session = await encrypt({ userId, username, email, expiresAt });
   const cookieStore = await cookies();
 
   cookieStore.set("session", session, {
@@ -63,6 +63,7 @@ export async function verifySession() {
       !session ||
       !session.userId ||
       !session.username ||
+      !session.email ||
       !session.expiresAt ||
       !session.exp
     ) {
@@ -74,7 +75,11 @@ export async function verifySession() {
 
     // Check if the session is still valid
     if (currentTime < session.exp) {
-      return { userId: session.userId, username: session.username };
+      return {
+        userId: session.userId,
+        username: session.username,
+        email: session.email,
+      };
     }
 
     // Token has expired

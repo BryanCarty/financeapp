@@ -95,22 +95,33 @@ export default function SignUpForm() {
           </div>
 
           <div>
-            <button
-              disabled={pending}
-              type="submit"
-              className={`${styles.submitButton} ${courierPrime.className}`}
-            >
-              Sign Up
-            </button>
+            {!pending ? (
+              <button
+                disabled={pending}
+                type="submit"
+                className={`${styles.loginButton} ${courierPrime.className}`}
+              >
+                Sign Up
+              </button>
+            ) : (
+              <div className={styles.dots}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            )}
           </div>
         </form>
       </div>
       <div className={styles.subSection}>
-        <Link className={`${styles.btn} ${courierPrime.className}`} href="/">
+        <Link
+          className={`${styles.loginButton} ${courierPrime.className}`}
+          href="/"
+        >
           Return Home
         </Link>
         <Link
-          className={`${styles.btn} ${courierPrime.className}`}
+          className={`${styles.loginButton} ${courierPrime.className}`}
           href="/login"
         >
           Go to login

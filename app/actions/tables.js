@@ -12,31 +12,34 @@ export default async function loadTable(type, searchQuery) {
   try {
     // Simulate database or external API call
     const { userId, username } = await verifySession();
-
+    let tableData = false;
     switch (type) {
       case "fe": //follower
         if (!userId) {
           redirect("/login");
         }
-        const followerTable = await getFollowerTable(userId);
-        return followerTable;
+
+        tableData = await getFollowerTable(userId);
+        return { tableData, userId };
       case "fi": //following
         if (!userId) {
           redirect("/login");
         }
-        const followingTable = await getFollowingTable(userId);
-        return followingTable;
+
+        tableData = await getFollowingTable(userId);
+
+        return { tableData, userId };
       case "se":
         if (!userId) {
           redirect("/login");
         }
-        const searchTable = await getSearchTable(userId, searchQuery);
-        return searchTable;
+        tableData = await getSearchTable(userId, searchQuery);
+        return { tableData, userId };
       case "l": //leaderboard
-        const leaderboardData = await getLeaderboard(userId);
-        return leaderboardData;
+        tableData = await getLeaderboard(userId);
+        return { tableData, userId };
       default:
-        return null;
+        return { tableData, userId };
     }
   } catch (error) {
     console.log("An error occurred in loadTable: " + error);

@@ -210,7 +210,8 @@ scheduleWebSocketLifecycle();
 
 async function updateDBStockData(ticker, price, last_updated) {
   try {
-    await sql`
+    if (process.env.STOCK_FEED_ENABLED?.toLowerCase() === "true") {
+      await sql`
       INSERT INTO stock_data (ticker, close_price, last_updated_time)
       VALUES (${ticker}, ${price}, ${last_updated})
       ON CONFLICT (ticker)
@@ -218,6 +219,7 @@ async function updateDBStockData(ticker, price, last_updated) {
         close_price = EXCLUDED.close_price,
         last_updated_time = EXCLUDED.last_updated_time;
     `;
+    }
   } catch (error) {
     console.error(
       "An error occurred attempting to update the stock price DB:",
@@ -469,7 +471,10 @@ export async function getLeaderboard(myUserId) {
     let result;
     if (myUserId) {
       result = await sql`
-      SELECT u.user_id, u.username, u.accuracy, u.trades_count, u.followers_count,
+      SELECT u.user_id, u.username, u.accuracy,(SELECT COUNT(*) 
+        FROM posts p 
+        WHERE p.author_id = u.user_id 
+          AND p.expiry < NOW()) AS trades_count,  u.followers_count,
              CASE WHEN f.follower_id IS NOT NULL THEN true ELSE false END AS is_following
       FROM users u
       LEFT JOIN followers f ON f.followed_id = u.user_id AND f.follower_id = ${myUserId}
@@ -503,6 +508,57 @@ export async function getLeaderboard(myUserId) {
     return leaderboard;
   } catch (error) {
     console.log("getLeaderboard : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function isEligibleToFollow(userId) {
+  try {
+    // Define the follow limit based on the account type
+    const result = await sql`
+      SELECT 
+        u.account_type, 
+        COUNT(f.follower_id) AS followers_count
+      FROM 
+        users u
+      LEFT JOIN 
+        followers f ON f.follower_id = u.user_id
+      WHERE 
+        u.user_id = ${userId}
+      GROUP BY 
+        u.user_id
+    `;
+
+    if (result.length === 0) {
+      console.error("User not found");
+      return false;
+    }
+
+    const { account_type, followers_count } = result[0];
+
+    // Determine the maximum follow limit based on account type
+    let maxFollowers;
+    if (account_type === 0) {
+      maxFollowers = 1;
+    } else if (account_type === 1) {
+      maxFollowers = 10;
+    } else if (account_type === 12) {
+      maxFollowers = 25;
+    } else {
+      console.error("Invalid account type");
+      return false;
+    }
+
+    // Check if the user has reached the follow limit
+    if (followers_count >= maxFollowers) {
+      console.log(`User has reached their follow limit of ${maxFollowers}`);
+      return false;
+    }
+
+    // The user is eligible to follow more people
+    return true;
+  } catch (error) {
+    console.error("isEligibleToFollow : Database Error Occurred:", error);
     return false;
   }
 }
@@ -560,6 +616,65 @@ export async function unfollowUserDb(myUserId, otherUserId) {
 export async function getArticleById(articleId, currentUserId) {
   try {
     const result = await sql`
+    SELECT 
+        posts.*, 
+        users.username AS post_author_username, 
+        users.accuracy AS post_author_accuracy,
+        COALESCE(
+            COUNT(DISTINCT CASE 
+                WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+            END), 
+            0
+        ) AS total_agreements,
+        COALESCE(
+            COUNT(DISTINCT CASE 
+                WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+            END), 
+            0
+        ) AS total_disagreements,
+        COALESCE(
+            (SELECT agreement_status.agreement_status 
+            FROM agreement_status 
+            WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = ${currentUserId}
+            ), NULL
+        ) AS user_agreement_status,
+        COALESCE(
+            json_agg(
+                DISTINCT CASE 
+                    WHEN comments.id IS NOT NULL THEN jsonb_build_object(
+                        'comment_id', comments.id,
+                        'user_id', comments.user_id,
+                        'text', comments.text,
+                        'created_at', comments.created_at,
+                        'username', comment_users.username,
+                        'accuracy', comment_users.accuracy,
+                        'post_opinion', COALESCE(
+                            (
+                                SELECT agreement_status.agreement_status
+                                FROM agreement_status
+                                WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = comments.user_id
+                                LIMIT 1
+                            ), NULL
+                        )
+                    )
+                END
+            ) FILTER (WHERE comments.id IS NOT NULL), 
+            '[]'
+        ) AS comments,
+        COALESCE(stock_data.close_price, NULL) AS status
+    FROM posts 
+    JOIN users ON posts.author_id = users.user_id
+    LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+    LEFT JOIN comments ON comments.article_id = posts.id
+    LEFT JOIN users AS comment_users ON comments.user_id = comment_users.user_id
+    LEFT JOIN stock_data ON stock_data.ticker = posts.ticker
+    WHERE posts.id = ${articleId}
+    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price;
+`;
+
+    /*
+    
+    const result = await sql`
         SELECT 
             posts.*, 
             users.username AS post_author_username, 
@@ -614,7 +729,7 @@ export async function getArticleById(articleId, currentUserId) {
         LEFT JOIN stock_data ON stock_data.ticker = posts.ticker
         WHERE posts.id = ${articleId}
         GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price;
-      `;
+      `;*/
 
     /*
     const result = await sql`
@@ -721,7 +836,7 @@ export async function updateAgreementStatusDb(postId, userId, status) {
 export async function createComment(postId, userId, text) {
   try {
     // Insert user data into the 'users' table
-
+    /*
     const enrichedComment = await sql`
     with inserted_comment as (
         insert into comments (article_id, user_id, text)
@@ -737,6 +852,22 @@ export async function createComment(postId, userId, text) {
     join users on users.user_id = inserted_comment.user_id
     join agreement_status on agreement_status.user_id = inserted_comment.user_id
                           and agreement_status.article_id = inserted_comment.article_id;
+`;*/
+    const enrichedComment = await sql`
+with inserted_comment as (
+    insert into comments (article_id, user_id, text)
+    values (${postId}, ${userId}, ${text})
+    returning *
+)
+select 
+    inserted_comment.*, 
+    users.username, 
+    users.accuracy, 
+    agreement_status.agreement_status
+from inserted_comment
+left join users on users.user_id = inserted_comment.user_id
+left join agreement_status on agreement_status.user_id = inserted_comment.user_id
+                         and agreement_status.article_id = inserted_comment.article_id;
 `;
 
     return enrichedComment[0];
@@ -783,7 +914,6 @@ export async function removeCommentDb(commentId, userId) {
     if (updatedComment.length === 0) {
       throw new Error("No matching comment found to delete");
     }
-
     return updatedComment[0].id;
   } catch (error) {
     console.error("updateCommentDb: Database Error Occurred:", error);
@@ -800,7 +930,10 @@ export async function getFollowerTable(myUserId) {
       u.user_id, 
       u.username, 
       u.accuracy, 
-      u.trades_count, 
+      (SELECT COUNT(*) 
+        FROM posts p 
+        WHERE p.author_id = u.user_id 
+          AND p.expiry < NOW()) AS trades_count, 
       u.followers_count,
       CASE 
         WHEN EXISTS (
@@ -817,7 +950,7 @@ export async function getFollowerTable(myUserId) {
   `;
 
     if (!result) {
-      console.log("Failed to retrieve leaderboard data from the database");
+      console.log("Failed to retrieve follower table data from the database");
       return false;
     }
 
@@ -843,6 +976,7 @@ export async function getFollowingTable(myUserId) {
   //TODO: Add in following status.
   try {
     // Insert user data into the 'users' table
+    /*
     const result = await sql`
     SELECT u.user_id, u.username, u.accuracy, u.trades_count, u.followers_count,
            CASE 
@@ -856,7 +990,25 @@ export async function getFollowingTable(myUserId) {
     FROM users u
     INNER JOIN followers f ON f.followed_id = u.user_id
     WHERE f.follower_id = ${myUserId}
-    ORDER BY u.accuracy DESC;`;
+    ORDER BY u.accuracy DESC;`;*/
+    const result = await sql`SELECT u.user_id, u.username, u.accuracy, 
+       (SELECT COUNT(*) 
+        FROM posts p 
+        WHERE p.author_id = u.user_id 
+          AND p.expiry < NOW()) AS trades_count, 
+       u.followers_count,
+       CASE 
+           WHEN EXISTS (
+               SELECT 1 
+               FROM followers f2
+               WHERE f2.follower_id = ${myUserId} AND f2.followed_id = u.user_id
+           ) THEN true
+           ELSE false
+       END AS is_following
+FROM users u
+INNER JOIN followers f ON f.followed_id = u.user_id
+WHERE f.follower_id = ${myUserId}
+ORDER BY u.accuracy DESC;`;
 
     if (!result) {
       console.log("Failed to retrieve leaderboard data from the database");
@@ -886,7 +1038,10 @@ export async function getSearchTable(myUserId, searchQuery) {
   try {
     // Insert user data into the 'users' table
     const result = await sql`
-    SELECT u.user_id, u.username, u.accuracy, u.trades_count, u.followers_count,
+    SELECT u.user_id, u.username, u.accuracy, (SELECT COUNT(*) 
+        FROM posts p 
+        WHERE p.author_id = u.user_id 
+          AND p.expiry < NOW()) AS trades_count,  u.followers_count,
            CASE WHEN f.follower_id IS NOT NULL THEN true ELSE false END AS is_following
     FROM users u
     LEFT JOIN followers f ON f.followed_id = u.user_id AND f.follower_id = ${myUserId}
@@ -1306,6 +1461,24 @@ export async function updatePostDb(reasoning, userId, articleId) {
   }
 }
 
+export async function eligibleToPost(authorId) {
+  try {
+    const dailyPostCount = await sql`
+    SELECT COUNT(*)
+    FROM posts
+    WHERE author_id = ${authorId} AND post_date::date = CURRENT_DATE;
+  `;
+
+    if (dailyPostCount[0].count < 5) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.log("eligibleToPost: Database Error Occurred:", error);
+    return false;
+  }
+}
+
 export async function createPost(
   ticker,
   comparison,
@@ -1361,11 +1534,12 @@ export async function loadUserStats(userId) {
     const result = await sql`
       SELECT 
         u.accuracy AS accuracy,
+        u.account_type as account_type,
         COUNT(DISTINCT p.id) AS post_count,
         COUNT(DISTINCT f.follower_id) AS follower_count,
         COUNT(DISTINCT c.id) AS comment_count
       FROM users u
-      LEFT JOIN posts p ON p.author_id = u.user_id
+      LEFT JOIN posts p ON p.author_id = u.user_id AND p.expiry < NOW()
       LEFT JOIN followers f ON f.followed_id = u.user_id
       LEFT JOIN comments c ON c.user_id = u.user_id
       WHERE u.user_id = ${userId}
@@ -1405,9 +1579,9 @@ export async function getValidTickers() {
 export async function getFollowerEmailsAndName(userId) {
   try {
     const result = await sql`
-      SELECT u.email, u.username, 
+      SELECT u.email, u.username 
       FROM users u
-      JOIN followers f ON f.follower_id = u.id
+      JOIN followers f ON f.follower_id = u.user_id
       WHERE f.followed_id = ${userId} 
       AND f.notified = true;
     `;
@@ -1418,6 +1592,23 @@ export async function getFollowerEmailsAndName(userId) {
     return result;
   } catch (error) {
     console.error("getFollowerEmails : Database Error Occurred:", error);
+    return false;
+  }
+}
+
+export async function getConscensusData(ticker, date) {
+  try {
+    const result = await sql`
+      SELECT * 
+      FROM posts
+      WHERE expiry = ${date} AND ticker = ${ticker}
+    `;
+    if (result.length == 0 || !result[0]) {
+      return false;
+    }
+    return result;
+  } catch (error) {
+    console.error("getConscensusData : Database Error Occurred:", error);
     return false;
   }
 }

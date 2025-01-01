@@ -31,6 +31,11 @@ export async function sendResetPasswordEmail(email, name, resetLink) {
                 font-family: 'Courier Prime', Courier, monospace;
                 color: #353535;
             }
+            .copyright-section {
+              display: inline-block; 
+              border-top: 2px dashed #353535;
+              padding-top: 10px; /* Optional: Adds some space between the border and the text */
+            }
         </style>
     </head>
     <body>
@@ -44,7 +49,7 @@ export async function sendResetPasswordEmail(email, name, resetLink) {
                 <p>We received a request to reset your password. If this was not you, please reply to this email. If this was you, and you do in fact wish to reset your password, click the below link.</p>
                 <br>
                 <br>
-                <p>You can reset your password here: }<a href="${resetLink}>Reset Password</a></p>
+                <p>You can reset your password here: <a href="${resetLink}">Reset Password</a></p>
                 <br>
                 <br>
                 <p>Happy Trading,</p>
@@ -53,7 +58,7 @@ export async function sendResetPasswordEmail(email, name, resetLink) {
             <br>
             <br>
             <br>
-            <div>
+            <div class="copyright-section">
                 <p>&copy; 2024 The Traders Journal. All rights reserved.</p>
             </div>
         </div>
@@ -111,6 +116,11 @@ export async function sendWelcomeEmail(email, name) {
                 background: none;  
                 padding: 0;  
               }
+               .copyright-section {
+              display: inline-block; 
+              border-top: 2px dashed #353535;
+              padding-top: 10px; /* Optional: Adds some space between the border and the text */
+            }
         </style>
     </head>
     <body>
@@ -131,7 +141,7 @@ export async function sendWelcomeEmail(email, name) {
             <br>
             <br>
             <br>
-            <div>
+            <div class="copyright-section">
                 <p>&copy; 2024 The Traders Journal. All rights reserved.</p>
             </div>
         </div>
@@ -168,7 +178,7 @@ export async function sendNewPostEmail(
   try {
     // Loop through each follower to send them an email
     for (let follower of followerEmailsAndNames) {
-      const { email, name } = follower;
+      const { email, username } = follower;
 
       const htmlToSend = `
         <html>
@@ -197,6 +207,11 @@ export async function sendNewPostEmail(
                     background: none;  
                     padding: 0;  
                   }
+                     .copyright-section {
+              display: inline-block; 
+              border-top: 2px dashed #353535;
+              padding-top: 10px; /* Optional: Adds some space between the border and the text */
+            }
             </style>
         </head>
         <body>
@@ -206,7 +221,7 @@ export async function sendNewPostEmail(
                 </div>
                 <br><br>
                 <div>
-                    <p>Hey ${name} 😊,</p>
+                    <p>Hey ${username} 😊,</p>
                     <p>This email is just to let you know that a user you follow, ${authorUsername} made a new post.</p>
                     <br>
                     <br>
@@ -219,7 +234,7 @@ export async function sendNewPostEmail(
                 <br>
                 <br>
                 <br>
-                <div>
+                <div class="copyright-section">
                     <p>&copy; 2024 The Traders Journal. All rights reserved.</p>
                 </div>
             </div>

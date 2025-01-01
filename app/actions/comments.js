@@ -6,6 +6,7 @@ import {
   removeCommentDb,
 } from "../lib/db/db_functions";
 import { redirect } from "next/navigation";
+import DOMPurify from "isomorphic-dompurify";
 
 export async function submitComment(postId, text) {
   try {
@@ -13,8 +14,8 @@ export async function submitComment(postId, text) {
     if (!userId) {
       redirect("/login");
     }
-
-    const comment = await createComment(postId, userId, text);
+    const sanitizedText = DOMPurify.sanitize(text);
+    const comment = await createComment(postId, userId, sanitizedText);
     return comment;
   } catch (error) {
     console.log("An error occurred in submitComment");
@@ -28,7 +29,8 @@ export async function updateComment(commentId, text) {
     if (!userId) {
       redirect("/login");
     }
-    let result = await updateCommentDb(commentId, userId, text);
+    const sanitizedText = DOMPurify.sanitize(text);
+    let result = await updateCommentDb(commentId, userId, sanitizedText);
     return result;
   } catch (error) {
     console.log("An error occurred in updateComment");

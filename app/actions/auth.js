@@ -59,8 +59,7 @@ export async function signup(state, formData) {
       };
     }
 
-    console.log("Creating Session for: " + userId);
-    errors = await createSession(userId, username);
+    errors = await createSession(userId, username, email);
     if (errors) {
       return {
         errors: errors,
@@ -130,7 +129,7 @@ export async function login(state, formData) {
     }
 
     console.log("Creating Session for: " + user.user_id);
-    errors = await createSession(user.user_id, user.username);
+    errors = await createSession(user.user_id, user.username, email);
     if (errors) {
       return {
         errors: errors,
@@ -140,6 +139,7 @@ export async function login(state, formData) {
     // 5. Redirect user
     redirect("/");
   } catch (error) {
+    if (error.message === "NEXT_REDIRECT") throw error;
     console.log("An error occurred in login(): " + error);
     return {
       errors: { username: ["An Internal Server Error Occurred"] },

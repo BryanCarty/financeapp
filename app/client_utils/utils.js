@@ -31,6 +31,7 @@ export function calculateDaysUntilExpiry(expiry) {
   return daysUntilExpiry;
 }
 
+/*
 export function formatDateToHumanReadable(dateString) {
   const date = new Date(dateString);
 
@@ -51,4 +52,36 @@ export function formatDateToHumanReadable(dateString) {
 
   // Return the formatted date with the suffix
   return formattedDate.replace(day, `${day}${suffix}`);
+}
+*/
+
+export function formatDateToHumanReadable(dateString, includeTime = false) {
+  const date = new Date(dateString);
+
+  // Format the date (e.g., Dec 2nd, 2024)
+  const options = { month: "short", day: "numeric", year: "numeric" };
+  const formattedDate = new Intl.DateTimeFormat("en-US", options).format(date);
+
+  // Add suffix to the day (1st, 2nd, 3rd, etc.)
+  const day = date.getDate();
+  const suffix =
+    day === 1 || day === 21 || day === 31
+      ? "st"
+      : day === 2 || day === 22
+      ? "nd"
+      : day === 3 || day === 23
+      ? "rd"
+      : "th";
+
+  // Format the time if includeTime is true
+  let timeString = "";
+  if (includeTime) {
+    const timeOptions = { hour: "numeric", minute: "numeric", hour12: true };
+    timeString = new Intl.DateTimeFormat("en-US", timeOptions).format(date);
+  }
+
+  // Return the formatted date with the suffix and optional time
+  return includeTime
+    ? `${formattedDate.replace(day, `${day}${suffix}`)} at ${timeString}`
+    : formattedDate.replace(day, `${day}${suffix}`);
 }

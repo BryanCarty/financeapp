@@ -116,3 +116,12 @@
 .red {
   color: red;
 }
+
+.editDelBtnSpace {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.btn:hover {
+  cursor: pointer;
+}

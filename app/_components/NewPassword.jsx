@@ -70,21 +70,32 @@ export default function NewPassword() {
             </div>
           )}
           <div>
-            <button
-              className={`${styles.submitButton} ${courierPrime.className}`}
-              type="submit"
-            >
-              Reset
-            </button>
+            {!pending ? (
+              <button
+                className={`${styles.loginButton} ${courierPrime.className}`}
+                type="submit"
+              >
+                Reset
+              </button>
+            ) : (
+              <div className={styles.dots}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            )}
           </div>
         </form>
       </div>
       <div className={styles.subSection}>
-        <Link className={`${styles.btn} ${courierPrime.className}`} href="/">
+        <Link
+          className={`${styles.loginButton} ${courierPrime.className}`}
+          href="/"
+        >
           Return Home
         </Link>
         <Link
-          className={`${styles.btn} ${courierPrime.className}`}
+          className={`${styles.loginButton} ${courierPrime.className}`}
           href="/login"
         >
           Login

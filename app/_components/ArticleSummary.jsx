@@ -114,7 +114,7 @@ export default function ArticleSummary({
           </div>
         </div>
         <div className={`${styles.summaryBody} ${courierPrime.className}`}>
-          <p>{snippet}</p>
+          <p className={styles.snippetText}>{snippet}</p>
           <a href="more-content.html" className={styles.seemorebtn}>
             See More
           </a>

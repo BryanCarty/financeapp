@@ -21,7 +21,7 @@ export default function SearchBar({ onSearchChange }) {
         type="text"
         value={query}
         onChange={handleInputChange}
-        placeholder="Search..."
+        placeholder="Username..."
         className={`${styles.searchInput} ${courierPrime.className}`}
       />
       <button

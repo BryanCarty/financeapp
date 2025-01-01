@@ -47,6 +47,27 @@ export default function ({ isLoggedIn }) {
     await logout();
   };
 
+  async function manageSubscription(clickedSubscription) {
+    const currentSubscription = userStats?.account_type;
+    switch (clickedSubscription) {
+      case 0:
+        //do nothing yet
+        break;
+      case 1:
+        router.push(
+          "https://buy.stripe.com/test_eVa02OaCxdzq1gY146?prefilled_email=" +
+            (isLoggedIn.email ? isLoggedIn.email : "")
+        );
+        break;
+      case 2:
+        router.push(
+          "https://buy.stripe.com/test_28o7vgaCxgLCf7O28b?prefilled_email=" +
+            (isLoggedIn.email ? isLoggedIn.email : "")
+        );
+        break;
+    }
+  }
+
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -62,7 +83,9 @@ export default function ({ isLoggedIn }) {
 
   return (
     <>
-      <div className={`${styles.pageBody} ${styles.mainContent}`}>
+      <div
+        className={`${manageFollowingstyles.pageBody} ${styles.mainContent}`}
+      >
         <div
           className={`${manageFollowingstyles.tableContainer} ${courierPrime.className}`}
         >
@@ -72,7 +95,7 @@ export default function ({ isLoggedIn }) {
               <tr>
                 <th>Accuracy</th>
                 <th>Followers</th>
-                <th>Total Posts</th>
+                <th>Total Posts (Expired)</th>
                 <th>Total Comments</th>
               </tr>
             </thead>
@@ -95,7 +118,87 @@ export default function ({ isLoggedIn }) {
             </tbody>
           </table>
         </div>
-        <div className={manageFollowingstyles.logoutButtonContainer}>
+
+        <div className={manageFollowingstyles.accountSettingsContainer}>
+          <div
+            className={`${manageFollowingstyles.grid} ${courierPrime.className}`}
+          >
+            <label
+              className={manageFollowingstyles.card}
+              onClick={() => manageSubscription(0)}
+            >
+              <input
+                name="plan"
+                className={manageFollowingstyles.radio}
+                type="radio"
+                checked={userStats?.account_type === 0}
+              />
+
+              <span className={manageFollowingstyles.planDetails}>
+                <span className={manageFollowingstyles.planType}>Basic</span>
+                <span className={manageFollowingstyles.planCost}>
+                  €0<span className={manageFollowingstyles.slash}>/</span>
+                  <abbr
+                    className={manageFollowingstyles.planCycle}
+                    title="month"
+                  >
+                    mo
+                  </abbr>
+                </span>
+                <span>1 Follow User Limit</span>
+              </span>
+            </label>
+            <label
+              className={manageFollowingstyles.card}
+              onClick={() => manageSubscription(1)}
+            >
+              <input
+                name="plan"
+                className={manageFollowingstyles.radio}
+                type="radio"
+                checked={userStats?.account_type === 1}
+              />
+              <span className={manageFollowingstyles.hiddenVisually}>
+                Pro - €5 per month, 10 Follow User Limit
+              </span>
+              <span
+                className={manageFollowingstyles.planDetails}
+                aria-hidden="true"
+              >
+                <span className={manageFollowingstyles.planType}>Pro</span>
+                <span className={manageFollowingstyles.planCost}>
+                  €5<span className={manageFollowingstyles.slash}>/</span>
+                  <span className={manageFollowingstyles.planCycle}>mo</span>
+                </span>
+                <span>10 Follow User Limit</span>
+              </span>
+            </label>
+            <label
+              className={manageFollowingstyles.card}
+              onClick={() => manageSubscription(2)}
+            >
+              <input
+                name="plan"
+                className={manageFollowingstyles.radio}
+                type="radio"
+                checked={userStats?.account_type === 2}
+              />
+              <span className={manageFollowingstyles.hiddenVisually}>
+                Elite - €10 per month, 25 Follow User Limit
+              </span>
+              <span
+                className={manageFollowingstyles.planDetails}
+                aria-hidden="true"
+              >
+                <span className={manageFollowingstyles.planType}>Elite</span>
+                <span className={manageFollowingstyles.planCost}>
+                  €10<span className={manageFollowingstyles.slash}>/</span>
+                  <span className={manageFollowingstyles.planCycle}>mo</span>
+                </span>
+                <span>25 Follow User Limit</span>
+              </span>
+            </label>
+          </div>
           <button
             onClick={logoutUser}
             className={`${manageFollowingstyles.logoutButton} ${courierPrime.className}`}
@@ -136,7 +239,7 @@ export default function ({ isLoggedIn }) {
             }`}
             onClick={() => setActiveTab("search")}
           >
-            Search
+            User Search
           </h5>
         </div>
 

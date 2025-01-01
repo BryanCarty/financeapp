@@ -51,25 +51,33 @@ export default function LogInForm() {
           </div>
 
           <div>
-            <button
-              disabled={pending}
-              className={`${styles.submitButton} ${courierPrime.className}`}
-              type="submit"
-            >
-              Login
-            </button>
+            {!pending ? (
+              <button
+                disabled={pending}
+                className={`${styles.loginButton} ${courierPrime.className}`}
+                type="submit"
+              >
+                Login
+              </button>
+            ) : (
+              <div className={styles.dots}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            )}
           </div>
         </form>
       </div>
       <div className={styles.subSection}>
         <Link
-          className={`${styles.btn} ${courierPrime.className}`}
+          className={`${styles.loginButton} ${courierPrime.className}`}
           href="/signup"
         >
           Sign up
         </Link>
         <Link
-          className={`${styles.btn} ${courierPrime.className}`}
+          className={`${styles.loginButton} ${courierPrime.className}`}
           href="/reset-password"
         >
           Forgot Password

@@ -1,3 +1,4 @@
+"use client";
 import styles from "@/app/_styles/Comment.module.css";
 import courierPrime from "./CourierPrime";
 import { useState } from "react";
@@ -12,6 +13,7 @@ export default function Comment({
   opinion,
   commentId,
   isOwner,
+  setCommentsList,
 }) {
   const [editText, setEditText] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -24,8 +26,14 @@ export default function Comment({
   async function saveComment() {
     let success = await updateComment(commentId, editText);
     if (success) {
-      commentBody = editText;
-      setEditText(null);
+      setEditText(null); // Reset the edit text field after saving
+      setCommentsList((prevComments) =>
+        prevComments.map((comment) =>
+          comment.comment_id === commentId
+            ? { ...comment, text: editText } // Update the comment's text
+            : comment
+        )
+      );
     }
   }
 
@@ -34,9 +42,13 @@ export default function Comment({
   };
 
   async function deleteComment() {
-    let success = await removeComment(commentId);
-    if (success) {
+    let id = await removeComment(commentId);
+    if (id) {
       setShowDeleteModal(false);
+      //also need to remove the comment, iterate over and remove comment with id
+      setCommentsList((prevComments) =>
+        prevComments.filter((comment) => comment.comment_id !== id)
+      );
     }
   }
 

@@ -1,5 +1,4 @@
 .comment {
-  height: 150px;
   margin: 15px;
   border: 2px solid #353535;
   width: 92%;
@@ -16,7 +15,7 @@
 }
 
 .upperComment {
-  height: 20%;
+  padding: 3px;
   border-bottom: 1px solid #353535;
   display: flex;
   flex-direction: row;
@@ -25,7 +24,7 @@
 }
 
 .lowerComment {
-  height: 20%;
+  padding: 3px;
   border-top: 1px solid #353535;
   display: flex;
   flex-direction: row;
@@ -48,6 +47,7 @@
   line-height: 1.6; /* Improve text spacing */
   margin: 10px 10px; /* Add spacing around the comment body */
   padding: 10px; /* Space inside the comment body */
+  flex: 1;
 }
 
 /* Modal styles */

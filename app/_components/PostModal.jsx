@@ -34,6 +34,12 @@ export default function PostModal({ isOpen, onClose, data }) {
     articleId = "",
   } = data || {};
 
+  const futureDate =
+    expiry instanceof Date
+      ? expiry.toISOString().split("T")[0]
+      : expiry
+      ? new Date(expiry).toISOString().split("T")[0]
+      : "";
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [value, setValue] = useState(content || "");
@@ -45,7 +51,7 @@ export default function PostModal({ isOpen, onClose, data }) {
         : "less than"
       : "greater than", // default value
     price: price || "",
-    futureDate: expiry ? expiry.toISOString().split("T")[0] : "",
+    futureDate: futureDate,
   });
 
   const handleInputChange = (e) => {
