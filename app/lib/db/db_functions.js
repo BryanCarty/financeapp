@@ -539,10 +539,8 @@ export async function isEligibleToFollow(userId) {
     // Determine the maximum follow limit based on account type
     let maxFollowers;
     if (account_type === 0) {
-      maxFollowers = 1;
+      maxFollowers = 0;
     } else if (account_type === 1) {
-      maxFollowers = 10;
-    } else if (account_type === 12) {
       maxFollowers = 25;
     } else {
       console.error("Invalid account type");
@@ -1610,5 +1608,123 @@ export async function getConscensusData(ticker, date) {
   } catch (error) {
     console.error("getConscensusData : Database Error Occurred:", error);
     return false;
+  }
+}
+
+export async function addPaidSubscriptionRecord(
+  userId,
+  customerId,
+  customerEmail
+) {
+  try {
+    await sql`INSERT INTO paid_subscription_records (user_id, stripe_customer_id, stripe_customer_email, created_at, deleted_at)
+VALUES 
+    (${userId}, ${customerId}, ${customerEmail}, CURRENT_TIMESTAMP, NULL); 
+
+  `;
+  } catch (error) {
+    console.error("addPaidSubscriptionRecord error:", error);
+  }
+}
+
+export async function cancelSubscription(customerId) {
+  try {
+    const result = await sql`UPDATE paid_subscription_records
+                             SET deleted_at = CURRENT_TIMESTAMP
+                             WHERE stripe_customer_id = ${customerId}
+                             AND deleted_at IS NULL
+                             RETURNING user_id;`;
+
+    if (result.length > 0) {
+      return result[0].user_id; // Return the userId of the affected record
+    } else {
+      console.warn("No active subscription found for customerId:", customerId);
+      return null; // No matching record was updated
+    }
+  } catch (error) {
+    console.error("cancelSubscription error:", error);
+  }
+}
+
+export async function updateUserSubscriptionType(userId, updateVal) {
+  try {
+    // Update the password_hash column for the given user
+    await sql`
+      update users
+      set account_type = ${updateVal}
+      where user_id = ${userId};
+    `;
+  } catch (error) {
+    console.error(
+      "updateUserSubscriptionType : Database Error Occurred:",
+      error
+    );
+  }
+}
+
+export async function recoverFollowerData(userId) {
+  try {
+    // Query to fetch follower data for the given user from the backup table
+    const result = await sql`
+      select follower_id, followed_id, created_at, notified
+      from followers_backup
+      where follower_id = ${userId};
+    `;
+
+    if (result.length > 0) {
+      // Insert the data back into the main followers table
+      await sql`
+        insert into followers (follower_id, followed_id, created_at, notified)
+        select follower_id, followed_id, created_at, notified
+        from followers_backup
+        where follower_id = ${userId};
+      `;
+
+      // Delete the data from the backup table
+      await sql`
+        delete from followers_backup
+        where follower_id = ${userId};
+      `;
+    }
+
+    return result; // Return the retrieved follower data
+  } catch (error) {
+    console.error("getBackupFollowerData : Database Error Occurred:", error);
+    return null; // Return null in case of an error
+  }
+}
+
+export async function backupUserFollowers(userId) {
+  try {
+    // Fetch the follower data from the main table
+    const followersData = await sql`
+      select follower_id, followed_id, created_at, notified
+      from followers
+      where follower_id = ${userId};
+    `;
+
+    if (followersData.length > 0) {
+      // Insert the data into the backup table
+      await sql`
+        insert into followers_backup (follower_id, followed_id, created_at, notified)
+        select follower_id, followed_id, created_at, notified
+        from followers
+        where follower_id = ${userId};
+      `;
+
+      // Delete the data from the main table
+      await sql`
+        delete from followers
+        where follower_id = ${userId};
+      `;
+    }
+
+    return { success: true, message: "Backup completed successfully" };
+  } catch (error) {
+    console.error("backupUserFollowers : Database Error Occurred:", error);
+    return {
+      success: false,
+      message: "An error occurred while backing up the data",
+    };
   }
 }

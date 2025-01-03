@@ -11,6 +11,7 @@ import PostModal from "./PostModal";
 import { logout } from "../actions/auth";
 import Feed from "./Feed";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import LoadingSquiggle from "./LoadingSquiggle";
 
 export default function ({ isLoggedIn }) {
   const searchParams = useSearchParams();
@@ -31,6 +32,7 @@ export default function ({ isLoggedIn }) {
   const [searchQuery, setSearchQuery] = useState(searchQueryText || "");
   const [userStats, setUserStats] = useState();
   const [editPostModalData, setEditPostModalData] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
@@ -44,26 +46,23 @@ export default function ({ isLoggedIn }) {
   };
 
   const logoutUser = async () => {
+    setLoading(true);
     await logout();
   };
 
   async function manageSubscription(clickedSubscription) {
     const currentSubscription = userStats?.account_type;
-    switch (clickedSubscription) {
+    switch (currentSubscription) {
       case 0:
-        //do nothing yet
+        router.push(
+          `${process.env.NEXT_PUBLIC_SUBSCRIPTION_LINK}?client_reference_id=${
+            isLoggedIn.userId ? isLoggedIn.userId : ""
+          }&prefilled_email=${isLoggedIn.email ? isLoggedIn.email : ""}`
+        );
         break;
       case 1:
-        router.push(
-          "https://buy.stripe.com/test_eVa02OaCxdzq1gY146?prefilled_email=" +
-            (isLoggedIn.email ? isLoggedIn.email : "")
-        );
-        break;
-      case 2:
-        router.push(
-          "https://buy.stripe.com/test_28o7vgaCxgLCf7O28b?prefilled_email=" +
-            (isLoggedIn.email ? isLoggedIn.email : "")
-        );
+        router.push(process.env.NEXT_PUBLIC_MANAGE_SUBSCRIPTION_LINK);
+
         break;
     }
   }
@@ -83,6 +82,11 @@ export default function ({ isLoggedIn }) {
 
   return (
     <>
+      {loading && (
+        <div className={styles.loadingContainer}>
+          <LoadingSquiggle />
+        </div>
+      )}
       <div
         className={`${manageFollowingstyles.pageBody} ${styles.mainContent}`}
       >
@@ -145,7 +149,7 @@ export default function ({ isLoggedIn }) {
                     mo
                   </abbr>
                 </span>
-                <span>1 Follow User Limit</span>
+                <span>Can't Follow 😔</span>
               </span>
             </label>
             <label
@@ -159,7 +163,7 @@ export default function ({ isLoggedIn }) {
                 checked={userStats?.account_type === 1}
               />
               <span className={manageFollowingstyles.hiddenVisually}>
-                Pro - €5 per month, 10 Follow User Limit
+                Pro - €8 per month, 25 Follow User Limit
               </span>
               <span
                 className={manageFollowingstyles.planDetails}
@@ -167,35 +171,10 @@ export default function ({ isLoggedIn }) {
               >
                 <span className={manageFollowingstyles.planType}>Pro</span>
                 <span className={manageFollowingstyles.planCost}>
-                  €5<span className={manageFollowingstyles.slash}>/</span>
+                  €8<span className={manageFollowingstyles.slash}>/</span>
                   <span className={manageFollowingstyles.planCycle}>mo</span>
                 </span>
-                <span>10 Follow User Limit</span>
-              </span>
-            </label>
-            <label
-              className={manageFollowingstyles.card}
-              onClick={() => manageSubscription(2)}
-            >
-              <input
-                name="plan"
-                className={manageFollowingstyles.radio}
-                type="radio"
-                checked={userStats?.account_type === 2}
-              />
-              <span className={manageFollowingstyles.hiddenVisually}>
-                Elite - €10 per month, 25 Follow User Limit
-              </span>
-              <span
-                className={manageFollowingstyles.planDetails}
-                aria-hidden="true"
-              >
-                <span className={manageFollowingstyles.planType}>Elite</span>
-                <span className={manageFollowingstyles.planCost}>
-                  €10<span className={manageFollowingstyles.slash}>/</span>
-                  <span className={manageFollowingstyles.planCycle}>mo</span>
-                </span>
-                <span>25 Follow User Limit</span>
+                <span>Can Follow 25 Users 🚀</span>
               </span>
             </label>
           </div>
@@ -242,6 +221,36 @@ export default function ({ isLoggedIn }) {
             User Search
           </h5>
         </div>
+        {(() => {
+          switch (activeTab) {
+            case "myPosts":
+              return (
+                <div className={`${styles.context} ${courierPrime.className}`}>
+                  Manage your posts: view, edit, or delete. ✏️
+                </div>
+              );
+            case "following":
+              return (
+                <div className={`${styles.context} ${courierPrime.className}`}>
+                  See who you're following. 👀
+                </div>
+              );
+            case "followers":
+              return (
+                <div className={`${styles.context} ${courierPrime.className}`}>
+                  Check out who’s following you. 👀
+                </div>
+              );
+            case "search":
+              return (
+                <div className={`${styles.context} ${courierPrime.className}`}>
+                  Search and discover new users to follow. 🔍
+                </div>
+              );
+            default:
+              return null;
+          }
+        })()}
 
         {activeTab == "myPosts" && (
           <Feed

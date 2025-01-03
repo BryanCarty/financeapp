@@ -26,7 +26,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
       );
       if (message == "Follow Inelligibillity") {
         setLoadingError(
-          "Your account type cannot follow more users 😔 Consider upgrading your account. 🚀"
+          "Your account type cannot follow users 😔 Consider upgrading your account. 🚀"
         );
         return;
       }
@@ -76,7 +76,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
               break;
             case "fe":
               errorText =
-                "Hmm.. looks like you've no followers yet. Try make a post.";
+                "Hmm.. looks like you've no followers yet 😞. Try making a post.";
               break;
             case "fi":
               errorText = "Hmm.. Looks like you haven't followed anyone yet 😞";
@@ -144,7 +144,11 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
   }
 
   if (loadingError) {
-    return <div className={`${courierPrime.className}`}>{loadingError}</div>;
+    return (
+      <div className={`${courierPrime.className} ${styles.loadingError}`}>
+        {loadingError}
+      </div>
+    );
   }
 
   if (type == "se" && !searchQuery) return null;
@@ -206,7 +210,8 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
           <div className={styles.modalContent}>
             <h3>Follow {selectedFollowProfile.name}</h3>
             <label>
-              Receive email alerts when John Doe makes a post
+              Receive email alerts when {selectedFollowProfile.name} makes a
+              post
               <input
                 type="checkbox"
                 checked={emailAlerts}

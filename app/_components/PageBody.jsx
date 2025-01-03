@@ -88,6 +88,48 @@ export default function ({ isLoggedIn }) {
             Consensus Search
           </h5>
         </div>
+        {(() => {
+          switch (activeTab) {
+            case "trending":
+              return (
+                <div className={`${styles.context} ${courierPrime.className}`}>
+                  Discover the posts that are currently grabbing the most
+                  attention. Explore content ranked by engagement. 📈
+                </div>
+              );
+            case "personalFeed":
+              return (
+                <div className={`${styles.context} ${courierPrime.className}`}>
+                  See what the users you're following are posting. Dive into
+                  their latest updates. 🤔
+                </div>
+              );
+            case "latest":
+              return (
+                <div className={`${styles.context} ${courierPrime.className}`}>
+                  Explore the newest posts from users. Stay up-to-date with the
+                  freshest content. ⏱️
+                </div>
+              );
+            case "leaderboard":
+              return (
+                <div className={`${styles.context} ${courierPrime.className}`}>
+                  Check out the top users with the best trading track records.
+                  🏆
+                </div>
+              );
+            case "search":
+              return (
+                <div className={`${styles.context} ${courierPrime.className}`}>
+                  Search by ticker and date to discover what others foresee for
+                  the future performance of that stock. 🔍
+                </div>
+              );
+            default:
+              return null;
+          }
+        })()}
+
         {(activeTab == "trending" ||
           activeTab == "personalFeed" ||
           activeTab == "latest") && (

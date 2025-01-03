@@ -28,6 +28,7 @@ export default function ArticleSummary({
   commentCount,
   setEditPostData,
   result,
+  setLoading,
 }) {
   const router = useRouter();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -35,6 +36,7 @@ export default function ArticleSummary({
   // Handler for clicking on the article summary
   const handleArticleClick = () => {
     // Redirect to the article page
+    setLoading(true);
     router.push(`/articles/${articleId}`);
   };
 

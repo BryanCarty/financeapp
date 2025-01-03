@@ -16,6 +16,7 @@ export default function Feed({ type, setEditPostData }) {
   const [noMorePosts, setNoMorePosts] = useState(false); // Track if there are more posts to load
   const activeTickers = useRef(new Set()); // Track visible articles
   const [priceMap, setPriceMap] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const fetchFeed = useCallback(
     async (page) => {
@@ -110,54 +111,86 @@ export default function Feed({ type, setEditPostData }) {
 
   if (loadingError) {
     return (
-      <div
-        className={`${styles.error} ${courierPrime.className} ${styles.mainContent}`}
-      >
+      <div className={`${styles.loadingError} ${courierPrime.className}`}>
         {loadingError}
       </div>
     );
   }
 
   return (
-    <div className={styles.feed}>
-      {feed.map((article, index) => (
-        <ArticleSummary
-          key={article.id}
-          articleId={article.id}
-          ticker={article.ticker}
-          comparison={article.comparison}
-          price={article.price}
-          expiry={article.expiry}
-          postDate={article.post_date}
-          username={article.post_author_username}
-          accuracy={article.post_author_accuracy + "%"}
-          content={article.content}
-          agreeCount={article.total_agreements}
-          disagreeCount={article.total_disagreements}
-          priceStatus={
-            //activeTickers.current.has(String(article.id)) &&
-            priceMap[article.ticker] ? priceMap[article.ticker] : article.status
-          }
-          commentCount={article.total_comments}
-          setEditPostData={article.owned_by_me ? setEditPostData : null}
-          result={article.true_claim}
-        />
-      ))}
-      {hasMore && (
-        <div id="last-post" className={styles.loadingIndicator}>
+    <>
+      {loading && (
+        <div className={styles.loadingContainer}>
           <LoadingSquiggle />
         </div>
       )}
-      {noMorePosts &&
-        (type == "personalFeed" ? (
-          <div className={`${courierPrime.className} `}>
-            No posts found 😥. Start following people!
-          </div>
-        ) : (
-          <div className={`${courierPrime.className} ${styles.margin}`}>
-            No more posts found 😥
-          </div>
+      <div className={styles.feed}>
+        {feed.map((article, index) => (
+          <ArticleSummary
+            key={article.id}
+            articleId={article.id}
+            ticker={article.ticker}
+            comparison={article.comparison}
+            price={article.price}
+            expiry={article.expiry}
+            postDate={article.post_date}
+            username={article.post_author_username}
+            accuracy={article.post_author_accuracy + "%"}
+            content={article.content}
+            agreeCount={article.total_agreements}
+            disagreeCount={article.total_disagreements}
+            priceStatus={
+              //activeTickers.current.has(String(article.id)) &&
+              priceMap[article.ticker]
+                ? priceMap[article.ticker]
+                : article.status
+            }
+            commentCount={article.total_comments}
+            setEditPostData={article.owned_by_me ? setEditPostData : null}
+            result={article.true_claim}
+            setLoading={setLoading}
+          />
         ))}
-    </div>
+        {hasMore && (
+          <div id="last-post" className={styles.loadingIndicator}>
+            <LoadingSquiggle />
+          </div>
+        )}
+        {noMorePosts &&
+          (() => {
+            let message;
+            switch (type) {
+              case "personalFeed":
+                message = (
+                  <div
+                    className={`${courierPrime.className} ${styles.loadingError}`}
+                  >
+                    No posts found 😥. Start following people!
+                  </div>
+                );
+                break;
+              case "myPosts":
+                message = (
+                  <div
+                    className={`${courierPrime.className} ${styles.loadingError}`}
+                  >
+                    No posts found 😥. Start creating posts!
+                  </div>
+                );
+                break;
+              default:
+                message = (
+                  <div
+                    className={`${courierPrime.className} ${styles.loadingError}`}
+                  >
+                    No more posts found 😥
+                  </div>
+                );
+                break;
+            }
+            return message;
+          })()}
+      </div>
+    </>
   );
 }

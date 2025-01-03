@@ -145,7 +145,11 @@ export default function ConscensusCharts({ searchQuery }) {
   }
 
   if (loadingError) {
-    return <div className={`${courierPrime.className}`}>{loadingError}</div>;
+    return (
+      <div className={`${courierPrime.className} ${styles.loadingError}`}>
+        {loadingError}
+      </div>
+    );
   }
 
   return (

@@ -182,3 +182,21 @@
     transform: scale(1);
   }
 }
+
+.loadingContainer {
+  position: fixed; /* Sticks the container to the viewport */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.3
+  ); /* Optional: adds a semi-transparent background */
+  z-index: 9999; /* Ensures it stays on top of other content */
+}

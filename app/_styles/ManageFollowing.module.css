@@ -1,11 +1,12 @@
 .pageBody {
   width: 100%;
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
+  flex: 1;
 }
 
 .searchContainer {
