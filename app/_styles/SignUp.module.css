@@ -200,3 +200,22 @@
   ); /* Optional: adds a semi-transparent background */
   z-index: 9999; /* Ensures it stays on top of other content */
 }
+
+.checkboxContainer {
+  margin: 10px;
+  width: 90%;
+  text-align: center;
+}
+
+.checkbox {
+  margin-right: 8px;
+}
+
+.link {
+  color: #0070f3;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

@@ -9,7 +9,7 @@ import styles from "@/app/_styles/PageContainer.module.css";
 export default async function () {
   const isLoggedIn = await verifySession();
   if (!isLoggedIn) {
-    redirect("/login");
+    redirect("/login?redirect=/profile");
   }
   return (
     <div className={styles.pageContainer}>

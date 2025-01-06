@@ -17,17 +17,33 @@ export default function Footer() {
       )}
       <div className={`${styles.footer} ${courierPrime.className}`}>
         <div className={styles.leftFooter}>
-          | © 2024 The Traders Journal | All Rights Reserved |
+          | © 2024 Insights Of A Trader | All Rights Reserved |
         </div>
         <div className={styles.rightFooter}>
+          <Link
+            className={`${styles.link} ${courierPrime.className}`}
+            href="/terms-and-conditions"
+            onClick={(e) => setLoading(true)}
+          >
+            T&C's
+          </Link>{" "}
+          |{" "}
+          <Link
+            className={`${styles.link} ${courierPrime.className}`}
+            href="/privacy-policy"
+            onClick={(e) => setLoading(true)}
+          >
+            Privacy Policy
+          </Link>{" "}
+          |{" "}
           <Link
             className={`${styles.link} ${courierPrime.className}`}
             href="/about"
             onClick={(e) => setLoading(true)}
           >
             About
-          </Link>
-          | info@thetradersjournal.com
+          </Link>{" "}
+          | info@insightsofatrader.com
         </div>
       </div>
     </>

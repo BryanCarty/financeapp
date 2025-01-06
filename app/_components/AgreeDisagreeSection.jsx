@@ -1,7 +1,7 @@
 "use client";
 import styles from "@/app/_styles/Article.module.css";
 import courierPrime from "./CourierPrime";
-
+import { usePathname } from "next/navigation";
 import updateAgreementStatus from "../actions/agree";
 
 export default function AgreeDisagreeSection({
@@ -13,9 +13,11 @@ export default function AgreeDisagreeSection({
   setDisagreeCount,
   setCommentsList,
 }) {
+  const currentPath = usePathname();
+
   async function agreeToggle(params) {
     if (currentAgreementStatus == 0) {
-      const { success } = await updateAgreementStatus(id, 1);
+      const { success } = await updateAgreementStatus(id, 1, currentPath);
       setAgreeCount((count) => (count += 1));
       setAgreeDisagreeStatus(1);
       setCommentsList((prevComments) =>
@@ -27,7 +29,7 @@ export default function AgreeDisagreeSection({
         )
       );
     } else if (currentAgreementStatus == -1) {
-      const { success } = await updateAgreementStatus(id, 1);
+      const { success } = await updateAgreementStatus(id, 1, currentPath);
       setAgreeCount((count) => (count += 1));
       setDisagreeCount((count) => (count -= 1));
       setAgreeDisagreeStatus(1);
@@ -41,7 +43,7 @@ export default function AgreeDisagreeSection({
       );
     } else {
       //currentAgreementStatus == 1
-      const { success } = await updateAgreementStatus(id, 0);
+      const { success } = await updateAgreementStatus(id, 0, currentPath);
       setAgreeCount((count) => (count -= 1));
       setAgreeDisagreeStatus(0);
       setCommentsList((prevComments) =>
@@ -57,7 +59,7 @@ export default function AgreeDisagreeSection({
 
   async function disagreeToggle(params) {
     if (currentAgreementStatus == 0) {
-      const { success } = await updateAgreementStatus(id, -1);
+      const { success } = await updateAgreementStatus(id, -1, currentPath);
       setDisagreeCount((count) => (count += 1));
       setAgreeDisagreeStatus(-1);
       setCommentsList((prevComments) =>
@@ -69,7 +71,7 @@ export default function AgreeDisagreeSection({
         )
       );
     } else if (currentAgreementStatus == 1) {
-      const { success } = await updateAgreementStatus(id, -1);
+      const { success } = await updateAgreementStatus(id, -1, currentPath);
       setDisagreeCount((count) => (count += 1));
       setAgreeCount((count) => (count -= 1));
       setAgreeDisagreeStatus(-1);
@@ -83,7 +85,7 @@ export default function AgreeDisagreeSection({
       );
     } else {
       //currentAgreementStatus == -1
-      const { success } = await updateAgreementStatus(id, 0);
+      const { success } = await updateAgreementStatus(id, 0, currentPath);
       setDisagreeCount((count) => (count -= 1));
       setAgreeDisagreeStatus(0);
       setCommentsList((prevComments) =>

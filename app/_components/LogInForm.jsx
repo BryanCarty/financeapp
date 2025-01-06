@@ -5,10 +5,13 @@ import Link from "next/link";
 import courierPrime from "./CourierPrime";
 import { login } from "@/app/actions/auth";
 import { useActionState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function LogInForm() {
   const [state, action, pending] = useActionState(login, {});
   const { email } = state?.values || {};
+  const searchParams = useSearchParams();
+  let redirect = searchParams.get("redirect");
 
   return (
     <div className={styles.mainSection}>
@@ -17,6 +20,7 @@ export default function LogInForm() {
           Log In
         </h1>
         <form action={action} className={styles.form}>
+          {redirect && <input type="hidden" name="redirect" value={redirect} />}
           <div>
             <input
               type="email"
@@ -72,7 +76,7 @@ export default function LogInForm() {
       <div className={styles.subSection}>
         <Link
           className={`${styles.loginButton} ${courierPrime.className}`}
-          href="/signup"
+          href={`/signup${redirect ? `?redirect=${redirect}` : ``}`}
         >
           Sign up
         </Link>

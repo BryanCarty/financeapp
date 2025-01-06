@@ -7,10 +7,18 @@ import PostModalButton from "./PostModalButton";
 import HomeLink from "./HomeLink";
 import { useState } from "react";
 import LoadingSquiggle from "./LoadingSquiggle";
+import { usePathname } from "next/navigation";
 
 export default function ({ isLoggedIn }) {
   //Determine if the user is logged in
   const [loading, setLoading] = useState(false);
+  const currentPath = usePathname();
+
+  const handleLinkClick = (href) => {
+    if (currentPath !== href) {
+      setLoading(true);
+    }
+  };
 
   return (
     <>
@@ -24,19 +32,19 @@ export default function ({ isLoggedIn }) {
           <Link
             className={styles.logo}
             href="/"
-            onClick={(e) => setLoading(true)}
+            onClick={(e) => handleLinkClick("/")}
           >
             <h1 className={`${courierPrime.className} ${styles.typedSiteName}`}>
-              The Traders Journal
+              Insights Of A Trader
             </h1>
           </Link>
         </div>
         <div className={styles.rightOfHeader}>
-          <HomeLink setLoading={setLoading} />
+          <HomeLink handleLinkClick={handleLinkClick} />
           <Link
             className={`${styles.navButton} ${courierPrime.className}`}
             href="/about"
-            onClick={(e) => setLoading(true)}
+            onClick={(e) => handleLinkClick("/about")}
           >
             About
           </Link>
@@ -46,9 +54,8 @@ export default function ({ isLoggedIn }) {
 
               <Link
                 className={`${styles.profileCircle} ${courierPrime.className}`}
-                href="/settings"
-                data-username="John Doe"
-                onClick={(e) => setLoading(true)}
+                href="/profile"
+                onClick={(e) => handleLinkClick("/profile")}
               >
                 {isLoggedIn.username[0].toUpperCase()}
               </Link>
@@ -58,7 +65,7 @@ export default function ({ isLoggedIn }) {
               <Link
                 className={`${styles.navButton} ${courierPrime.className}`}
                 href="/login"
-                onClick={(e) => setLoading(true)}
+                onClick={(e) => handleLinkClick("/login")}
               >
                 Log in
               </Link>
@@ -66,7 +73,7 @@ export default function ({ isLoggedIn }) {
               <Link
                 className={`${styles.navButton} ${courierPrime.className} ${styles.underline}`}
                 href="/signup"
-                onClick={(e) => setLoading(true)}
+                onClick={(e) => handleLinkClick("/signup")}
               >
                 Sign up
               </Link>
@@ -100,7 +107,7 @@ export default function () {
         <div className={styles.leftOfHeader}>
           <Link className={styles.logo} href="/">
             <h1 className={`${courierPrime.className} ${styles.typedSiteName}`}>
-              The Traders Journal
+              Insights Of A Trader
             </h1>
           </Link>
         </div>

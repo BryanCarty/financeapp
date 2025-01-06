@@ -611,64 +611,119 @@ export async function unfollowUserDb(myUserId, otherUserId) {
   }
 }
 
-export async function getArticleById(articleId, currentUserId) {
+export async function fetchArticleUrls() {
   try {
-    const result = await sql`
-    SELECT 
-        posts.*, 
-        users.username AS post_author_username, 
-        users.accuracy AS post_author_accuracy,
-        COALESCE(
-            COUNT(DISTINCT CASE 
-                WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
-            END), 
-            0
-        ) AS total_agreements,
-        COALESCE(
-            COUNT(DISTINCT CASE 
-                WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
-            END), 
-            0
-        ) AS total_disagreements,
-        COALESCE(
-            (SELECT agreement_status.agreement_status 
-            FROM agreement_status 
-            WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = ${currentUserId}
-            ), NULL
-        ) AS user_agreement_status,
-        COALESCE(
-            json_agg(
-                DISTINCT CASE 
-                    WHEN comments.id IS NOT NULL THEN jsonb_build_object(
-                        'comment_id', comments.id,
-                        'user_id', comments.user_id,
-                        'text', comments.text,
-                        'created_at', comments.created_at,
-                        'username', comment_users.username,
-                        'accuracy', comment_users.accuracy,
-                        'post_opinion', COALESCE(
-                            (
-                                SELECT agreement_status.agreement_status
-                                FROM agreement_status
-                                WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = comments.user_id
-                                LIMIT 1
-                            ), NULL
-                        )
+    const postUrlData = await sql`
+    SELECT id, ticker, comparison, price, expiry
+    FROM posts;
+  `;
+
+    return postUrlData;
+  } catch (error) {
+    console.log("fetchArticleUrls: Database Error Occurred:", error);
+    return [];
+  }
+}
+
+export async function getArticleBySlug(
+  ticker,
+  comparison,
+  price,
+  day,
+  month,
+  year,
+  articleId,
+  currentUserId
+) {
+  // Month name to number mapping
+  const monthMap = {
+    january: "01",
+    february: "02",
+    march: "03",
+    april: "04",
+    may: "05",
+    june: "06",
+    july: "07",
+    august: "08",
+    september: "09",
+    october: "10",
+    november: "11",
+    december: "12",
+  };
+
+  // Get the formatted month number
+  const formattedMonth = monthMap[month];
+
+  // Ensure day is zero-padded (e.g., "09" instead of "9")
+  const formattedDay = String(day).padStart(2, "0");
+
+  // Construct the timestamp string in 'YYYY-MM-DD 00:00:00' format (midnight)
+  const timestampString = `${year}-${formattedMonth}-${formattedDay} 00:00:00`;
+
+  const expiryObject = new Date(timestampString);
+
+  let comparisonVal = null;
+  if (comparison == "greater") {
+    comparisonVal = ">";
+  } else if (comparison == "less") {
+    comparisonVal = "<";
+  }
+
+  try {
+    const result = await sql`SELECT 
+    posts.*, 
+    users.username AS post_author_username, 
+    users.accuracy AS post_author_accuracy,
+    COALESCE(
+        COUNT(DISTINCT CASE 
+            WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
+        END), 
+        0
+    ) AS total_agreements,
+    COALESCE(
+        COUNT(DISTINCT CASE 
+            WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
+        END), 
+        0
+    ) AS total_disagreements,
+    COALESCE(
+        (SELECT agreement_status.agreement_status 
+        FROM agreement_status 
+        WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = ${currentUserId}
+        ), NULL
+    ) AS user_agreement_status,
+    COALESCE(
+        json_agg(
+            DISTINCT CASE 
+                WHEN comments.id IS NOT NULL THEN jsonb_build_object(
+                    'comment_id', comments.id,
+                    'user_id', comments.user_id,
+                    'text', comments.text,
+                    'created_at', comments.created_at,
+                    'username', comment_users.username,
+                    'accuracy', comment_users.accuracy,
+                    'post_opinion', COALESCE(
+                        (
+                            SELECT agreement_status.agreement_status
+                            FROM agreement_status
+                            WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = comments.user_id
+                            LIMIT 1
+                        ), NULL
                     )
-                END
-            ) FILTER (WHERE comments.id IS NOT NULL), 
-            '[]'
-        ) AS comments,
-        COALESCE(stock_data.close_price, NULL) AS status
-    FROM posts 
-    JOIN users ON posts.author_id = users.user_id
-    LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
-    LEFT JOIN comments ON comments.article_id = posts.id
-    LEFT JOIN users AS comment_users ON comments.user_id = comment_users.user_id
-    LEFT JOIN stock_data ON stock_data.ticker = posts.ticker
-    WHERE posts.id = ${articleId}
-    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price;
-`;
+                )
+            END
+        ) FILTER (WHERE comments.id IS NOT NULL), 
+        '[]'
+    ) AS comments,
+    COALESCE(stock_data.close_price, NULL) AS status
+  FROM posts 
+  JOIN users ON posts.author_id = users.user_id
+  LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
+  LEFT JOIN comments ON comments.article_id = posts.id
+  LEFT JOIN users AS comment_users ON comments.user_id = comment_users.user_id
+  LEFT JOIN stock_data ON stock_data.ticker = posts.ticker
+  WHERE posts.id = ${articleId} AND posts.ticker = ${ticker.toUpperCase()} AND posts.comparison = ${comparisonVal} AND posts.price=${price} AND posts.expiry=${expiryObject}
+  GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price;`;
 
     /*
     

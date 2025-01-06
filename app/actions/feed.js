@@ -15,9 +15,9 @@ export default async function loadFeed(type, page) {
 
     switch (type) {
       case "latest": //follower
-        if (!userId) {
-          redirect("/login");
-        }
+        //if (!userId) {
+        //  redirect("/login");
+        //}
         const latestFeed = await getLatestFeed(page);
 
         //need to calculate status

@@ -5,14 +5,14 @@ export default async function AboutPageBody() {
   return (
     <div className={styles.container}>
       <div className={`${styles.mainBody} ${courierPrime.className}`}>
-        <h1>About The Traders Journal</h1>
+        <h1>About Insights Of A Trader</h1>
         <p>
-          Welcome to <strong>The Traders Journal</strong> – a dynamic platform
+          Welcome to <strong>Insights Of A Trader</strong> – a dynamic platform
           where traders unite to share, learn, and grow. Here, traders of all
           levels can voice their opinions on future price movements, log their
           trades, and back their decisions with reasoning and logic. Whether
           you're looking to sharpen your trading strategies or gain valuable
-          insights, The Traders Journal provides the tools to make it happen.
+          insights, Insights Of A Trader provides the tools to make it happen.
         </p>
         <br />
         <h2>What We Offer:</h2>
@@ -40,7 +40,7 @@ export default async function AboutPageBody() {
         </ul>
         <br />
         <p>
-          At <strong>The Traders Journal</strong>, we believe in the power of
+          At <strong>Insights Of A Trader</strong>, we believe in the power of
           shared knowledge and accountability. Join us to explore diverse market
           perspectives, refine your strategies, and build confidence in your
           trading decisions. Let’s navigate the markets together.

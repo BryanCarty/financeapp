@@ -59,7 +59,7 @@ export async function sendResetPasswordEmail(email, name, resetLink) {
             <br>
             <br>
             <div class="copyright-section">
-                <p>&copy; 2024 The Traders Journal. All rights reserved.</p>
+                <p>&copy; 2024 Insights Of A Trader. All rights reserved.</p>
             </div>
         </div>
     </body>
@@ -67,7 +67,7 @@ export async function sendResetPasswordEmail(email, name, resetLink) {
 
     try {
       const info = await transporter.sendMail({
-        from: `"The Traders Journal" <${process.env.THE_TRADERS_JOURNAL_EMAIL}>`,
+        from: `"Insights Of A Trader" <${process.env.THE_TRADERS_JOURNAL_EMAIL}>`,
         to: email,
         subject: "Reset Password Email",
         html: htmlToSend,
@@ -131,7 +131,7 @@ export async function sendWelcomeEmail(email, name) {
             <br><br>
             <div>
                 <p>Hey ${name} 😊,</p>
-                <p>This email is just to welcome you to The traders Journal. Please don't hesitate to reach out to us if you have any questions.</p>
+                <p>This email is just to welcome you to Insights Of A Trader. Please don't hesitate to reach out to us if you have any questions.</p>
                 <br>
                 <br>
                 <br>
@@ -142,7 +142,7 @@ export async function sendWelcomeEmail(email, name) {
             <br>
             <br>
             <div class="copyright-section">
-                <p>&copy; 2024 The Traders Journal. All rights reserved.</p>
+                <p>&copy; 2024 Insights Of A Trader. All rights reserved.</p>
             </div>
         </div>
     </body>
@@ -150,7 +150,7 @@ export async function sendWelcomeEmail(email, name) {
 
     try {
       const info = await transporter.sendMail({
-        from: `"The Traders Journal" <${process.env.THE_TRADERS_JOURNAL_EMAIL}>`,
+        from: `"Insights Of A Trader" <${process.env.THE_TRADERS_JOURNAL_EMAIL}>`,
         to: email,
         subject: "Welcome Email",
         html: htmlToSend,
@@ -235,7 +235,7 @@ export async function sendNewPostEmail(
                 <br>
                 <br>
                 <div class="copyright-section">
-                    <p>&copy; 2024 The Traders Journal. All rights reserved.</p>
+                    <p>&copy; 2024 Insights Of A Trader. All rights reserved.</p>
                 </div>
             </div>
         </body>
@@ -243,7 +243,7 @@ export async function sendNewPostEmail(
 
       try {
         const info = await transporter.sendMail({
-          from: `"The Traders Journal" <${process.env.THE_TRADERS_JOURNAL_EMAIL}>`,
+          from: `"Insights Of A Trader" <${process.env.THE_TRADERS_JOURNAL_EMAIL}>`,
           to: email,
           subject: `New Post by ${authorUsername}`,
           html: htmlToSend,
@@ -308,7 +308,7 @@ export async function sendSubscriptionCreatedEmail(email) {
                 <br><br>
                 <div>
                     <p>Hey,</p>
-                    <p>This email is just to let you know that you've successfully been subscribed to The Traders Journal Pro!</p>
+                    <p>This email is just to let you know that you've successfully been subscribed to Insights Of A Trader Pro!</p>
                     <br>
                     <br>
                     <p>You can now follow up to 25 users at a time.</p>
@@ -321,13 +321,13 @@ export async function sendSubscriptionCreatedEmail(email) {
                 <br>
                 <br>
                 <div class="copyright-section">
-                    <p>&copy; 2024 The Traders Journal. All rights reserved.</p>
+                    <p>&copy; 2024 Insights Of A Trader. All rights reserved.</p>
                 </div>
             </div>
         </body>
         </html>`;
     const info = await transporter.sendMail({
-      from: `"The Traders Journal" <${process.env.THE_TRADERS_JOURNAL_EMAIL}>`,
+      from: `"Insights Of A Trader" <${process.env.THE_TRADERS_JOURNAL_EMAIL}>`,
       to: email,
       subject: `You've Subscribed to Pro! 😎`,
       html: htmlToSend,
@@ -386,7 +386,7 @@ export async function sendUnsubscribeEmail(email) {
               <br><br>
               <div>
                   <p>Hey,</p>
-                  <p>This email is just to let you know that you've successfully been unsubscribed to The Traders Journal Pro!</p>
+                  <p>This email is just to let you know that you've successfully been unsubscribed to Insights Of A Trader Pro!</p>
                   <br>
                   <br>
                   <p>If you've any questions, don't hesitate to contact us.</p>
@@ -399,13 +399,13 @@ export async function sendUnsubscribeEmail(email) {
               <br>
               <br>
               <div class="copyright-section">
-                  <p>&copy; 2024 The Traders Journal. All rights reserved.</p>
+                  <p>&copy; 2024 Insights Of A Trader. All rights reserved.</p>
               </div>
           </div>
       </body>
       </html>`;
     const info = await transporter.sendMail({
-      from: `"The Traders Journal" <${process.env.THE_TRADERS_JOURNAL_EMAIL}>`,
+      from: `"Insights Of A Trader" <${process.env.THE_TRADERS_JOURNAL_EMAIL}>`,
       to: email,
       subject: `You've Unubscribed to Pro! 😢`,
       html: htmlToSend,

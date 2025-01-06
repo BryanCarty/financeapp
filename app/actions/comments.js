@@ -8,17 +8,21 @@ import {
 import { redirect } from "next/navigation";
 import DOMPurify from "isomorphic-dompurify";
 
-export async function submitComment(postId, text) {
+export async function submitComment(postId, text, redirectUrl) {
   try {
     const { userId, username } = await verifySession();
     if (!userId) {
-      redirect("/login");
+      const redirectVal = redirectUrl
+        ? `/login?redirect=${redirectUrl}`
+        : `/login`;
+      redirect(redirectVal);
     }
     const sanitizedText = DOMPurify.sanitize(text);
     const comment = await createComment(postId, userId, sanitizedText);
     return comment;
   } catch (error) {
-    console.log("An error occurred in submitComment");
+    if (error.message === "NEXT_REDIRECT") throw error;
+    console.log("An error occurred in submitComment: " + error);
     return false;
   }
 }

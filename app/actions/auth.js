@@ -25,6 +25,7 @@ export async function signup(state, formData) {
   const email = formData.get("email");
   const password = formData.get("password");
   const dateOfBirth = formData.get("dateOfBirth");
+  const redirectVal = formData.get("redirect");
 
   const extractedData = {
     username: username,
@@ -70,7 +71,11 @@ export async function signup(state, formData) {
     let result = await sendWelcomeEmail(email, username);
 
     // 5. Redirect user
-    redirect("/");
+    if (redirectVal) {
+      redirect(redirectVal);
+    } else {
+      redirect("/");
+    }
   } catch (error) {
     if (error.message === "NEXT_REDIRECT") throw error;
     console.log("An error occurred in signup: " + error);
@@ -104,6 +109,7 @@ export async function login(state, formData) {
   // Validate form fields
   const email = formData.get("email");
   const password = formData.get("password");
+  const redirectVal = formData.get("redirect");
 
   const extractedData = {
     email: email,
@@ -136,8 +142,11 @@ export async function login(state, formData) {
         values: extractedData,
       };
     }
-    // 5. Redirect user
-    redirect("/");
+    if (redirectVal) {
+      redirect(redirectVal);
+    } else {
+      redirect("/");
+    }
   } catch (error) {
     if (error.message === "NEXT_REDIRECT") throw error;
     console.log("An error occurred in login(): " + error);

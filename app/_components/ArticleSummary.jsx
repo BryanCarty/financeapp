@@ -10,6 +10,7 @@ import {
   extractSnippet,
   calculateDaysUntilExpiry,
   formatDateToHumanReadable,
+  formatDateToUrl,
 } from "../client_utils/utils";
 
 export default function ArticleSummary({
@@ -32,12 +33,25 @@ export default function ArticleSummary({
 }) {
   const router = useRouter();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  let comparisonText = null;
+  if (comparison == ">") {
+    comparisonText = "greater-than";
+  } else if (comparison == "<") {
+    comparisonText = "less-than";
+  }
 
   // Handler for clicking on the article summary
   const handleArticleClick = () => {
     // Redirect to the article page
     setLoading(true);
-    router.push(`/articles/${articleId}`);
+    const redirectStr = `/articles/why-${ticker.toLowerCase()}-stock-will-be-${comparisonText}-${parseFloat(
+      price
+    ).toFixed(2)}-by-market-close-on-the-${formatDateToUrl(
+      expiry
+    )}-${articleId}`;
+    console.log(redirectStr);
+    router.push(redirectStr);
+    //why-appl-stock-will-be-greater-than-310.09-by-market-close-on-the-31st-of-march-2025-23
   };
 
   // Handler for clicking on the comment icon
@@ -83,7 +97,7 @@ export default function ArticleSummary({
   }
 
   function redirectToUserInfo() {
-    router.push(`/settings?tab=search&query=${username}`);
+    router.push(`/profile?tab=search&query=${username}`);
   }
 
   return (

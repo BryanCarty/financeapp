@@ -4,11 +4,15 @@ import styles from "@/app/_styles/SignUp.module.css";
 import Link from "next/link";
 import courierPrime from "./CourierPrime";
 import { signup } from "@/app/actions/auth";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function SignUpForm() {
   const [state, action, pending] = useActionState(signup, {});
   const { username, email, password, dateOfBirth } = state?.values || {};
+  const searchParams = useSearchParams();
+  let redirect = searchParams.get("redirect");
+
   return (
     <div className={styles.mainSection}>
       <div className={styles.signUpForm}>
@@ -16,6 +20,7 @@ export default function SignUpForm() {
           Sign Up
         </h1>
         <form action={action} className={styles.form}>
+          {redirect && <input type="hidden" name="redirect" value={redirect} />}
           <div>
             <input
               required
@@ -94,6 +99,36 @@ export default function SignUpForm() {
             )}
           </div>
 
+          {/* Terms and Conditions Checkbox */}
+          <div className={styles.checkboxContainer}>
+            <label className={`${courierPrime.className}`} htmlFor="terms">
+              <input
+                required
+                type="checkbox"
+                id="terms"
+                name="terms"
+                className={styles.checkbox}
+              />
+              I agree to the{" "}
+              <Link
+                href="/terms-and-conditions"
+                target="_blank"
+                className={styles.link}
+              >
+                Terms and Conditions
+              </Link>{" "}
+              and{" "}
+              <Link
+                href="/privacy-policy"
+                target="_blank"
+                className={styles.link}
+              >
+                Privacy Policy
+              </Link>
+              .
+            </label>
+          </div>
+
           <div>
             {!pending ? (
               <button
@@ -122,9 +157,9 @@ export default function SignUpForm() {
         </Link>
         <Link
           className={`${styles.loginButton} ${courierPrime.className}`}
-          href="/login"
+          href={`/login${redirect ? `?redirect=${redirect}` : ``}`}
         >
-          Go to login
+          login
         </Link>
       </div>
     </div>

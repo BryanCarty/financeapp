@@ -34,16 +34,23 @@ async function isValidTickerPrice(specificTicker, price, condition) {
     const result = await getValidTickers();
     const entry = result.find(({ ticker }) => ticker === specificTicker);
 
-    if (!entry) {
+    let closePrice = parseFloat(entry.close_price);
+
+    if (
+      !entry ||
+      entry === undefined ||
+      !closePrice ||
+      closePrice === undefined
+    ) {
       return { validTicker: false, message: "Unrecognized Ticker" };
     }
 
-    if (condition == "greater than" && price < entry.close_price) {
+    if (condition == "greater than" && price < closePrice) {
       return {
         validTicker: false,
         message: "Price must be greater than current price",
       };
-    } else if (condition == "less than" && price > entry.close_price) {
+    } else if (condition == "less than" && price > closePrice) {
       return {
         validTicker: false,
         message: "Price must be less than current price",

@@ -30,7 +30,7 @@ export default function ArticleHeader({
   const router = useRouter();
 
   function redirectToUserInfo() {
-    router.push(`/settings?tab=search&query=${author}`);
+    router.push(`/profile?tab=search&query=${author}`);
   }
 
   const fetchPricesForTickers = async (tickers) => {

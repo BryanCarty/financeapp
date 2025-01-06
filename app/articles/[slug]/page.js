@@ -3,31 +3,9 @@ import StandardPageHeader from "@/app/_components/StandardPageHeader";
 import styles from "@/app/_styles/Article.module.css";
 import Footer from "@/app/_components/Footer";
 import { redirect } from "next/navigation";
-import fetchArticleById from "@/app/actions/articles";
+import fetchArticleBySlug from "@/app/actions/articles";
 import ArticleDynamicContent from "@/app/_components/ArticleDyanmicContent";
 import { verifySession } from "@/app/lib/sessions";
-/*
-function formatDateToHumanReadable(dateString, includeTime = false) {
-  const date = new Date(dateString);
-
-  // Format the date (e.g., Dec 2nd, 2024)
-  const options = { month: "short", day: "numeric", year: "numeric" };
-  const formattedDate = new Intl.DateTimeFormat("en-US", options).format(date);
-
-  // Add suffix to the day (1st, 2nd, 3rd, etc.)
-  const day = date.getDate();
-  const suffix =
-    day === 1 || day === 21 || day === 31
-      ? "st"
-      : day === 2 || day === 22
-      ? "nd"
-      : day === 3 || day === 23
-      ? "rd"
-      : "th";
-
-  // Return the formatted date with the suffix
-  return formattedDate.replace(day, `${day}${suffix}`);
-}*/
 
 function formatDateToHumanReadable(dateString, includeTime = false) {
   const date = new Date(dateString);
@@ -68,17 +46,69 @@ function makeHumanReadableDates(comments, loggedInUser) {
   }));
 }
 
+export async function generateMetadata({ params }) {
+  const slug = await params.slug;
+  const array = slug.split("-");
+  array[1] = array[1].toUpperCase();
+  array[0] = array[0].charAt(0).toUpperCase() + array[0].slice(1); // Capitalize the first letter of the first word
+  array[15] = array[15].charAt(0).toUpperCase() + array[15].slice(1); // Capitalize the first letter of the first word
+  array.pop(); // Removes the last element (39)
+
+  const resultStr = array.join(" ");
+
+  return {
+    title: `Insights Of A Trader | ${resultStr}`,
+    description: `'Insights of a Trader' ${resultStr} article page. 'Insights of a Trader' is a dynamic platform designed for traders to collaborate and refine their market strategies. Users can share stock price predictions, log their trades, discuss individual stocks, and gain valuable insights into market trends. The platform also offers email notifications for trade prediction posts, allowing traders to stay updated. Additionally, users can search by ticker and date to discover what others foresee for the future performance of a stock, helping them make more informed decisions based on collective insights from the community.`,
+    icons: {
+      icon: "/images/icon.png",
+    },
+    keywords: [
+      "trading platform",
+      "stock predictions",
+      "market trends",
+      "trade logging",
+      "stock insights",
+      "financial community",
+      "trader collaboration",
+      "stock forecasting",
+      "ticker search",
+      "market predictions",
+      "trading insights",
+      "stock market analysis",
+      "future performance predictions",
+      "trader notifications",
+      "stock consensus",
+      "investment strategies",
+      "copy trading",
+      "stock forum",
+      resultStr,
+    ],
+    metadataBase: new URL("https://insightsofatrader.com"),
+    alternates: {
+      canonical: `/articles/${slug}`,
+      languages: {
+        "en-US": "/en-US",
+      },
+    },
+    openGraph: {
+      images: "/icon.png",
+    },
+  };
+}
+
 export default async function ArticlePage({ params }) {
   const userId = await verifySession();
-  if (!userId) {
-    redirect("/login");
-  }
 
-  const slug = (await params).id;
+  const slug = (await params).slug;
+
+  //if (!userId) {
+  //  const redirectUrl = slug ? `/login?redirect=${slug}` : "/login";
+  //  redirect(redirectUrl);
+  //}
+
   let article;
-  let loggedOut = false;
   try {
-    article = await fetchArticleById(slug);
+    article = await fetchArticleBySlug(slug);
   } catch (error) {
     console.log(
       "An error occurred fetching article by id: " + slug + ": " + error

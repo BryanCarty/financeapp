@@ -193,3 +193,87 @@
 .btn:hover {
   cursor: pointer;
 }
+.ctaWrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f7f7f7; /* You can change the background color */
+  color: #353535;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid #353535;
+  z-index: 1000;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed; /* Ensures it stays fixed in the viewport */
+  pointer-events: auto; /* Ensure the CTA is interactive */
+  overflow: hidden; /* Avoids content overflow */
+  opacity: 0; /* Initially invisible */
+  animation: fadeIn 1s ease-in-out forwards; /* Apply animation only to opacity */
+}
+
+.ctaContent h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.ctaContent p {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.ctaButton {
+  padding: 10px 20px;
+  background-color: #f7f7f7;
+  color: #353535;
+  font-size: 16px;
+  border: 1px solid #353535;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.ctaButton:hover {
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  color: #353535;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.3s;
+}
+
+.closeButton:hover {
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.barChart {
+  margin: 15px;
+}
+
+.popupContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}

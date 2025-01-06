@@ -71,7 +71,9 @@ export default function Comment({
             onChange={handleCommentChange}
           ></textarea>
         ) : (
-          <div className={styles.commentBody}>{commentBody}</div>
+          <div className={`${styles.commentBody} ${courierPrime.className}`}>
+            {commentBody}
+          </div>
         )}
         <div className={`${styles.lowerComment} ${courierPrime.className}`}>
           <span className={styles.lowerSpan}>Opinion: {opinion}</span>

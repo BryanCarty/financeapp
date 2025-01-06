@@ -31,6 +31,50 @@ export function calculateDaysUntilExpiry(expiry) {
   return daysUntilExpiry;
 }
 
+export function formatDateToUrl(date) {
+  // Define an array of month names
+  const months = [
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december",
+  ];
+
+  // Extract day, month, and year from the date object
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  // Function to determine the suffix for the day
+  function getDaySuffix(day) {
+    if (day > 3 && day < 21) return "th"; // Special case for 11th-19th
+    switch (day % 10) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  }
+
+  // Get the suffix for the day
+  const dayWithSuffix = day + getDaySuffix(day);
+
+  // Return the formatted date
+  return `${dayWithSuffix}-of-${month}-${year}`;
+}
+
 /*
 export function formatDateToHumanReadable(dateString) {
   const date = new Date(dateString);

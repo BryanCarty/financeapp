@@ -4,14 +4,14 @@ import Link from "next/link";
 import styles from "@/app/_styles/StandardPageHeader.module.css";
 import courierPrime from "./CourierPrime";
 
-export default function HomeLink({ setLoading }) {
+export default function HomeLink({ handleLinkClick }) {
   const currentPath = usePathname();
   if (currentPath !== "/") {
     return (
       <Link
         className={`${styles.navButton} ${courierPrime.className}`}
         href="/"
-        onClick={(e) => setLoading(true)}
+        onClick={(e) => handleLinkClick("/")}
       >
         Home
       </Link>

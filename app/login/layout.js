@@ -1,9 +1,7 @@
-import "@/app/_styles/globals.css";
-
 export const metadata = {
-  title: "Insights Of A Trader | Home",
+  title: "Insights Of A Trader | Login",
   description:
-    "'Insights of a Trader' is a dynamic platform designed for traders to collaborate and refine their market strategies. Users can share stock price predictions, log their trades, discuss individual stocks, and gain valuable insights into market trends. The platform also offers email notifications for trade prediction posts, allowing traders to stay updated. Additionally, users can search by ticker and date to discover what others foresee for the future performance of a stock, helping them make more informed decisions based on collective insights from the community.",
+    "'Insights of a Trader' login page. 'Insights of a Trader' is a dynamic platform designed for traders to collaborate and refine their market strategies. Users can share stock price predictions, log their trades, discuss individual stocks, and gain valuable insights into market trends. The platform also offers email notifications for trade prediction posts, allowing traders to stay updated. Additionally, users can search by ticker and date to discover what others foresee for the future performance of a stock, helping them make more informed decisions based on collective insights from the community.",
   icons: {
     icon: "/images/icon.png",
   },
@@ -29,7 +27,7 @@ export const metadata = {
   ],
   metadataBase: new URL("https://insightsofatrader.com"),
   alternates: {
-    canonical: "/",
+    canonical: "/login",
     languages: {
       "en-US": "/en-US",
     },
@@ -39,7 +37,7 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default function Layout({ children }) {
   return (
     <html lang="en">
       <body>{children}</body>

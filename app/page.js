@@ -4,6 +4,7 @@ import PageBody from "@/app/_components/PageBody";
 import Footer from "./_components/Footer";
 import { isAuthenticated } from "@/app/actions/auth";
 import styles from "@/app/_styles/PageContainer.module.css";
+
 export default async function HomePage() {
   let isLoggedIn = await isAuthenticated();
 

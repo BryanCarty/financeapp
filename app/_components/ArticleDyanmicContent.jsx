@@ -4,7 +4,7 @@ import styles from "@/app/_styles/Article.module.css";
 import ArticleBody from "@/app/_components/ArticleBody";
 import AgreeDisagreeSection from "@/app/_components/AgreeDisagreeSection";
 import Comment from "@/app/_components/Comment";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { submitComment } from "../actions/comments";
 import { formatDateToHumanReadable } from "../client_utils/utils";
 import courierPrime from "./CourierPrime";
@@ -12,6 +12,9 @@ import PostModal from "./PostModal";
 import { useRouter } from "next/navigation";
 import { deletePostRequest } from "../actions/postActions";
 import { useRef } from "react";
+import { usePathname } from "next/navigation";
+import barChart from "@/app/_assets/barchart.png";
+import Image from "next/image";
 
 export default function ArticleDynamicContent({
   id,
@@ -35,6 +38,7 @@ export default function ArticleDynamicContent({
   isPostOwner,
 }) {
   const router = useRouter();
+  const currentPath = usePathname();
 
   const [agreeDisagreeStatus, setAgreeDisagreeStatus] = useState(
     user_agreement_status
@@ -58,6 +62,15 @@ export default function ArticleDynamicContent({
     setNewComment(e.target.value);
   };
 
+  const handleSignUp = () => {
+    // You can redirect to sign up page or open a modal here
+    router.push(`/signup?redirect=${currentPath}`);
+  };
+
+  const handleCloseCTA = () => {
+    setShowCTA(false); // Close the CTA when "X" is clicked
+  };
+
   // Function to handle comment submission
   const handleSubmitComment = async () => {
     if (newComment.trim() === "") {
@@ -65,7 +78,7 @@ export default function ArticleDynamicContent({
     }
 
     try {
-      const savedComment = await submitComment(id, newComment);
+      const savedComment = await submitComment(id, newComment, currentPath);
 
       // Check if the response is savedCommentful
 
@@ -113,8 +126,53 @@ export default function ArticleDynamicContent({
     }
   };
 
+  const [showCTA, setShowCTA] = useState(false);
+
+  // Show CTA every 30 seconds if the user is not logged in
+  useEffect(() => {
+    if (current_user_id === null) {
+      const interval = setInterval(() => {
+        setShowCTA(true);
+      }, 25000); // 25 seconds interval
+
+      return () => clearInterval(interval); // Clean up interval on unmount
+    }
+  }, [current_user_id]);
+
   return (
     <>
+      {showCTA && current_user_id === null && (
+        <div className={`${styles.ctaWrapper} ${courierPrime.className}`}>
+          <div className={styles.ctaContent}>
+            <button
+              className={styles.closeButton}
+              onClick={handleCloseCTA}
+              aria-label="Close CTA"
+            >
+              &times;
+            </button>
+            <div className={styles.popupContainer}>
+              <h3>Why should you sign up?</h3>
+              <p>
+                Sign up to activate the Consensus Search tab, where you can view
+                the <b>{ticker}</b> stock price outlook for <b>{expiry}</b>,
+                based on <b>ALL</b> user estimates!
+              </p>
+              <Image
+                src={barChart}
+                className={styles.barChart}
+                alt="CTA Image"
+              />
+              <button
+                className={`${styles.ctaButton} ${courierPrime.className}`}
+                onClick={handleSignUp}
+              >
+                Sign Up
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {deletePostModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
