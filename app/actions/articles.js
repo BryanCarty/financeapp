@@ -24,7 +24,6 @@ export default async function fetchArticleBySlug(slug) {
 
     //why-appl-stock-will-be-greater-than-310.09-by-market-close-on-the-31st-of-march-2025-23
     //why-aapl-will-be-greater-than-310.00-by-market-close-on-the-31st-of-march-2025-39
-    console.log(slug);
 
     // Match the slug against the pattern
     const match = slug.match(slugPattern);
@@ -46,9 +45,11 @@ export default async function fetchArticleBySlug(slug) {
       articleId,
       userId
     );
-    article["current_user_id"] = userId;
 
-    console.log(article);
+    if (!article) {
+      return false;
+    }
+    article["current_user_id"] = userId;
 
     // If comments exist, order them by latest created_at
     if (article.comments && Array.isArray(article.comments)) {

@@ -140,10 +140,12 @@ export default function Feed({ type, setEditPostData }) {
             agreeCount={article.total_agreements}
             disagreeCount={article.total_disagreements}
             priceStatus={
-              //activeTickers.current.has(String(article.id)) &&
               priceMap[article.ticker]
                 ? priceMap[article.ticker]
-                : article.status
+                : {
+                    price: article.status,
+                    last_updated: article.stock_last_update_time,
+                  }
             }
             commentCount={article.total_comments}
             setEditPostData={article.owned_by_me ? setEditPostData : null}
@@ -174,7 +176,7 @@ export default function Feed({ type, setEditPostData }) {
                   <div
                     className={`${courierPrime.className} ${styles.loadingError}`}
                   >
-                    No posts found 😥. Start creating posts!
+                    No more posts found 😥. Start creating posts!
                   </div>
                 );
                 break;

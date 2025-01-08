@@ -12,6 +12,7 @@ import {
   formatDateToHumanReadable,
   formatDateToUrl,
 } from "../client_utils/utils";
+const { DateTime } = require("luxon");
 
 export default function ArticleSummary({
   articleId,
@@ -49,7 +50,6 @@ export default function ArticleSummary({
     ).toFixed(2)}-by-market-close-on-the-${formatDateToUrl(
       expiry
     )}-${articleId}`;
-    console.log(redirectStr);
     router.push(redirectStr);
     //why-appl-stock-will-be-greater-than-310.09-by-market-close-on-the-31st-of-march-2025-23
   };
@@ -61,11 +61,16 @@ export default function ArticleSummary({
   };
 
   let glow = null;
-  const now = new Date();
   let finalResult = null;
 
+  const newYorkTimeNow = DateTime.now().setZone("America/New_York");
+  const expiryTimeGMT = DateTime.fromJSDate(expiry);
+  const expiryTimeNY = expiryTimeGMT.setZone("America/New_York", {
+    keepLocalTime: true,
+  });
+
   // Compare the two dates
-  if (now > expiry) {
+  if (newYorkTimeNow > expiryTimeNY && result !== null) {
     glow = result ? styles.greenGlow : styles.redGlow;
     finalResult = result ? "ACCURATE FORECAST" : "MISSED PROJECTION";
   }
@@ -77,16 +82,17 @@ export default function ArticleSummary({
 
   async function deletePost() {
     const postId = showDeleteModal.articleId;
+
     const id = await deletePostRequest(postId);
     if (id) {
       setShowDeleteModal(null);
       window.location.reload();
     }
   }
-  const percentageDifference = ((priceStatus - price) / price) * 100;
+  const percentageDifference = ((priceStatus?.price - price) / price) * 100;
   const formattedPercentageDifference = percentageDifference.toFixed(2); // Ensures 2 decimal places
   let color = null;
-  if (now <= expiry) {
+  if (newYorkTimeNow <= expiryTimeNY || result === null) {
     if (comparison == ">") {
       color = formattedPercentageDifference >= 0 ? styles.green : styles.red;
     } else if (comparison == "<") {
@@ -140,8 +146,17 @@ export default function ArticleSummary({
             Agree: {agreeCount} | Disagree: {disagreeCount} | Status:
             <span className={color}>
               {finalResult ||
-                `${priceStatus} (${formattedPercentageDifference}%)`}
+                `${priceStatus?.price} (${formattedPercentageDifference}%)`}
             </span>
+            {result === null && (
+              <span className={`${styles.tooltip} ${courierPrime.className}`}>
+                <span className={styles.tooltipIcon}>i</span>
+                <span className={styles.tooltipText}>
+                  Price is at least 15 minutes delayed. Last updated at{" "}
+                  {priceStatus.last_updated.toLocaleString()}
+                </span>
+              </span>
+            )}
           </div>
 
           <div
@@ -200,7 +215,12 @@ export default function ArticleSummary({
         <div className={styles.modal}>
           <div className={styles.modalContent}>
             <h3>Delete {showDeleteModal.ticker} Post</h3>
-
+            <p
+              className={`${courierPrime.className} ${styles.deleteModalWarning}`}
+            >
+              This will negatively affect your accuracy unless the post has
+              expired being true to its claim.
+            </p>
             <div className={styles.modalActions}>
               <button
                 className={`${styles.btn} ${courierPrime.className}`}

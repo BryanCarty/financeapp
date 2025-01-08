@@ -86,7 +86,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
           setLoading(false);
           return;
         }
-        console.log(tableData);
+
         setProfiles(tableData);
         setLoggedIn(userId);
         setLoading(false);

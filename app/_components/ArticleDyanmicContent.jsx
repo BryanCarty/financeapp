@@ -15,6 +15,7 @@ import { useRef } from "react";
 import { usePathname } from "next/navigation";
 import barChart from "@/app/_assets/barchart.png";
 import Image from "next/image";
+import ArticleTitle from "./ArticleTitle";
 
 export default function ArticleDynamicContent({
   id,
@@ -36,6 +37,7 @@ export default function ArticleDynamicContent({
   current_user_id,
   result,
   isPostOwner,
+  title,
 }) {
   const router = useRouter();
   const currentPath = usePathname();
@@ -177,7 +179,12 @@ export default function ArticleDynamicContent({
         <div className={styles.modal}>
           <div className={styles.modalContent}>
             <h3>Delete {ticker} Post</h3>
-
+            <p
+              className={`${courierPrime.className} ${styles.deleteModalWarning}`}
+            >
+              This will negatively affect your accuracy unless the post has
+              expired being true to its claim.
+            </p>
             <div className={styles.modalActions}>
               <button
                 className={`${styles.btn} ${courierPrime.className}`}
@@ -233,6 +240,7 @@ export default function ArticleDynamicContent({
           setDeletePostModal={isPostOwner ? setDeletePostModal : null}
           scrollToComments={scrollToComments}
         />
+        <ArticleTitle text={title} />
         <ArticleBody body={content} />
 
         <AgreeDisagreeSection

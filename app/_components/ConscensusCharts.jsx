@@ -95,14 +95,23 @@ export default function ConscensusCharts({ searchQuery }) {
   useEffect(() => {
     const fetchConscensusData = async () => {
       setLoading(true);
-      const conscensusData = await fetchConscensusDataDb(
+      const conscensusData = {
+        less_thans: [
+          220, 220, 222, 222, 222, 224, 223, 225, 225, 227, 226, 227, 230, 229,
+          229, 230, 230, 226, 226, 226, 230, 229, 229, 231, 230,
+        ],
+        greater_thans: [
+          240, 240, 240, 244, 244, 244, 244, 245, 245, 246, 247, 248, 248, 248,
+          248, 250, 250, 250, 250, 254, 254, 242, 243, 242, 246, 246, 246, 246,
+          251, 251, 251, 251, 251, 251, 251, 251, 251, 250, 250, 250, 253, 253,
+          253, 253, 253, 253, 253, 253, 253, 253, 253, 253,
+        ],
+      }; /*await fetchConscensusDataDb(
         searchQuery.ticker,
         searchQuery.date
-      );
-      console.log(conscensusData);
+      );*/
 
       if (!conscensusData) {
-        console.log("sdfsd");
         setLoadingError("Hmm.. There appears to be no data for this date 😞");
         setLoading(false);
         return;

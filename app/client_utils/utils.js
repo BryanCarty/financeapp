@@ -23,6 +23,7 @@ export function calculateDaysUntilExpiry(expiry) {
 
   const currentDate = new Date();
 
+  console.log(currentDate);
   // Calculate the difference in milliseconds
   const timeDifference = expiry - currentDate;
 

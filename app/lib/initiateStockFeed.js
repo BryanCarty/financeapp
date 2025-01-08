@@ -1,6 +1,7 @@
 "server-only";
 
 import { websocketClient } from "@polygon.io/client-js";
+import { errorEmail } from "./email";
 
 export default function initiateStockFeed() {
   console.log("Beginning Initialization");
@@ -9,7 +10,10 @@ export default function initiateStockFeed() {
     process.env.POLY_URL
   ).stocks(); // real-time webscoket
 
-  ws.onerror = (err) => console.log("Failed to connect", err);
+  ws.onerror = (err) => {
+    console.log("websocker error", err);
+    errorEmail(err);
+  };
 
   return ws;
 }

@@ -1,3 +1,4 @@
+"use client";
 import styles from "@/app/_styles/SearchBar.module.css";
 import { useState } from "react";
 import courierPrime from "./CourierPrime";

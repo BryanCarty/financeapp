@@ -1,34 +1,9 @@
 "server-only";
+
+import { errorEmail } from "../email";
 import initiateStockFeed from "../initiateStockFeed";
-import sql from "./db";
+import pool from "./db";
 import bcrypt from "bcrypt";
-/*
-const ws = initiateStockFeed();
-ws.onmessage = async (msg) => {
-  const parsedMessage = JSON.parse(msg.data);
-
-  if (
-    parsedMessage[0].ev === "status" &&
-    parsedMessage[0].status === "auth_success"
-  ) {
-    console.log("Subscribing to the minute aggregates channel for tickers");
-    ws.send(JSON.stringify({ action: "subscribe", params: "AM.*" }));
-  }
-
-  for (const entry of parsedMessage) {
-    if (entry.ev === "AM") {
-      const ticker = entry.sym;
-      const closePrice = entry.c;
-      const lastUpdatedTime = new Date(entry.e).toISOString(); // Convert timestamp to ISO format
-
-      try {
-        await updateDBStockData(ticker, closePrice, lastUpdatedTime);
-      } catch (err) {
-        console.error("Error updating database:", err);
-      }
-    }
-  }
-};*/
 
 const { DateTime } = require("luxon");
 
@@ -63,7 +38,7 @@ async function checkAndScheduleWebSocket() {
   });
   const marketCloseTimeET = nowET.set({
     hour: 16,
-    minute: 0,
+    minute: 16,
     second: 0,
     millisecond: 0,
   });
@@ -92,8 +67,9 @@ async function checkAndScheduleWebSocket() {
     console.log(
       `Scheduling WebSocket disconnection in ${timeUntilClose / 1000} seconds.`
     );
+
     setTimeout(disconnectWebSocket, timeUntilClose);
-    setTimeout(await updatePostStatusesAndAuthorAccuracy, timeUntilClose);
+    setTimeout(updatePostStatusesAndAuthorAccuracy, timeUntilClose);
   }
 }
 
@@ -107,28 +83,42 @@ function connectWebSocket() {
   isWebSocketConnected = true;
 
   ws.onmessage = async (msg) => {
-    const parsedMessage = JSON.parse(msg.data);
+    try {
+      const parsedMessage = JSON.parse(msg.data);
 
-    if (
-      parsedMessage[0].ev === "status" &&
-      parsedMessage[0].status === "auth_success"
-    ) {
-      console.log("Subscribing to the minute aggregates channel for tickers");
-      ws.send(JSON.stringify({ action: "subscribe", params: "AM.*" }));
-    }
-
-    for (const entry of parsedMessage) {
-      if (entry.ev === "AM") {
-        const ticker = entry.sym;
-        const closePrice = entry.c;
-        const lastUpdatedTime = new Date(entry.e).toISOString(); // Convert timestamp to ISO format
-
-        try {
-          await updateDBStockData(ticker, closePrice, lastUpdatedTime);
-        } catch (err) {
-          console.error("Error updating database:", err);
-        }
+      if (
+        parsedMessage[0].ev === "status" &&
+        parsedMessage[0].status === "auth_success"
+      ) {
+        console.log("Subscribing to the minute aggregates channel for tickers");
+        ws.send(JSON.stringify({ action: "subscribe", params: "AM.*" }));
       }
+
+      /*
+      for (const entry of parsedMessage) {
+        if (entry.ev === "AM") {
+          const ticker = entry.sym;
+          const closePrice = entry.c;
+          const lastUpdatedTime = new Date(entry.e).toISOString(); // Convert timestamp to ISO format
+
+          await updateDBStockData(ticker, closePrice, lastUpdatedTime);
+        }
+      }*/
+
+      const stockDataArray = parsedMessage
+        .filter((entry) => entry.ev === "AM")
+        .map((entry) => ({
+          ticker: entry.sym,
+          price: entry.c,
+          last_updated: new Date(entry.e).toISOString(),
+        }));
+
+      if (stockDataArray.length > 0) {
+        await updateDBStockDataBatch(stockDataArray);
+      }
+    } catch (error) {
+      console.log("An error occurred in ws.onMessage: ", error);
+      await errorEmail(error);
     }
   };
 
@@ -151,7 +141,96 @@ function disconnectWebSocket() {
 }
 
 async function updatePostStatusesAndAuthorAccuracy() {
+  console.log("updatePostStatusesAndAuthorAccuracy called");
+  const client = await pool.connect();
+  await client.query("BEGIN");
   try {
+    await client.query(`
+      UPDATE posts
+      SET true_claim = (
+          CASE
+              WHEN (comparison = '>' AND stock_data.close_price > price)
+                OR (comparison = '<' AND stock_data.close_price < price)
+              THEN TRUE
+              ELSE FALSE
+          END
+      )
+      FROM stock_data
+      WHERE
+          posts.expiry::DATE = CURRENT_DATE
+          AND posts.ticker = stock_data.ticker;
+  `);
+
+    // Step 2: Calculate aggregated stats
+    await client.query(`
+      WITH aggregated_stats AS (
+          SELECT
+              author_id,
+              SUM(CASE WHEN true_claim THEN 1 ELSE 0 END) AS lifetime_correct,
+              COUNT(*) FILTER (WHERE true_claim IS NOT NULL) AS lifetime_total,
+              COUNT(*) FILTER (WHERE true_claim = TRUE) AS correct_predictions_today,
+              COUNT(*) FILTER (WHERE true_claim IS NOT NULL) AS total_predictions_today
+          FROM posts
+          WHERE posts.author_id IN (SELECT DISTINCT author_id FROM posts WHERE true_claim IS NOT NULL)
+          GROUP BY author_id
+      )
+
+      UPDATE users
+      SET accuracy = (
+          (aggregated_stats.lifetime_correct) * 100.0
+          / NULLIF(aggregated_stats.lifetime_total, 0)
+      )
+      FROM aggregated_stats
+      WHERE users.user_id = aggregated_stats.author_id;
+    `);
+
+    // Commit transaction
+    await client.query("COMMIT");
+
+    /*
+    await sql`
+    -- Step 1: Update the true_claim column in posts
+    WITH updated_posts AS (
+        UPDATE posts
+        SET true_claim = (
+            CASE
+                WHEN (comparison = '>' AND stock_data.close_price > price)
+                  OR (comparison = '<' AND stock_data.close_price < price)
+                THEN TRUE
+                ELSE FALSE
+            END
+        )
+        FROM stock_data
+        WHERE
+            posts.expiry::DATE = CURRENT_DATE
+            AND posts.ticker = stock_data.ticker
+        RETURNING author_id, true_claim
+    ),
+
+    -- Step 2: Calculate lifetime and current statistics
+    aggregated_stats AS (
+        SELECT
+            author_id,
+            SUM(CASE WHEN true_claim THEN 1 ELSE 0 END) AS lifetime_correct,
+            COUNT(*) FILTER (WHERE true_claim IS NOT NULL) AS lifetime_total,
+            COUNT(*) FILTER (WHERE true_claim = TRUE) AS correct_predictions_today,
+            COUNT(*) FILTER (WHERE true_claim IS NOT NULL) AS total_predictions_today
+        FROM posts
+        WHERE posts.author_id IN (SELECT DISTINCT author_id FROM updated_posts)
+        GROUP BY author_id
+    )
+
+    -- Step 3: Update the accuracy in users table
+    UPDATE users
+    SET accuracy = (
+        (aggregated_stats.lifetime_correct) * 100.0
+        / NULLIF(aggregated_stats.lifetime_total, 0)
+    )
+    FROM aggregated_stats
+    WHERE users.user_id = aggregated_stats.author_id;
+`;*/
+
+    /*
     await sql`
       -- Update the true_claim column in posts
       UPDATE posts
@@ -198,15 +277,36 @@ async function updatePostStatusesAndAuthorAccuracy() {
         ON user_post_counts.author_id = updated_posts.author_id
       WHERE users.id = user_post_counts.author_id;
     `;
+    /*
+    await sql`UPDATE posts
+      SET true_claim = (
+          CASE
+              WHEN (comparison = '>' AND stock_data.close_price > posts.price)
+                OR (comparison = '<' AND stock_data.close_price < posts.price)
+              THEN TRUE
+              ELSE FALSE
+          END
+      )
+      FROM stock_data
+      WHERE
+          posts.expiry = CURRENT_DATE
+          AND posts.ticker = stock_data.ticker;`;*/
   } catch (error) {
     console.error(
       "An error occurred attempting to update the post statuses and author accuracies:",
       error
     );
+    await client.query("ROLLBACK");
+    await errorEmail(
+      "[ERROR] UNABLE TO UPDATE POST STATUS AND AUTHOR ACCURACY"
+    );
+  } finally {
+    await client.release();
   }
 }
 // Start the scheduler
 scheduleWebSocketLifecycle();
+/*
 
 async function updateDBStockData(ticker, price, last_updated) {
   try {
@@ -226,22 +326,62 @@ async function updateDBStockData(ticker, price, last_updated) {
       error
     );
   }
-}
+}*/
+
+const updateDBStockDataBatch = async (stockDataArray) => {
+  try {
+    if (process.env.STOCK_FEED_ENABLED?.toLowerCase() === "true") {
+      const tickers = stockDataArray.map((row) => row.ticker);
+      const prices = stockDataArray.map((row) => row.price);
+      const lastUpdatedTimes = stockDataArray.map((row) => row.last_updated);
+
+      // Construct and execute the parameterized query
+      await pool.query(
+        `
+        INSERT INTO stock_data (ticker, close_price, last_updated_time)
+        SELECT * FROM UNNEST(
+          $1::text[],
+          $2::float8[],
+          $3::timestamptz[]
+        )
+        ON CONFLICT (ticker)
+        DO UPDATE SET
+          close_price = EXCLUDED.close_price,
+          last_updated_time = EXCLUDED.last_updated_time;
+      `,
+        [tickers, prices, lastUpdatedTimes]
+      );
+    }
+  } catch (error) {
+    console.error(
+      "An error occurred attempting to batch update the stock price DB:",
+      error
+    );
+  }
+};
 
 export async function getTickerPrices(tickers) {
   const tickerToPriceMap = {};
 
   try {
     // Query the database for the prices of the given tickers
-    const rows = await sql`
-      SELECT ticker, close_price
+    const rows = (
+      await pool.query(
+        `
+      SELECT ticker, close_price, last_updated_time
       FROM stock_data
-      WHERE ticker = ANY(${tickers});
-    `;
+      WHERE ticker = ANY($1);
+    `,
+        [tickers]
+      )
+    ).rows;
 
     // Populate the map with ticker-price pairs from the query results
     for (const row of rows) {
-      tickerToPriceMap[row.ticker] = row.close_price;
+      tickerToPriceMap[row.ticker] = {
+        price: row.close_price,
+        last_updated: row.last_updated_time,
+      };
     }
 
     return tickerToPriceMap;
@@ -262,15 +402,18 @@ export async function createUser({
 }) {
   try {
     // Insert user data into the 'users' table
-    const user = await sql`
+    const user = await pool.query(
+      `
         insert into users
           (username, email, password_hash, date_of_birth)
         values
-          (${username}, ${email}, ${hashedPassword}, ${dateOfBirth})
+          ($1, $2, $3, $4)
         returning user_id, username, email;  -- Adjusted the returned columns to match table fields
-      `;
+      `,
+      [username, email, hashedPassword, dateOfBirth]
+    );
 
-    return { userId: user[0].user_id, errors: null };
+    return { userId: user.rows[0].user_id, errors: null };
   } catch (error) {
     console.error("createUser : Database Error Occurred:", error);
 
@@ -313,9 +456,14 @@ export async function getUserByEmailAndPassword(email, password) {
 
     // Query the database safely using parameterized queries
 
-    const user = await sql`
-      SELECT * FROM users WHERE email = ${email};
-    `;
+    const user = (
+      await pool.query(
+        `
+      SELECT * FROM users WHERE email = $1;
+    `,
+        [email]
+      )
+    ).rows;
 
     // Check if the user exists
     if (
@@ -351,9 +499,14 @@ export async function getUserByEmail(email) {
 
     // Query the database safely using parameterized queries
 
-    const user = await sql`
-      SELECT * FROM users WHERE email = ${email};
-    `;
+    const user = (
+      await pool.query(
+        `
+      SELECT * FROM users WHERE email = $1;
+    `,
+        [email]
+      )
+    ).rows;
 
     // Check if the user exists
     if (user.length === 0 || !user[0]) {
@@ -378,13 +531,18 @@ export async function getUserByEmail(email) {
 export async function insertResetPasswordToken(userId, resetPasswordToken) {
   try {
     // Insert user data into the 'users' table
-    const id = await sql`
+    const id = (
+      await pool.query(
+        `
         insert into reset_password_tokens
           (user_id, token)
         values
-          (${userId}, ${resetPasswordToken})
+          ($1, $2)
         returning id;  -- Adjusted the returned columns to match table fields
-      `;
+      `,
+        [userId, resetPasswordToken]
+      )
+    ).rows;
 
     return {
       success: id[0].id,
@@ -402,8 +560,13 @@ export async function insertResetPasswordToken(userId, resetPasswordToken) {
 export async function getUserIdByToken(token) {
   try {
     // Insert user data into the 'users' table
-    const result = await sql`
-        select user_id, expires_at from reset_password_tokens WHERE token = ${token}`;
+    const result = (
+      await pool.query(
+        `
+        select user_id, expires_at from reset_password_tokens WHERE token = $1`,
+        [token]
+      )
+    ).rows;
 
     if (result.length != 1 || !result[0].user_id || !result[0].expires_at) {
       return {
@@ -438,12 +601,17 @@ export async function getUserIdByToken(token) {
 export async function updatePasswordHash(userId, passwordHash) {
   try {
     // Update the password_hash column for the given user
-    const updatedUser = await sql`
+    const updatedUser = (
+      await pool.query(
+        `
         update users
-        set password_hash = ${passwordHash}
-        where user_id = ${userId}
+        set password_hash = $1
+        where user_id = $2
         returning user_id;  -- Returning the user ID after update
-      `;
+      `,
+        [passwordHash, userId]
+      )
+    ).rows;
 
     if (!updatedUser[0]?.user_id) {
       return {
@@ -465,28 +633,52 @@ export async function updatePasswordHash(userId, passwordHash) {
 }
 
 export async function getLeaderboard(myUserId) {
-  //TODO: Add in following status.
   try {
-    // Insert user data into the 'users' table
     let result;
     if (myUserId) {
-      result = await sql`
-      SELECT u.user_id, u.username, u.accuracy,(SELECT COUNT(*) 
-        FROM posts p 
-        WHERE p.author_id = u.user_id 
-          AND p.expiry < NOW()) AS trades_count,  u.followers_count,
-             CASE WHEN f.follower_id IS NOT NULL THEN true ELSE false END AS is_following
-      FROM users u
-      LEFT JOIN followers f ON f.followed_id = u.user_id AND f.follower_id = ${myUserId}
-      WHERE u.user_id != ${myUserId}
-      ORDER BY u.accuracy DESC LIMIT 10;
-    `;
+      result = (
+        await pool.query(
+          `
+          SELECT u.user_id, u.username, u.accuracy,
+            (SELECT COUNT(*) 
+              FROM posts p 
+              WHERE p.author_id = u.user_id 
+                AND p.true_claim IS NOT NULL) AS trades_count,
+            (SELECT COUNT(*) 
+              FROM followers f 
+              WHERE f.followed_id = u.user_id) AS followers_count,
+            CASE WHEN f.follower_id IS NOT NULL THEN true ELSE false END AS is_following
+            FROM users u
+            LEFT JOIN followers f ON f.followed_id = u.user_id AND f.follower_id = $1
+            WHERE u.user_id != $2
+            ORDER BY u.accuracy DESC, trades_count DESC
+            LIMIT 10;
+        `,
+          [myUserId, myUserId]
+        )
+      ).rows;
     } else {
-      result = await sql`
-      SELECT u.user_id, u.username, u.accuracy, u.trades_count, u.followers_count
-      FROM users u
-      ORDER BY u.accuracy DESC LIMIT 10;
-    `;
+      result = (
+        await pool.query(
+          `
+    SELECT 
+    u.user_id, 
+    u.username, 
+    u.accuracy,
+    (SELECT COUNT(*) 
+     FROM posts p 
+     WHERE p.author_id = u.user_id 
+       AND p.true_claim IS NOT NULL) AS trades_count,
+    (SELECT COUNT(*) 
+     FROM followers f 
+     WHERE f.followed_id = u.user_id) AS followers_count,
+    false AS is_following
+FROM users u
+ORDER BY u.accuracy DESC, trades_count DESC
+LIMIT 10;
+  `
+        )
+      ).rows;
     }
 
     if (!result) {
@@ -515,7 +707,9 @@ export async function getLeaderboard(myUserId) {
 export async function isEligibleToFollow(userId) {
   try {
     // Define the follow limit based on the account type
-    const result = await sql`
+    const result = (
+      await pool.query(
+        `
       SELECT 
         u.account_type, 
         COUNT(f.follower_id) AS followers_count
@@ -524,10 +718,13 @@ export async function isEligibleToFollow(userId) {
       LEFT JOIN 
         followers f ON f.follower_id = u.user_id
       WHERE 
-        u.user_id = ${userId}
+        u.user_id = $1
       GROUP BY 
         u.user_id
-    `;
+    `,
+        [userId]
+      )
+    ).rows;
 
     if (result.length === 0) {
       console.error("User not found");
@@ -564,11 +761,16 @@ export async function isEligibleToFollow(userId) {
 export async function followUserDb(myUserId, otherUserId, notified) {
   try {
     // Insert the follower relationship and set the 'notified' column to false by default
-    const result = await sql`
+    const result = (
+      await pool.query(
+        `
       INSERT INTO followers (follower_id, followed_id, notified)
-      VALUES (${myUserId}, ${otherUserId}, ${notified})  -- Set 'notified' to false initially
+      VALUES ($1, $2, $3)  -- Set 'notified' to false initially
       RETURNING created_at;  -- Return the created_at timestamp and the 'notified' value
-    `;
+    `,
+        [myUserId, otherUserId, notified]
+      )
+    ).rows;
 
     return {
       success: result[0].created_at, // Access the created_at timestamp
@@ -584,11 +786,16 @@ export async function followUserDb(myUserId, otherUserId, notified) {
 export async function unfollowUserDb(myUserId, otherUserId) {
   try {
     // Delete the follower relationship
-    const result = await sql`
+    const result = (
+      await pool.query(
+        `
       DELETE FROM followers
-      WHERE follower_id = ${myUserId} AND followed_id = ${otherUserId}
+      WHERE follower_id = $1 AND followed_id = $2
       RETURNING *;  
-    `;
+    `,
+        [myUserId, otherUserId]
+      )
+    ).rows;
 
     // If a record was deleted, the result array will contain the deleted row.
     if (result.length > 0) {
@@ -613,10 +820,12 @@ export async function unfollowUserDb(myUserId, otherUserId) {
 
 export async function fetchArticleUrls() {
   try {
-    const postUrlData = await sql`
+    const postUrlData = (
+      await pool.query(`
     SELECT id, ticker, comparison, price, expiry
-    FROM posts;
-  `;
+    FROM posts WHERE deleted = false;
+  `)
+    ).rows;
 
     return postUrlData;
   } catch (error) {
@@ -658,7 +867,7 @@ export async function getArticleBySlug(
   const formattedDay = String(day).padStart(2, "0");
 
   // Construct the timestamp string in 'YYYY-MM-DD 00:00:00' format (midnight)
-  const timestampString = `${year}-${formattedMonth}-${formattedDay} 00:00:00`;
+  const timestampString = `${year}-${formattedMonth}-${formattedDay} 16:00:00`;
 
   const expiryObject = new Date(timestampString);
 
@@ -670,7 +879,9 @@ export async function getArticleBySlug(
   }
 
   try {
-    const result = await sql`SELECT 
+    const result = (
+      await pool.query(
+        `SELECT 
     posts.*, 
     users.username AS post_author_username, 
     users.accuracy AS post_author_accuracy,
@@ -689,7 +900,7 @@ export async function getArticleBySlug(
     COALESCE(
         (SELECT agreement_status.agreement_status 
         FROM agreement_status 
-        WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = ${currentUserId}
+        WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = $1
         ), NULL
     ) AS user_agreement_status,
     COALESCE(
@@ -715,131 +926,27 @@ export async function getArticleBySlug(
         ) FILTER (WHERE comments.id IS NOT NULL), 
         '[]'
     ) AS comments,
-    COALESCE(stock_data.close_price, NULL) AS status
+    COALESCE(stock_data.close_price, NULL) AS status,
+    COALESCE(stock_data.last_updated_time, NULL) AS stock_last_update_time
   FROM posts 
   JOIN users ON posts.author_id = users.user_id
   LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
   LEFT JOIN comments ON comments.article_id = posts.id
   LEFT JOIN users AS comment_users ON comments.user_id = comment_users.user_id
   LEFT JOIN stock_data ON stock_data.ticker = posts.ticker
-  WHERE posts.id = ${articleId} AND posts.ticker = ${ticker.toUpperCase()} AND posts.comparison = ${comparisonVal} AND posts.price=${price} AND posts.expiry=${expiryObject}
-  GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price;`;
+  WHERE posts.id = $2 AND posts.ticker = $3 AND posts.comparison = $4 AND posts.price=$5 AND posts.expiry=$6 AND deleted=false
+  GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time;`,
+        [
+          currentUserId,
+          articleId,
+          ticker.toUpperCase(),
+          comparisonVal,
+          price,
+          expiryObject,
+        ]
+      )
+    ).rows;
 
-    /*
-    
-    const result = await sql`
-        SELECT 
-            posts.*, 
-            users.username AS post_author_username, 
-            users.accuracy AS post_author_accuracy,
-            COALESCE(
-                COUNT(DISTINCT CASE 
-                    WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
-                END), 
-                0
-            ) AS total_agreements,
-            COALESCE(
-                COUNT(DISTINCT CASE 
-                    WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
-                END), 
-                0
-            ) AS total_disagreements,
-            COALESCE(
-                (SELECT agreement_status.agreement_status 
-                FROM agreement_status 
-                WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = ${currentUserId}
-                ), NULL
-            ) AS user_agreement_status,
-            COALESCE(
-                json_agg(
-                    CASE 
-                        WHEN comments.id IS NOT NULL THEN json_build_object(
-                            'comment_id', comments.id,
-                            'user_id', comments.user_id,
-                            'text', comments.text,
-                            'created_at', comments.created_at,
-                            'username', comment_users.username,
-                            'accuracy', comment_users.accuracy,
-                            'post_opinion', COALESCE(
-                                (
-                                    SELECT agreement_status.agreement_status
-                                    FROM agreement_status
-                                    WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = comments.user_id
-                                    LIMIT 1
-                                ), NULL
-                            )
-                        )
-                    END
-                ) FILTER (WHERE comments.id IS NOT NULL), 
-                '[]'
-            ) AS comments,
-            COALESCE(stock_data.close_price, NULL) AS status
-        FROM posts 
-        JOIN users ON posts.author_id = users.user_id
-        LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
-        LEFT JOIN comments ON comments.article_id = posts.id
-        LEFT JOIN users AS comment_users ON comments.user_id = comment_users.user_id
-        LEFT JOIN stock_data ON stock_data.ticker = posts.ticker
-        WHERE posts.id = ${articleId}
-        GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price;
-      `;*/
-
-    /*
-    const result = await sql`
-      SELECT 
-          posts.*, 
-          users.username AS post_author_username, 
-          users.accuracy AS post_author_accuracy,
-          COALESCE(
-              COUNT(DISTINCT CASE 
-                  WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
-              END), 
-              0
-          ) AS total_agreements,
-          COALESCE(
-              COUNT(DISTINCT CASE 
-                  WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
-              END), 
-              0
-          ) AS total_disagreements,
-          COALESCE(
-              (SELECT agreement_status.agreement_status 
-              FROM agreement_status 
-              WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = ${currentUserId}
-              ), NULL
-          ) AS user_agreement_status,
-          COALESCE(
-              json_agg(
-                  CASE 
-                      WHEN comments.id IS NOT NULL THEN json_build_object(
-                          'comment_id', comments.id,
-                          'user_id', comments.user_id,
-                          'text', comments.text,
-                          'created_at', comments.created_at,
-                          'username', comment_users.username,
-                          'accuracy', comment_users.accuracy,
-                          'post_opinion', COALESCE(
-                              (
-                                  SELECT agreement_status.agreement_status
-                                  FROM agreement_status
-                                  WHERE agreement_status.article_id = posts.id AND agreement_status.user_id = comments.user_id
-                                  LIMIT 1
-                              ), NULL
-                          )
-                      )
-                  END
-              ) FILTER (WHERE comments.id IS NOT NULL), 
-              '[]'
-          ) AS comments
-      FROM posts 
-      JOIN users ON posts.author_id = users.user_id
-      LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
-      LEFT JOIN comments ON comments.article_id = posts.id
-      LEFT JOIN users AS comment_users ON comments.user_id = comment_users.user_id
-      WHERE posts.id = ${articleId}
-      GROUP BY posts.id, users.username, users.accuracy;
-      `;
-*/
     if (result.length != 1 || !result[0]) {
       return false;
     }
@@ -855,26 +962,39 @@ export async function updateAgreementStatusDb(postId, userId, status) {
   try {
     if (status === 0) {
       // Undo agreement: Delete the row
-      const result = await sql`DELETE FROM agreement_status 
-         WHERE article_id = ${postId} AND user_id = ${userId}`;
+      const result = (
+        await pool.query(
+          `DELETE FROM agreement_status 
+         WHERE article_id = $1 AND user_id = $2`,
+          [postId, userId]
+        )
+      ).rows;
 
       return true; // Returns true if a row was deleted
     } else if (status === 1) {
       // Agree: Insert or update agreement_status to true
-      const result =
-        await sql`INSERT INTO agreement_status (article_id, user_id, agreement_status)
-         VALUES (${postId}, ${userId}, TRUE)
+      const result = (
+        await pool.query(
+          `INSERT INTO agreement_status (article_id, user_id, agreement_status)
+         VALUES ($1, $2, TRUE)
          ON CONFLICT (article_id, user_id)
-         DO UPDATE SET agreement_status = TRUE`;
+         DO UPDATE SET agreement_status = TRUE`,
+          [postId, userId]
+        )
+      ).rows;
 
       return result.rowCount > 0; // Returns true if the operation succeeded
     } else if (status === -1) {
       // Disagree: Insert or update agreement_status to false
-      const result =
-        await sql`INSERT INTO agreement_status (article_id, user_id, agreement_status)
-         VALUES (${postId}, ${userId}, FALSE)
+      const result = (
+        await pool.query(
+          `INSERT INTO agreement_status (article_id, user_id, agreement_status)
+         VALUES ($1, $2, FALSE)
          ON CONFLICT (article_id, user_id)
-         DO UPDATE SET agreement_status = FALSE`;
+         DO UPDATE SET agreement_status = FALSE`,
+          [postId, userId]
+        )
+      ).rows;
 
       return result.rowCount > 0; // Returns true if the operation succeeded
     } else {
@@ -890,7 +1010,7 @@ export async function createComment(postId, userId, text) {
   try {
     // Insert user data into the 'users' table
     /*
-    const enrichedComment = await sql`
+    const enrichedComment = await pool.query(`
     with inserted_comment as (
         insert into comments (article_id, user_id, text)
         values (${postId}, ${userId}, ${text})
@@ -906,10 +1026,12 @@ export async function createComment(postId, userId, text) {
     join agreement_status on agreement_status.user_id = inserted_comment.user_id
                           and agreement_status.article_id = inserted_comment.article_id;
 `;*/
-    const enrichedComment = await sql`
+    const enrichedComment = (
+      await pool.query(
+        `
 with inserted_comment as (
     insert into comments (article_id, user_id, text)
-    values (${postId}, ${userId}, ${text})
+    values ($1, $2, $3)
     returning *
 )
 select 
@@ -921,7 +1043,10 @@ from inserted_comment
 left join users on users.user_id = inserted_comment.user_id
 left join agreement_status on agreement_status.user_id = inserted_comment.user_id
                          and agreement_status.article_id = inserted_comment.article_id;
-`;
+`,
+        [postId, userId, text]
+      )
+    ).rows;
 
     return enrichedComment[0];
   } catch (error) {
@@ -934,12 +1059,17 @@ left join agreement_status on agreement_status.user_id = inserted_comment.user_i
 export async function updateCommentDb(commentId, userId, text) {
   try {
     // Update the comment and return only the comment_id if user_id and comment_id match a row in the database
-    const updatedComment = await sql`
+    const updatedComment = (
+      await pool.query(
+        `
       update comments
-      set text = ${text}
-      where id = ${commentId} and user_id = ${userId}
+      set text = $1
+      where id = $2 and user_id = $3
       returning id;
-    `;
+    `,
+        [text, commentId, userId]
+      )
+    ).rows;
 
     // Ensure that a result was returned
     if (updatedComment.length === 0) {
@@ -957,11 +1087,16 @@ export async function updateCommentDb(commentId, userId, text) {
 export async function removeCommentDb(commentId, userId) {
   try {
     // Update the comment and return only the comment_id if user_id and comment_id match a row in the database
-    const updatedComment = await sql`
+    const updatedComment = (
+      await pool.query(
+        `
       Delete FROM comments
-      where id = ${commentId} and user_id = ${userId}
+      where id = $1 and user_id = $2
       returning id;
-    `;
+    `,
+        [commentId, userId]
+      )
+    ).rows;
 
     // Ensure that a result was returned
     if (updatedComment.length === 0) {
@@ -978,7 +1113,10 @@ export async function getFollowerTable(myUserId) {
   //TODO: Add in following status.
   try {
     // Insert user data into the 'users' table
-    const result = await sql`
+    const result = (
+      await pool.query(
+        /*
+        `
     SELECT 
       u.user_id, 
       u.username, 
@@ -992,15 +1130,40 @@ export async function getFollowerTable(myUserId) {
         WHEN EXISTS (
           SELECT 1 
           FROM followers 
-          WHERE follower_id = ${myUserId} AND followed_id = u.user_id
+          WHERE follower_id = $1 AND followed_id = u.user_id
         ) THEN true
         ELSE false
       END AS is_following
     FROM users u
     INNER JOIN followers f ON f.follower_id = u.user_id
-    WHERE f.followed_id = ${myUserId}
-    ORDER BY u.accuracy DESC;
-  `;
+    WHERE f.followed_id = $2
+    ORDER BY u.accuracy DESC, trades_count DESC;
+  `*/ `SELECT 
+  u.user_id, 
+  u.username, 
+  u.accuracy, 
+  (SELECT COUNT(*) 
+   FROM posts p 
+   WHERE p.author_id = u.user_id 
+     AND p.true_claim IS NOT NULL) AS trades_count,
+  (SELECT COUNT(*) 
+   FROM followers f2 
+   WHERE f2.followed_id = u.user_id) AS followers_count,
+  CASE 
+    WHEN EXISTS (
+      SELECT 1 
+      FROM followers f3 
+      WHERE f3.follower_id = $1 AND f3.followed_id = u.user_id
+    ) THEN true
+    ELSE false
+  END AS is_following
+FROM users u
+INNER JOIN followers f ON f.follower_id = u.user_id
+WHERE f.followed_id = $2
+ORDER BY u.accuracy DESC, trades_count DESC;`,
+        [myUserId, myUserId]
+      )
+    ).rows;
 
     if (!result) {
       console.log("Failed to retrieve follower table data from the database");
@@ -1030,7 +1193,7 @@ export async function getFollowingTable(myUserId) {
   try {
     // Insert user data into the 'users' table
     /*
-    const result = await sql`
+    const result = await pool.query(`
     SELECT u.user_id, u.username, u.accuracy, u.trades_count, u.followers_count,
            CASE 
                WHEN EXISTS (
@@ -1044,7 +1207,10 @@ export async function getFollowingTable(myUserId) {
     INNER JOIN followers f ON f.followed_id = u.user_id
     WHERE f.follower_id = ${myUserId}
     ORDER BY u.accuracy DESC;`;*/
-    const result = await sql`SELECT u.user_id, u.username, u.accuracy, 
+    const result = (
+      await pool.query(
+        /*
+        `SELECT u.user_id, u.username, u.accuracy, 
        (SELECT COUNT(*) 
         FROM posts p 
         WHERE p.author_id = u.user_id 
@@ -1054,14 +1220,38 @@ export async function getFollowingTable(myUserId) {
            WHEN EXISTS (
                SELECT 1 
                FROM followers f2
-               WHERE f2.follower_id = ${myUserId} AND f2.followed_id = u.user_id
+               WHERE f2.follower_id = $1 AND f2.followed_id = u.user_id
            ) THEN true
            ELSE false
        END AS is_following
 FROM users u
 INNER JOIN followers f ON f.followed_id = u.user_id
-WHERE f.follower_id = ${myUserId}
-ORDER BY u.accuracy DESC;`;
+WHERE f.follower_id = $2
+ORDER BY u.accuracy DESC, trades_count DESC;`*/ `SELECT 
+  u.user_id, 
+  u.username, 
+  u.accuracy, 
+  (SELECT COUNT(*) 
+   FROM posts p 
+   WHERE p.author_id = u.user_id 
+     AND p.true_claim IS NOT NULL) AS trades_count,
+  (SELECT COUNT(*) 
+   FROM followers f2 
+   WHERE f2.followed_id = u.user_id) AS followers_count,
+  CASE 
+    WHEN EXISTS (
+      SELECT 1 
+      FROM followers f3 
+      WHERE f3.follower_id = $1 AND f3.followed_id = u.user_id
+    ) THEN true
+    ELSE false
+  END AS is_following
+FROM users u
+INNER JOIN followers f ON f.follower_id = $2 AND f.followed_id = u.user_id
+ORDER BY u.accuracy DESC, trades_count DESC;`,
+        [myUserId, myUserId]
+      )
+    ).rows;
 
     if (!result) {
       console.log("Failed to retrieve leaderboard data from the database");
@@ -1087,27 +1277,62 @@ ORDER BY u.accuracy DESC;`;
 }
 
 export async function getSearchTable(myUserId, searchQuery) {
+  console.log(searchQuery);
   //TODO: Add in following status.
   try {
     // Insert user data into the 'users' table
-    const result = await sql`
+    const result = (
+      await pool.query(
+        /*
+        `
     SELECT u.user_id, u.username, u.accuracy, (SELECT COUNT(*) 
         FROM posts p 
         WHERE p.author_id = u.user_id 
           AND p.expiry < NOW()) AS trades_count,  u.followers_count,
            CASE WHEN f.follower_id IS NOT NULL THEN true ELSE false END AS is_following
     FROM users u
-    LEFT JOIN followers f ON f.followed_id = u.user_id AND f.follower_id = ${myUserId}
-    WHERE u.user_id != ${myUserId}
-      AND u.username ILIKE ${`%${searchQuery}%`}  -- Matching usernames based on the search query
+    LEFT JOIN followers f ON f.followed_id = u.user_id AND f.follower_id = $1
+    WHERE u.user_id != $2
+      AND u.username ILIKE $3  
     ORDER BY
-      CASE WHEN u.username ILIKE ${`%${searchQuery}%`} THEN 1 ELSE 2 END,  -- Prioritize search matches
-      u.accuracy DESC  -- Order by accuracy as a secondary sort
+      CASE WHEN u.username ILIKE $4 THEN 1 ELSE 2 END, 
+      u.accuracy DESC, trades_count DESC  -- Order by accuracy as a secondary sort
     LIMIT 10;
-  `;
+  `*/ `SELECT 
+  u.user_id, 
+  u.username, 
+  u.accuracy, 
+  (SELECT COUNT(*) 
+   FROM posts p 
+   WHERE p.author_id = u.user_id 
+     AND p.true_claim IS NOT NULL) AS trades_count,
+  (SELECT COUNT(*) 
+   FROM followers f2 
+   WHERE f2.followed_id = u.user_id) AS followers_count,
+  CASE 
+    WHEN f.follower_id IS NOT NULL THEN true 
+    ELSE false 
+  END AS is_following
+FROM users u
+LEFT JOIN followers f ON f.followed_id = u.user_id AND f.follower_id = $1
+WHERE u.user_id != $2
+  AND u.username ILIKE $3
+ORDER BY
+  CASE 
+    WHEN u.username ILIKE $4 THEN 1 
+    ELSE 2 
+  END, 
+  u.accuracy DESC, trades_count DESC  -- Order by accuracy and trades_count
+LIMIT 10;
+`,
+        [myUserId, myUserId, `%${searchQuery}%`, `%${searchQuery}%`]
+      )
+    ).rows;
+
+    console.log(result);
 
     if (!result) {
-      console.log("Failed to retrieve leaderboard data from the database");
+      console.log("Failed to retrieve search table data from the database");
       return false;
     }
 
@@ -1124,7 +1349,7 @@ export async function getSearchTable(myUserId, searchQuery) {
 
     return leaderboard;
   } catch (error) {
-    console.log("getLeaderboard : Database Error Occurred:", error);
+    console.log("getSearchTable : Database Error Occurred:", error);
     return false;
   }
 }
@@ -1134,7 +1359,7 @@ export async function getLatestFeed(pageNumber) {
     const postsPerPage = 10;
     const offset = (pageNumber - 1) * postsPerPage;
     /*
-    const results = await sql`
+    const results = await pool.query(`
     SELECT posts.*, 
            users.username AS post_author_username, 
            users.accuracy AS post_author_accuracy,
@@ -1159,7 +1384,9 @@ export async function getLatestFeed(pageNumber) {
     ORDER BY post_date DESC  -- Order by post_date in descending order (most recent first)
     LIMIT ${postsPerPage} OFFSET ${offset};  -- Add LIMIT and OFFSET for pagination
 `;*/
-    const results = await sql`
+    const results = (
+      await pool.query(
+        `
     SELECT posts.*, 
           users.username AS post_author_username, 
           users.accuracy AS post_author_accuracy,
@@ -1176,16 +1403,21 @@ export async function getLatestFeed(pageNumber) {
               0
           ) AS total_disagreements,
           COALESCE(COUNT(comments.article_id), 0) AS total_comments, -- Add total comments count
-          stock_data.close_price AS status -- Add stock close price from stock_data
+          stock_data.close_price AS status,
+          stock_data.last_updated_time AS stock_last_update_time
     FROM posts
     JOIN users ON posts.author_id = users.user_id
     LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
     LEFT JOIN comments ON comments.article_id = posts.id -- Join comments table
     LEFT JOIN stock_data ON stock_data.ticker = posts.ticker -- Join stock_data table on ticker
-    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price -- Ensure proper grouping for aggregates
+    WHERE posts.deleted = false
+    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time -- Ensure proper grouping for aggregates
     ORDER BY post_date DESC -- Order by post_date in descending order (most recent first)
-    LIMIT ${postsPerPage} OFFSET ${offset}; -- Add LIMIT and OFFSET for pagination
-    `;
+    LIMIT $1 OFFSET $2; -- Add LIMIT and OFFSET for pagination
+    `,
+        [postsPerPage, offset]
+      )
+    ).rows;
 
     if (!results || !results[0]) {
       return false;
@@ -1203,7 +1435,7 @@ export async function getTrendingFeed(pageNumber) {
     const postsPerPage = 10;
     const offset = (pageNumber - 1) * postsPerPage;
     /*
-    const results = await sql`
+    const results = await pool.query()
 SELECT posts.*, 
        users.username AS post_author_username, 
        users.accuracy AS post_author_accuracy,
@@ -1243,7 +1475,9 @@ ORDER BY
 LIMIT ${postsPerPage} OFFSET ${offset}; 
 `;*/
 
-    const results = await sql`
+    const results = (
+      await pool.query(
+        `
 SELECT posts.*, 
        users.username AS post_author_username, 
        users.accuracy AS post_author_accuracy,
@@ -1260,14 +1494,15 @@ SELECT posts.*,
            0
        ) AS total_disagreements,
        COALESCE(COUNT(comments.article_id), 0) AS total_comments, -- Add total comments count
-       stock_data.close_price AS status -- Add stock close price from stock_data
+       stock_data.close_price AS status,
+       stock_data.last_updated_time AS stock_last_update_time
 FROM posts
 JOIN users ON posts.author_id = users.user_id
 LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
 LEFT JOIN comments ON comments.article_id = posts.id -- Join comments table
-LEFT JOIN stock_data ON stock_data.ticker = posts.ticker -- Join stock_data table on ticker
-WHERE posts.expiry >= CURRENT_DATE -- Only include posts that don't expire before today
-GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price -- Ensure proper grouping for aggregates
+LEFT JOIN stock_data ON stock_data.ticker = posts.ticker -- Join stock_data table on ticke
+WHERE posts.true_claim IS NULL AND posts.deleted = false -- Only include posts that don't expire before today
+GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time -- Ensure proper grouping for aggregates
 ORDER BY 
     (COALESCE(
         COUNT(DISTINCT CASE 
@@ -1282,8 +1517,11 @@ ORDER BY
         0
     ) + 
     COALESCE(COUNT(comments.article_id), 0)) DESC -- Order by engagement (sum of comments + agreements + disagreements)
-LIMIT ${postsPerPage} OFFSET ${offset}; 
-`;
+LIMIT $1 OFFSET $2; 
+`,
+        [postsPerPage, offset]
+      )
+    ).rows;
 
     if (!results || !results[0]) {
       return false;
@@ -1291,7 +1529,7 @@ LIMIT ${postsPerPage} OFFSET ${offset};
 
     return results;
   } catch (error) {
-    console.error("getLatestFeed : Database Error Occurred:", error);
+    console.error("getTrendingFeed : Database Error Occurred:", error);
     return false;
   }
 }
@@ -1301,7 +1539,9 @@ export async function getPersonalFeed(yourUserId, pageNumber) {
   try {
     const postsPerPage = 10;
     const offset = (pageNumber - 1) * postsPerPage;
-    const results = await sql`
+    const results = (
+      await pool.query(
+        `
     SELECT posts.*, 
            users.username AS post_author_username, 
            users.accuracy AS post_author_accuracy,
@@ -1318,16 +1558,17 @@ export async function getPersonalFeed(yourUserId, pageNumber) {
                0
            ) AS total_disagreements,
            COALESCE(COUNT(comments.article_id), 0) AS total_comments,  -- Add total comments count
-           stock_data.close_price AS status -- Add stock close price from stock_data
+           stock_data.close_price AS status,
+           stock_data.last_updated_time AS stock_last_update_time
     FROM posts
     JOIN users ON posts.author_id = users.user_id
     LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
     LEFT JOIN comments ON comments.article_id = posts.id  -- Join comments table
     JOIN followers ON followers.followed_id = posts.author_id  -- Join followers table to get the users you're following
     LEFT JOIN stock_data ON stock_data.ticker = posts.ticker -- Join stock_data table on ticker
-    WHERE followers.follower_id = ${yourUserId}  -- Only include posts from users you're following
-      AND expiry >= CURRENT_DATE  -- Only include posts that don't expire before today
-    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price  -- Ensure proper grouping for aggregates
+    WHERE followers.follower_id = $1  -- Only include posts from users you're following
+     AND posts.deleted = false  -- Only include posts that don't expire before today
+    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time  -- Ensure proper grouping for aggregates
     ORDER BY 
         (COALESCE(
             COUNT(DISTINCT CASE 
@@ -1342,11 +1583,14 @@ export async function getPersonalFeed(yourUserId, pageNumber) {
             0
         ) + 
         COALESCE(COUNT(comments.article_id), 0)) DESC  -- Order by engagement (sum of comments + agreements + disagreements)
-    LIMIT ${postsPerPage} OFFSET ${offset}; 
-`;
+    LIMIT $2 OFFSET $3; 
+`,
+        [yourUserId, postsPerPage, offset]
+      )
+    ).rows;
 
     /*
-    const results = await sql`
+    const results = await pool.query(`
     SELECT posts.*, 
            users.username AS post_author_username, 
            users.accuracy AS post_author_accuracy,
@@ -1394,7 +1638,7 @@ export async function getPersonalFeed(yourUserId, pageNumber) {
 
     return results;
   } catch (error) {
-    console.error("getLatestFeed : Database Error Occurred:", error);
+    console.error("getPersonalFeed : Database Error Occurred:", error);
     return false;
   }
 }
@@ -1404,7 +1648,7 @@ export async function getMyPosts(userId, pageNumber) {
     const postsPerPage = 10;
     const offset = (pageNumber - 1) * postsPerPage;
     /*
-    const results = await sql`
+    const results = await pool.query(`
     SELECT posts.*, 
            users.username AS post_author_username, 
            users.accuracy AS post_author_accuracy,
@@ -1430,7 +1674,9 @@ export async function getMyPosts(userId, pageNumber) {
     ORDER BY posts.post_date DESC  -- Order by latest posts (assumes there is a 'created_at' field)
     LIMIT ${postsPerPage} OFFSET ${offset}; 
     `;*/
-    const results = await sql`
+    const results = (
+      await pool.query(
+        `
     SELECT posts.*, 
            users.username AS post_author_username, 
            users.accuracy AS post_author_accuracy,
@@ -1447,17 +1693,21 @@ export async function getMyPosts(userId, pageNumber) {
                0
            ) AS total_disagreements,
            COALESCE(COUNT(comments.article_id), 0) AS total_comments, -- Add total comments count
-           stock_data.close_price AS status -- Add stock close price from stock_data
+           stock_data.close_price AS status,
+           stock_data.last_updated_time AS stock_last_update_time
     FROM posts
     JOIN users ON posts.author_id = users.user_id
     LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
     LEFT JOIN comments ON comments.article_id = posts.id -- Join comments table
     LEFT JOIN stock_data ON stock_data.ticker = posts.ticker -- Join stock_data table on ticker
-    WHERE posts.author_id = ${userId} -- Only include posts by the current user
-    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price -- Ensure proper grouping for aggregates
+    WHERE posts.author_id = $1 AND posts.deleted = false -- Only include posts by the current user
+    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time -- Ensure proper grouping for aggregates
     ORDER BY posts.post_date DESC -- Order by latest posts
-    LIMIT ${postsPerPage} OFFSET ${offset}; 
-`;
+    LIMIT $2 OFFSET $3; 
+`,
+        [userId, postsPerPage, offset]
+      )
+    ).rows;
 
     if (!results || !results[0]) {
       return false;
@@ -1465,7 +1715,7 @@ export async function getMyPosts(userId, pageNumber) {
 
     return results;
   } catch (error) {
-    console.error("getLatestFeed : Database Error Occurred:", error);
+    console.error("getMyPosts : Database Error Occurred:", error);
     return false;
   }
 }
@@ -1490,14 +1740,19 @@ export async function updatePostDb(reasoning, userId, articleId) {
     }
 
     // Perform the update only if the user_id matches the author_id of the post
-    const updatedPost = await sql`
+    const updatedPost = (
+      await pool.query(
+        `
       update posts
       set
-        content = ${reasoning}
+        content = $1
       where
-        id = ${articleId} and author_id = ${userId}
+        id = $2 and author_id = $3 and posts.deleted = false
       returning id;
-    `;
+    `,
+        [reasoning, articleId, userId]
+      )
+    ).rows;
 
     // Check if the update was successful
     if (updatedPost.length === 0) {
@@ -1516,11 +1771,16 @@ export async function updatePostDb(reasoning, userId, articleId) {
 
 export async function eligibleToPost(authorId) {
   try {
-    const dailyPostCount = await sql`
+    const dailyPostCount = (
+      await pool.query(
+        `
     SELECT COUNT(*)
     FROM posts
-    WHERE author_id = ${authorId} AND post_date::date = CURRENT_DATE;
-  `;
+    WHERE author_id = $1 AND post_date::date = CURRENT_DATE;
+  `,
+        [authorId]
+      )
+    ).rows;
 
     if (dailyPostCount[0].count < 5) {
       return true;
@@ -1545,13 +1805,18 @@ export async function createPost(
     // Insert user data into the 'users' table
     let condition = comparison === "greater than" ? ">" : "<";
 
-    const post = await sql`
+    const post = (
+      await pool.query(
+        `
         insert into posts
           (ticker, comparison, price, expiry, content, status, author_id)
         values
-          (${ticker}, ${condition}, ${price}, ${expiry}, ${content}, ${status}, ${authorId})
+          ($1, $2, $3, $4, $5, $6, $7)
         returning id;
-      `;
+      `,
+        [ticker, condition, price, expiry, content, status, authorId]
+      )
+    ).rows;
 
     return post[0].id;
   } catch (error) {
@@ -1561,30 +1826,99 @@ export async function createPost(
 }
 
 export async function deletePostDb(userId, articleId) {
+  const client = await pool.connect();
+  await client.query("BEGIN");
   try {
-    const post = await sql`
-      delete from posts
-      where id = ${articleId} and author_id = ${userId}
-      returning id;
-    `;
+    //check if expired
+    const result = (
+      await client.query(
+        `
+        select true_claim
+        from posts
+        where id = $1 and author_id = $2
+      `,
+        [articleId, userId]
+      )
+    ).rows;
 
-    if (post.length === 0) {
+    if (result.length === 0) {
       console.log(
-        "deletePost: No matching post found or unauthorized delete attempt."
+        "checkTrueClaim: No matching post found or unauthorized access."
       );
       return false;
     }
 
-    return post[0].id;
+    const trueClaim = result[0].true_claim;
+
+    if (trueClaim === null) {
+      await client.query(
+        `
+        UPDATE posts
+        SET true_claim = false
+        WHERE id = $1
+    `,
+        [articleId]
+      );
+
+      // Step 2: Calculate aggregated stats
+      await client.query(`
+      WITH aggregated_stats AS (
+          SELECT
+              author_id,
+              SUM(CASE WHEN true_claim THEN 1 ELSE 0 END) AS lifetime_correct,
+              COUNT(*) FILTER (WHERE true_claim IS NOT NULL) AS lifetime_total,
+              COUNT(*) FILTER (WHERE true_claim = TRUE) AS correct_predictions_today,
+              COUNT(*) FILTER (WHERE true_claim IS NOT NULL) AS total_predictions_today
+          FROM posts
+          WHERE posts.author_id IN (SELECT DISTINCT author_id FROM posts WHERE true_claim IS NOT NULL)
+          GROUP BY author_id
+      )
+
+      UPDATE users
+      SET accuracy = (
+          (aggregated_stats.lifetime_correct) * 100.0
+          / NULLIF(aggregated_stats.lifetime_total, 0)
+      )
+      FROM aggregated_stats
+      WHERE users.user_id = aggregated_stats.author_id;
+    `);
+    }
+
+    const post = await client.query(
+      `
+          update posts
+          set deleted = true
+          where id = $1 and author_id = $2 and deleted = false
+          returning id;
+        `,
+      [articleId, userId]
+    );
+
+    const postRows = post.rows;
+
+    if (postRows.length === 0) {
+      console.log(
+        "softDeletePost: No matching post found, already deleted, or unauthorized attempt."
+      );
+      return false;
+    }
+
+    await client.query("COMMIT");
+    return postRows[0].id;
   } catch (error) {
-    console.log("deletePost : Database Error Occurred:", error);
+    console.log("softDeletePost : Database Error Occurred:", error);
+    await client.query("ROLLBACK");
     return false;
+  } finally {
+    await client.release();
   }
 }
 
 export async function loadUserStats(userId) {
   try {
-    const result = await sql`
+    const result = (
+      await pool.query(
+        `
       SELECT 
         u.accuracy AS accuracy,
         u.account_type as account_type,
@@ -1592,12 +1926,15 @@ export async function loadUserStats(userId) {
         COUNT(DISTINCT f.follower_id) AS follower_count,
         COUNT(DISTINCT c.id) AS comment_count
       FROM users u
-      LEFT JOIN posts p ON p.author_id = u.user_id AND p.expiry < NOW()
+      LEFT JOIN posts p ON p.author_id = u.user_id AND p.true_claim IS NOT NULL
       LEFT JOIN followers f ON f.followed_id = u.user_id
       LEFT JOIN comments c ON c.user_id = u.user_id
-      WHERE u.user_id = ${userId}
+      WHERE u.user_id = $1
       GROUP BY u.user_id;
-    `;
+    `,
+        [userId]
+      )
+    ).rows;
 
     if (result.length != 1 || !result[0]) {
       return false;
@@ -1615,9 +1952,14 @@ export async function getValidTickers() {
     const lastWeekDate = new Date();
     lastWeekDate.setDate(lastWeekDate.getDate() - 7);
 
-    const result = await sql`
-      SELECT ticker, close_price from stock_data WHERE last_updated_time >= ${lastWeekDate};
-    `;
+    const result = (
+      await pool.query(
+        `
+      SELECT ticker, close_price from stock_data WHERE last_updated_time >= $1;
+    `,
+        [lastWeekDate]
+      )
+    ).rows;
 
     if (result.length == 0 || !result[0]) {
       return false;
@@ -1631,13 +1973,18 @@ export async function getValidTickers() {
 
 export async function getFollowerEmailsAndName(userId) {
   try {
-    const result = await sql`
+    const result = (
+      await pool.query(
+        `
       SELECT u.email, u.username 
       FROM users u
       JOIN followers f ON f.follower_id = u.user_id
-      WHERE f.followed_id = ${userId} 
+      WHERE f.followed_id = $1 
       AND f.notified = true;
-    `;
+    `,
+        [userId]
+      )
+    ).rows;
 
     if (result.length == 0 || !result[0]) {
       return false;
@@ -1651,11 +1998,17 @@ export async function getFollowerEmailsAndName(userId) {
 
 export async function getConscensusData(ticker, date) {
   try {
-    const result = await sql`
+    console.log(date, ticker);
+    const result = (
+      await pool.query(
+        `
       SELECT * 
       FROM posts
-      WHERE expiry = ${date} AND ticker = ${ticker}
-    `;
+      WHERE expiry::DATE = $1 AND ticker = $2 AND posts.deleted = false
+    `,
+        [date, ticker]
+      )
+    ).rows;
     if (result.length == 0 || !result[0]) {
       return false;
     }
@@ -1672,11 +2025,14 @@ export async function addPaidSubscriptionRecord(
   customerEmail
 ) {
   try {
-    await sql`INSERT INTO paid_subscription_records (user_id, stripe_customer_id, stripe_customer_email, created_at, deleted_at)
+    await pool.query(
+      `INSERT INTO paid_subscription_records (user_id, stripe_customer_id, stripe_customer_email, created_at, deleted_at)
 VALUES 
-    (${userId}, ${customerId}, ${customerEmail}, CURRENT_TIMESTAMP, NULL); 
+    ($1, $2, $3, CURRENT_TIMESTAMP, NULL); 
 
-  `;
+  `,
+      [userId, customerId, customerEmail]
+    );
   } catch (error) {
     console.error("addPaidSubscriptionRecord error:", error);
   }
@@ -1684,11 +2040,16 @@ VALUES
 
 export async function cancelSubscription(customerId) {
   try {
-    const result = await sql`UPDATE paid_subscription_records
+    const result = (
+      await pool.query(
+        `UPDATE paid_subscription_records
                              SET deleted_at = CURRENT_TIMESTAMP
-                             WHERE stripe_customer_id = ${customerId}
+                             WHERE stripe_customer_id = $1
                              AND deleted_at IS NULL
-                             RETURNING user_id;`;
+                             RETURNING user_id;`,
+        [customerId]
+      )
+    ).rows;
 
     if (result.length > 0) {
       return result[0].user_id; // Return the userId of the affected record
@@ -1704,11 +2065,14 @@ export async function cancelSubscription(customerId) {
 export async function updateUserSubscriptionType(userId, updateVal) {
   try {
     // Update the password_hash column for the given user
-    await sql`
+    await pool.query(
+      `
       update users
-      set account_type = ${updateVal}
-      where user_id = ${userId};
-    `;
+      set account_type = $1
+      where user_id = $2;
+    `,
+      [updateVal, userId]
+    );
   } catch (error) {
     console.error(
       "updateUserSubscriptionType : Database Error Occurred:",
@@ -1720,26 +2084,37 @@ export async function updateUserSubscriptionType(userId, updateVal) {
 export async function recoverFollowerData(userId) {
   try {
     // Query to fetch follower data for the given user from the backup table
-    const result = await sql`
+    const result = (
+      await pool.query(
+        `
       select follower_id, followed_id, created_at, notified
       from followers_backup
-      where follower_id = ${userId};
-    `;
+      where follower_id = $1;
+    `,
+        [userId]
+      )
+    ).rows;
 
     if (result.length > 0) {
       // Insert the data back into the main followers table
-      await sql`
+      await pool.query(
+        `
         insert into followers (follower_id, followed_id, created_at, notified)
         select follower_id, followed_id, created_at, notified
         from followers_backup
-        where follower_id = ${userId};
-      `;
+        where follower_id = $1;
+      `,
+        [userId]
+      );
 
       // Delete the data from the backup table
-      await sql`
+      await pool.query(
+        `
         delete from followers_backup
-        where follower_id = ${userId};
-      `;
+        where follower_id = $1;
+      `,
+        [userId]
+      );
     }
 
     return result; // Return the retrieved follower data
@@ -1752,26 +2127,36 @@ export async function recoverFollowerData(userId) {
 export async function backupUserFollowers(userId) {
   try {
     // Fetch the follower data from the main table
-    const followersData = await sql`
+    const followersData = (
+      await pool.query(
+        `
       select follower_id, followed_id, created_at, notified
       from followers
-      where follower_id = ${userId};
-    `;
-
+      where follower_id = $1;
+    `,
+        [userId]
+      )
+    ).rows;
     if (followersData.length > 0) {
       // Insert the data into the backup table
-      await sql`
+      await pool.query(
+        `
         insert into followers_backup (follower_id, followed_id, created_at, notified)
         select follower_id, followed_id, created_at, notified
         from followers
-        where follower_id = ${userId};
-      `;
+        where follower_id = $1;
+      `,
+        [userId]
+      );
 
       // Delete the data from the main table
-      await sql`
+      await pool.query(
+        `
         delete from followers
-        where follower_id = ${userId};
-      `;
+        where follower_id = $1;
+      `,
+        [userId]
+      );
     }
 
     return { success: true, message: "Backup completed successfully" };

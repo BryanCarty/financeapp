@@ -1,0 +1,16 @@
+.articleTitle {
+  color: #353535;
+  border: 5px solid #353535;
+  margin-top: 50px;
+  margin-bottom: 0px;
+  padding: 0;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5%;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 60px;
+  font-weight: 700;
+}

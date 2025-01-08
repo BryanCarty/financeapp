@@ -47,7 +47,7 @@ function makeHumanReadableDates(comments, loggedInUser) {
 }
 
 export async function generateMetadata({ params }) {
-  const slug = await params.slug;
+  const slug = (await params).slug;
   const array = slug.split("-");
   array[1] = array[1].toUpperCase();
   array[0] = array[0].charAt(0).toUpperCase() + array[0].slice(1); // Capitalize the first letter of the first word
@@ -100,6 +100,13 @@ export default async function ArticlePage({ params }) {
   const userId = await verifySession();
 
   const slug = (await params).slug;
+  const array = slug.split("-");
+  array[1] = array[1].toUpperCase();
+  array[0] = array[0].charAt(0).toUpperCase() + array[0].slice(1); // Capitalize the first letter of the first word
+  array[15] = array[15].charAt(0).toUpperCase() + array[15].slice(1); // Capitalize the first letter of the first word
+  array.pop(); // Removes the last element (39)
+
+  const resultStr = array.join(" ");
 
   //if (!userId) {
   //  const redirectUrl = slug ? `/login?redirect=${slug}` : "/login";
@@ -128,6 +135,7 @@ export default async function ArticlePage({ params }) {
     expiry,
     content,
     status,
+    stock_last_update_time,
     author_id,
     comments,
     post_date,
@@ -182,7 +190,7 @@ export default async function ArticlePage({ params }) {
         rawExpiry={rawExpiry}
         daysUntilExpiry={daysUntilExpiry}
         content={content}
-        status={status}
+        status={{ price: status, last_updated: stock_last_update_time }}
         comments={comments}
         post_date={post_date}
         username={post_author_username}
@@ -193,6 +201,7 @@ export default async function ArticlePage({ params }) {
         current_user_id={current_user_id}
         result={true_claim}
         isPostOwner={userId.userId == author_id}
+        title={resultStr}
       />
       <Footer />
     </div>

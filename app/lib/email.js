@@ -419,3 +419,75 @@ export async function sendUnsubscribeEmail(email) {
     return { success: false, message: "Failed to send emails", error };
   }
 }
+
+//errorUpdatingPostStatusesAndAuthorAccuracyEmail
+
+export async function errorEmail(error) {
+  try {
+    const htmlToSend = `
+      <html>
+          <head>
+          <!-- Link to Courier Prime font from Google Fonts -->
+          <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+          <style>
+              body {
+                  font-family: 'Courier Prime', Courier, monospace; /* Fallback to Courier if Courier Prime isn't available */              
+              }
+              h1 {
+                  font-family: 'Courier Prime', Courier, monospace;
+                  color: #353535;
+                  display: inline-block; 
+                  border-bottom: 2px dashed #353535;
+              }
+              p {
+                  font-family: 'Courier Prime', Courier, monospace;
+                  color: #353535;
+              }
+              a {
+                  font-family: 'Courier Prime', Courier, monospace;
+                  color: #353535;
+                  text-decoration: underline;
+                  border: none; 
+                  background: none;  
+                  padding: 0;  
+                }
+                   .copyright-section {
+            display: inline-block; 
+            border-top: 2px dashed #353535;
+            padding-top: 10px; /* Optional: Adds some space between the border and the text */
+          }
+          </style>
+      </head>
+      <body>
+          <div>
+              <div>
+                  <h1>${error}</h1>
+              </div>
+              <br><br>
+              <div>
+                  <h4>${error}</h4>
+              </div>
+              <br>
+              <br>
+              <br>
+              <div class="copyright-section">
+                  <p>&copy; 2024 Insights Of A Trader. All rights reserved.</p>
+              </div>
+          </div>
+      </body>
+      </html>`;
+    const info = await transporter.sendMail({
+      from: `"Insights Of A Trader" <${process.env.THE_TRADERS_JOURNAL_EMAIL}>`,
+      to: process.env.THE_TRADERS_JOURNAL_EMAIL,
+      subject: `${error}`,
+      html: htmlToSend,
+    });
+
+    return { success: true, message: "Emails sent successfully" };
+  } catch (error) {
+    console.error(
+      `An error occurred in the errorUpdatingPostStatusesAndAuthorAccuracyEmail function: ${error}`
+    );
+    return { success: false, message: "Failed to send emails", error };
+  }
+}

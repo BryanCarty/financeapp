@@ -1,12 +1,14 @@
 // db.js
 
-import postgres from "postgres";
+//import postgres from "postgres";
 
 /*
 const sql = postgres(
   `postgres://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`
 );
 */
+
+/*
 
 const sql = postgres({
   user: process.env.DB_USERNAME,
@@ -20,4 +22,18 @@ const sql = postgres({
   connectionTimeout: 2000, // wait 2 seconds for a connection before throwing an error
   // other options can be added here as needed
 });
+
 export default sql;
+*/
+
+import { Pool } from "pg";
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT,
+  idleTimeoutMillis: 30000,
+});
+
+export default pool;

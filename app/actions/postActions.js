@@ -123,6 +123,9 @@ export async function submitPost(postData) {
 
     // Parse the futureDate and the current date
     const parsedFutureDate = new Date(futureDate);
+    parsedFutureDate.setHours(16, 0, 0, 0);
+    console.log(parsedFutureDate);
+    console.log(typeof parsedFutureDate);
     const today = new Date();
 
     // Set the "tomorrow" date by adding one day to today's date
@@ -194,7 +197,7 @@ export async function submitPost(postData) {
       ticker,
       condition,
       price,
-      futureDate,
+      parsedFutureDate,
       reasoning,
       0.0,
       userId

@@ -6,6 +6,7 @@ import courierPrime from "./CourierPrime";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import getPriceByTickers from "../actions/tickers";
+const { DateTime } = require("luxon");
 
 export default function ArticleHeader({
   ticker,
@@ -58,19 +59,25 @@ export default function ArticleHeader({
   }, []); // Empty dependency array to run only once when the component mounts
 
   let glow = null;
-  const now = new Date();
+
+  const newYorkTimeNow = DateTime.now().setZone("America/New_York");
+  const expiryTimeGMT = DateTime.fromJSDate(rawExpiry);
+  const expiryTimeNY = expiryTimeGMT.setZone("America/New_York", {
+    keepLocalTime: true,
+  });
+
   let finalResult = null;
 
   // Compare the two dates
-  if (now > rawExpiry) {
+  if (newYorkTimeNow > expiryTimeNY && result !== null) {
     glow = result ? styles.greenGlow : styles.redGlow;
     finalResult = result ? "ACCURATE FORECAST" : "MISSED PROJECTION";
   }
 
-  const percentageDifference = ((livePrice - price) / price) * 100;
+  const percentageDifference = ((livePrice?.price - price) / price) * 100;
   const formattedPercentageDifference = percentageDifference.toFixed(2); // Ensures 2 decimal places
   let color = null;
-  if (now <= rawExpiry) {
+  if (newYorkTimeNow <= expiryTimeNY || result === null) {
     if (comparison == ">") {
       color = formattedPercentageDifference >= 0 ? styles.green : styles.red;
     } else if (comparison == "<") {
@@ -107,8 +114,18 @@ export default function ArticleHeader({
         <div className={`${styles.leftFooter} ${courierPrime.className}`}>
           Agree: {agreeCount} | Disagree: {disagreeCount} | Status:
           <span className={color}>
-            {finalResult || `${livePrice} (${formattedPercentageDifference}%)`}
+            {finalResult ||
+              `${livePrice?.price} (${formattedPercentageDifference}%)`}
           </span>
+          {result === null && (
+            <span className={`${styles.tooltip} ${courierPrime.className}`}>
+              <span className={styles.tooltipIcon}>i</span>
+              <span className={styles.tooltipText}>
+                Price is at least 15 minutes delayed. Last updated at{" "}
+                {livePrice?.last_updated.toLocaleString()}
+              </span>
+            </span>
+          )}
         </div>
 
         <div className={`${styles.rightFooter} ${courierPrime.className}`}>

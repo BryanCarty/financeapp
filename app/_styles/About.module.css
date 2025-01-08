@@ -1,10 +1,25 @@
 .background {
-  width: 100%;
+  /* width: 100%;
 
   background-image: url("/images/background.svg");
   background-repeat: no-repeat;
-  background-size: cover; /* Adjust the size */
-  background-position: center; /* Center the SVG */
+  background-size: cover; 
+  background-position: center;*/
+
+  position: relative;
+}
+
+.background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("/images/background.svg") repeat;
+  background-size: contain;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .container {
@@ -12,16 +27,20 @@
   justify-content: center; /* Center form horizontally */
   align-items: center; /* Center form vertically */
   width: 100%;
-  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 .mainBody {
   width: 70%;
-
   border: 5px solid #353535;
   background-color: #f7f7f7;
   border-radius: 25px;
   padding: 25px;
+  margin: 80px;
 }
 
 .mainBody h1 {
@@ -51,4 +70,60 @@
 .mainBody ul li {
   margin-bottom: 10px;
   font-size: 1rem;
+}
+
+.feature {
+  border-radius: 25px;
+  width: 70%;
+  margin: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 5px solid #353535;
+  background-color: #f7f7f7; /* Light background for better aesthetics */
+  padding: 25px;
+}
+
+.leftBlock {
+  flex: 1;
+  padding: 10px;
+  border-radius: 15px; /* Rounded corners for consistency */
+  background-color: #f7f7f7; /* Contrast with border */
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.heading {
+  font-size: 2.25rem;
+  color: #353535; /* Darker text for better readability */
+  text-align: center;
+  margin-bottom: 60px;
+  margin-top: 0px;
+}
+
+.description {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #353535; /* Lighter shade for description */
+  text-align: center;
+}
+
+.rightBlock {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+.imgStyle {
+  border-radius: 25px;
+  max-width: 100%; /* Ensure responsiveness */
+  height: auto; /* Maintain aspect ratio */
+  border: 2px solid #353535;
+  padding: 10px;
 }
