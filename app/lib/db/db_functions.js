@@ -103,9 +103,8 @@ function connectWebSocket() {
 
     ws.onmessage = async (msg) => {
       try {
-        logger.info(`stock feed websocket received message: ${msg}`);
         const parsedMessage = JSON.parse(msg.data);
-
+        logger.info(`stock feed websocket received message`);
         if (
           parsedMessage[0].ev === "status" &&
           parsedMessage[0].status === "auth_success"
