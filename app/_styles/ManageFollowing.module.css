@@ -9,6 +9,61 @@
   flex: 1;
 }
 
+.subnavbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 25px;
+  margin: 15px 0;
+  background-color: #f7f7f7;
+  border-bottom: 2px dashed #353535;
+}
+
+.context {
+  font-size: 1.35rem; /* Slightly larger text */
+  color: #353535; /* Dark color for readability */
+  line-height: 1.1; /* Spacing for readability */
+  margin: 25px; /* Adds some space around the text */
+  text-align: center; /* Center the text */
+  max-width: 600px; /* Optional, limits text width */
+  margin-left: auto; /* Center align */
+  margin-right: auto; /* Center align */
+  border: 2px dashed #353535;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.subnavitem {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  color: #353535;
+}
+
+.subnavitem:hover {
+  background-color: #eeeeee; /* Set your desired hover background color */
+  /* Change text color on hover */
+  border-color: #353535; /* Change border color on hover */
+  cursor: pointer;
+}
+.loadingContainer {
+  position: fixed; /* Sticks the container to the viewport */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.3
+  ); /* Optional: adds a semi-transparent background */
+  z-index: 9999; /* Ensures it stays on top of other content */
+}
+
 .searchContainer {
   width: 100%;
   display: flex;

@@ -41,9 +41,7 @@ export default function ArticleSummary({
     comparisonText = "less-than";
   }
 
-  // Handler for clicking on the article summary
   const handleArticleClick = () => {
-    // Redirect to the article page
     setLoading(true);
     const redirectStr = `/articles/why-${ticker.toLowerCase()}-stock-will-be-${comparisonText}-${parseFloat(
       price
@@ -51,12 +49,9 @@ export default function ArticleSummary({
       expiry
     )}-${articleId}`;
     router.push(redirectStr);
-    //why-appl-stock-will-be-greater-than-310.09-by-market-close-on-the-31st-of-march-2025-23
   };
 
-  // Handler for clicking on the comment icon
   const handleCommentClick = () => {
-    // Redirect to the comment section of the article page
     router.push(`/articles/${articleId}#comments`);
   };
 
@@ -69,7 +64,6 @@ export default function ArticleSummary({
     keepLocalTime: true,
   });
 
-  // Compare the two dates
   if (newYorkTimeNow > expiryTimeNY && result !== null) {
     glow = result ? styles.greenGlow : styles.redGlow;
     finalResult = result ? "ACCURATE FORECAST" : "MISSED PROJECTION";
@@ -84,13 +78,19 @@ export default function ArticleSummary({
     const postId = showDeleteModal.articleId;
 
     const id = await deletePostRequest(postId);
+    console.log(`deletePostRequest success: ${postId}`);
     if (id) {
       setShowDeleteModal(null);
       window.location.reload();
+    } else {
+      console.error(`deletePostRequest failed`);
+      router.push(
+        `/?tab=latest&error=${encodeURIComponent("Failed to delete post")}`
+      );
     }
   }
   const percentageDifference = ((priceStatus?.price - price) / price) * 100;
-  const formattedPercentageDifference = percentageDifference.toFixed(2); // Ensures 2 decimal places
+  const formattedPercentageDifference = percentageDifference.toFixed(2);
   let color = null;
   if (newYorkTimeNow <= expiryTimeNY || result === null) {
     if (comparison == ">") {
@@ -121,18 +121,17 @@ export default function ArticleSummary({
             </span>
             <span className={styles.claimExpiry}>({daysUntilExpiry} days)</span>
           </div>
-          <div className={`${styles.profile} ${courierPrime.className}`}>
+          <div
+            className={`${styles.profile} ${courierPrime.className}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              redirectToUserInfo();
+            }}
+          >
             {humanReadablePostDate} |&nbsp;
-            <span
-              className={styles.profileUsername}
-              onClick={(e) => {
-                e.stopPropagation();
-                redirectToUserInfo();
-              }}
-            >
-              {username}
+            <span className={styles.profileUsername}>
+              {username} ({accuracy})
             </span>
-            ({accuracy})
           </div>
         </div>
         <div className={`${styles.summaryBody} ${courierPrime.className}`}>
@@ -152,7 +151,8 @@ export default function ArticleSummary({
               <span className={`${styles.tooltip} ${courierPrime.className}`}>
                 <span className={styles.tooltipIcon}>i</span>
                 <span className={styles.tooltipText}>
-                  Price is at least 15 minutes delayed. Last updated at{" "}
+                  Price is at least 15 minutes delayed. The displayed price
+                  reflects the price as of{" "}
                   {priceStatus.last_updated.toLocaleString()}
                 </span>
               </span>
@@ -162,7 +162,6 @@ export default function ArticleSummary({
           <div
             className={`${styles.rightFooter} ${courierPrime.className}`}
             onClick={(e) => {
-              // Prevent the click from bubbling up to the article summary
               e.stopPropagation();
               handleCommentClick();
             }}

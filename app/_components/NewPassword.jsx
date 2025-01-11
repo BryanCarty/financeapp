@@ -11,10 +11,8 @@ export default function NewPassword() {
   const [state, action, pending] = useActionState(updatePassword, {});
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
-
   const [success, setSuccess] = useState(false);
 
-  // Effect to track successful execution
   useEffect(() => {
     if (state?.success) {
       setSuccess(true);
@@ -51,11 +49,7 @@ export default function NewPassword() {
           </div>
           {token ? (
             <div>
-              <input
-                type="hidden"
-                name="token"
-                value={token || ""} // Set the value from the URL token or an empty string if not available
-              />
+              <input type="hidden" name="token" value={token || ""} />
             </div>
           ) : (
             <div className={`${styles.error} ${courierPrime.className}`}>

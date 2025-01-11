@@ -16,6 +16,7 @@ import { usePathname } from "next/navigation";
 import barChart from "@/app/_assets/barchart.png";
 import Image from "next/image";
 import ArticleTitle from "./ArticleTitle";
+import ErrorPopUP from "./ErrorPopUp";
 
 export default function ArticleDynamicContent({
   id,
@@ -42,6 +43,8 @@ export default function ArticleDynamicContent({
   const router = useRouter();
   const currentPath = usePathname();
 
+  const [errorMessage, setErrorMessage] = useState(false);
+
   const [agreeDisagreeStatus, setAgreeDisagreeStatus] = useState(
     user_agreement_status
   );
@@ -56,37 +59,31 @@ export default function ArticleDynamicContent({
   const [editPostModal, setEditPostModal] = useState(false);
   const [deletePostModal, setDeletePostModal] = useState(false);
 
-  // State to store the new comment input by the user
   const [newComment, setNewComment] = useState("");
 
-  // Function to handle input change in the textarea
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
   };
 
   const handleSignUp = () => {
-    // You can redirect to sign up page or open a modal here
     router.push(`/signup?redirect=${currentPath}`);
   };
 
   const handleCloseCTA = () => {
-    setShowCTA(false); // Close the CTA when "X" is clicked
+    setShowCTA(false);
   };
 
-  // Function to handle comment submission
   const handleSubmitComment = async () => {
     if (newComment.trim() === "") {
-      return; // Don't submit if the comment is empty
+      return;
     }
 
     try {
+      setErrorMessage("");
       const savedComment = await submitComment(id, newComment, currentPath);
-
-      // Check if the response is savedCommentful
+      console.log(`submitComment success: ${savedComment}`);
 
       if (savedComment) {
-        // Update the comments list with the new comment
-
         let alteredComment = {
           created_at: formatDateToHumanReadable(savedComment.created_at, true),
           username: savedComment.username,
@@ -97,26 +94,31 @@ export default function ArticleDynamicContent({
           is_owner: true,
         };
 
-        setCommentsList((prevComments) => [
-          alteredComment,
-          ...prevComments,
-          // Add the newly added comment to the top of the list
-        ]);
-        setNewComment(""); // Clear the input field
+        setCommentsList((prevComments) => [alteredComment, ...prevComments]);
+        setNewComment("");
+        setErrorMessage("");
       } else {
-        console.log("Failed to save comment");
+        console.error("Failed to save comment");
+        setErrorMessage("Failed to create comment.");
       }
     } catch (error) {
-      console.log("Error submitting comment:" + error);
+      console.error(`Error submitting comment: ${error}`);
+      setErrorMessage("Failed to create comment.");
     }
   };
 
   async function deletePost() {
     const postId = id;
+    setErrorMessage("");
     const success = await deletePostRequest(postId);
+    console.log(`deletePostRequest success: ${success}`);
     if (success) {
       setDeletePostModal(null);
+      setErrorMessage("");
       router.push("/");
+    } else {
+      setErrorMessage("Failed to delete post");
+      console.error(`deletePostRequest request failed`);
     }
   }
 
@@ -130,19 +132,19 @@ export default function ArticleDynamicContent({
 
   const [showCTA, setShowCTA] = useState(false);
 
-  // Show CTA every 30 seconds if the user is not logged in
   useEffect(() => {
     if (current_user_id === null) {
       const interval = setInterval(() => {
         setShowCTA(true);
-      }, 25000); // 25 seconds interval
+      }, 25000);
 
-      return () => clearInterval(interval); // Clean up interval on unmount
+      return () => clearInterval(interval);
     }
   }, [current_user_id]);
 
   return (
     <>
+      {errorMessage && <ErrorPopUP message={errorMessage} />}
       {showCTA && current_user_id === null && (
         <div className={`${styles.ctaWrapper} ${courierPrime.className}`}>
           <div className={styles.ctaContent}>
@@ -258,10 +260,10 @@ export default function ArticleDynamicContent({
             placeholder="Write your comment here..."
             rows="6"
             aria-label="Comment Input"
-            value={newComment} // Bind the textarea value to the state
+            value={newComment}
             onChange={(e) => {
               if (e.target.value.length <= 1000) {
-                handleCommentChange(e); // Update the state only if the input length is <= 1000
+                handleCommentChange(e);
               }
             }}
           ></textarea>
@@ -290,6 +292,7 @@ export default function ArticleDynamicContent({
                 commentId={comment.comment_id}
                 isOwner={comment.is_owner}
                 setCommentsList={setCommentsList}
+                setErrorMessage={setErrorMessage}
                 key={comment.comment_id}
               />
             ))}

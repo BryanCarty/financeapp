@@ -4,15 +4,21 @@ import PageBody from "@/app/_components/PageBody";
 import Footer from "./_components/Footer";
 import { isAuthenticated } from "@/app/actions/auth";
 import styles from "@/app/_styles/PageContainer.module.css";
+import { logger } from "./lib/logger";
 
 export default async function HomePage() {
-  let isLoggedIn = await isAuthenticated();
+  try {
+    let isLoggedIn = await isAuthenticated();
+    logger.info(`user accessing home page, user_id: ${isLoggedIn?.userId}`);
 
-  return (
-    <div className={styles.pageContainer}>
-      <StandardPageHeader isLoggedIn={isLoggedIn} />
-      <PageBody isLoggedIn={isLoggedIn} />
-      <Footer />
-    </div>
-  );
+    return (
+      <div className={styles.pageContainer}>
+        <StandardPageHeader isLoggedIn={isLoggedIn} />
+        <PageBody isLoggedIn={isLoggedIn} />
+        <Footer />
+      </div>
+    );
+  } catch (error) {
+    logger.error(`an error occurred accessing the home page: ${error}`);
+  }
 }

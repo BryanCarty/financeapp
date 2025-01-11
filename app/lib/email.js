@@ -1,4 +1,6 @@
+"server-only";
 import nodemailer from "nodemailer";
+import { logger } from "./logger";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -72,17 +74,17 @@ export async function sendResetPasswordEmail(email, name, resetLink) {
         subject: "Reset Password Email",
         html: htmlToSend,
       });
-
-      console.log("Email sent successfully:", info.response);
+      logger.info(`reset password email sent: ${info.response}`);
       return { success: true, message: "Email sent successfully", info };
     } catch (error) {
-      console.error("Error sending email:", error);
+      logger.error(`error sending reset password email: ${error}`);
       return { success: false, message: "Failed to send email", error };
     }
   } catch (error) {
-    console.log(
+    logger.error(
       `An error occurred in the sendResetPasswordEmail util function: ${error}`
     );
+
     return { success: false, message: "Failed to send email", error };
   }
 }
@@ -156,15 +158,15 @@ export async function sendWelcomeEmail(email, name) {
         html: htmlToSend,
       });
 
-      console.log("Email sent successfully:", info.response);
+      logger.info(`welcome email sent: ${info.response}`);
       return { success: true, message: "Email sent successfully", info };
     } catch (error) {
-      console.error("Error sending email:", error);
+      logger.error(`Error sending welcome email: ${error}`);
       return { success: false, message: "Failed to send email", error };
     }
   } catch (error) {
-    console.log(
-      `An error occurred in the sendResetPasswordEmail util function: ${error}`
+    logger.error(
+      `An error occurred in the sendWelcomeEmail util function: ${error}`
     );
     return { success: false, message: "Failed to send email", error };
   }
@@ -249,15 +251,15 @@ export async function sendNewPostEmail(
           html: htmlToSend,
         });
 
-        console.log(`Email sent to ${email}:`, info.response);
+        logger.info(`new post email sent to ${email}:`, info.response);
       } catch (error) {
-        console.error(`Error sending email to ${email}:`, error);
+        logger.error(`Error sending email to ${email}: ${error}`);
       }
     }
 
-    return { success: true, message: "Emails sent successfully" };
+    return { success: true, message: "Emails sent..." };
   } catch (error) {
-    console.error(
+    logger.error(
       `An error occurred in the sendNewPostEmail function: ${error}`
     );
     return { success: false, message: "Failed to send emails", error };
@@ -332,10 +334,10 @@ export async function sendSubscriptionCreatedEmail(email) {
       subject: `You've Subscribed to Pro! 😎`,
       html: htmlToSend,
     });
-
+    logger.info(`subscription created email sent: ${info.response}`);
     return { success: true, message: "Emails sent successfully" };
   } catch (error) {
-    console.error(
+    logger.error(
       `An error occurred in the sendSubscriptionCreatedEmail function: ${error}`
     );
     return { success: false, message: "Failed to send emails", error };
@@ -410,20 +412,19 @@ export async function sendUnsubscribeEmail(email) {
       subject: `You've Unubscribed to Pro! 😢`,
       html: htmlToSend,
     });
-
+    logger.info(`unsubscribe email sent: ${info.response}`);
     return { success: true, message: "Emails sent successfully" };
   } catch (error) {
-    console.error(
+    logger.error(
       `An error occurred in the sendUnsubscribeEmail function: ${error}`
     );
     return { success: false, message: "Failed to send emails", error };
   }
 }
 
-//errorUpdatingPostStatusesAndAuthorAccuracyEmail
-
 export async function errorEmail(error) {
   try {
+    logger.info(`sending error email: ${error}`);
     const htmlToSend = `
       <html>
           <head>
@@ -482,12 +483,11 @@ export async function errorEmail(error) {
       subject: `${error}`,
       html: htmlToSend,
     });
+    logger.info(`error email sent: ${info.response}`);
 
     return { success: true, message: "Emails sent successfully" };
   } catch (error) {
-    console.error(
-      `An error occurred in the errorUpdatingPostStatusesAndAuthorAccuracyEmail function: ${error}`
-    );
+    logger.error(`An error occurred in the errorEmail function: ${error}`);
     return { success: false, message: "Failed to send emails", error };
   }
 }

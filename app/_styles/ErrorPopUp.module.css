@@ -1,0 +1,35 @@
+.errorPopUp {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px 40px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  z-index: 2;
+  opacity: 0;
+  animation: slideInFadeOut 5s forwards;
+  background-color: #f0d8d8;
+  color: #763c3c;
+  border: 1px solid #f0d8d8;
+}
+
+@keyframes slideInFadeOut {
+  0% {
+    top: -50px;
+    opacity: 0;
+  }
+  10% {
+    top: 20px;
+    opacity: 1;
+  }
+  90% {
+    top: 20px;
+    opacity: 1;
+  }
+  100% {
+    top: -50px;
+    opacity: 0;
+  }
+}

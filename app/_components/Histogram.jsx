@@ -11,8 +11,6 @@ import {
 import courierPrime from "./CourierPrime";
 import styles from "@/app/_styles/ConscensusCharts.module.css";
 
-// Register Chart.js components
-
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Title);
 
 const Histogram = ({ histogramData, title }) => {
@@ -32,7 +30,6 @@ const Histogram = ({ histogramData, title }) => {
 
   return (
     <div>
-      {/* Histogram */}
       <div className={styles.barContainer}>
         <h2 className={`${courierPrime.className} ${styles.font}`}>{title}</h2>
         <Bar data={histogramData} options={histogramOptions} />

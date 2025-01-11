@@ -35,10 +35,10 @@ export default function ArticleHeader({
   }
 
   const fetchPricesForTickers = async (tickers) => {
-    // Create an empty object to hold the ticker-price pairs
     const prices = await getPriceByTickers(tickers);
+    console.log(`getPriceByTickers success: ${prices != false}`);
     if (!prices) {
-      console.log("An error occurred attempting to retrieve prices");
+      console.error("An error occurred attempting to retrieve prices");
     } else {
       return prices;
     }
@@ -53,10 +53,10 @@ export default function ArticleHeader({
       } catch (error) {
         console.error("Error fetching ticker prices:", error);
       }
-    }, 60000); // Update prices every 5 seconds
+    }, 60000);
 
-    return () => clearInterval(intervalId); // Cleanup interval on unmount
-  }, []); // Empty dependency array to run only once when the component mounts
+    return () => clearInterval(intervalId);
+  }, []);
 
   let glow = null;
 
@@ -68,14 +68,13 @@ export default function ArticleHeader({
 
   let finalResult = null;
 
-  // Compare the two dates
   if (newYorkTimeNow > expiryTimeNY && result !== null) {
     glow = result ? styles.greenGlow : styles.redGlow;
     finalResult = result ? "ACCURATE FORECAST" : "MISSED PROJECTION";
   }
 
   const percentageDifference = ((livePrice?.price - price) / price) * 100;
-  const formattedPercentageDifference = percentageDifference.toFixed(2); // Ensures 2 decimal places
+  const formattedPercentageDifference = percentageDifference.toFixed(2);
   let color = null;
   if (newYorkTimeNow <= expiryTimeNY || result === null) {
     if (comparison == ">") {
@@ -121,7 +120,8 @@ export default function ArticleHeader({
             <span className={`${styles.tooltip} ${courierPrime.className}`}>
               <span className={styles.tooltipIcon}>i</span>
               <span className={styles.tooltipText}>
-                Price is at least 15 minutes delayed. Last updated at{" "}
+                Price is at least 15 minutes delayed. The displayed price
+                reflects the price as of{" "}
                 {livePrice?.last_updated.toLocaleString()}
               </span>
             </span>

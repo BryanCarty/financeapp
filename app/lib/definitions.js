@@ -1,3 +1,4 @@
+"server-only";
 import { z } from "zod";
 
 const isOlderThan18 = (dateOfBirth) => {

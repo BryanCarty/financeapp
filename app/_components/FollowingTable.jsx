@@ -24,6 +24,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
         selectedFollowProfile,
         emailAlerts
       );
+      console.log(`followUser success: ${success}, ${message}`);
       if (message == "Follow Inelligibillity") {
         setLoadingError(
           "Your account type cannot follow users 😔 Consider upgrading your account. 🚀"
@@ -40,13 +41,15 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
       );
     } catch (error) {
       setLoadingError("An Unexpected Error Occurred (Follow)");
-      console.log("Error attempting to follow user:", error);
+      console.error(`Error attempting to follow user: ${error}`);
     }
   };
 
   const unfollowUserClient = async (selectedUnfollowProfile) => {
     try {
       const success = await unfollowUser(selectedUnfollowProfile); // Your backend API route
+      console.log(`unfollowUser success: ${success}`);
+
       if (!success) throw new Error("Failed to unfollow user");
       // Update the local state optimistically
       setProfiles((prevProfiles) =>
@@ -58,7 +61,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
       );
     } catch (error) {
       setLoadingError("An Unexpected Error Occurred (UnFollow)");
-      console.log("Error attempting to unfollow user:", error);
+      console.error(`Error attempting to unfollow user: ${error}`);
     }
   };
 
@@ -67,6 +70,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
       try {
         setLoading(true);
         const { tableData, userId } = await loadTable(type, searchQuery);
+        console.log(`loadTable success: ${tableData != false}`);
         if (!tableData || tableData.length === 0) {
           let errorText = "Hmm.. There appears to be no data 😞";
           switch (type) {
@@ -93,7 +97,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
       } catch (error) {
         setLoadingError("An Unexpected Error Occurred!");
         setLoading(false);
-        console.log("Error fetching table data:", error);
+        console.error(`Error fetching table data: ${error}`);
       }
     };
 
@@ -115,9 +119,6 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
   };
 
   const handleConfirmFollow = () => {
-    console.log(
-      `Followed ${selectedFollowProfile.name} with email alerts: ${emailAlerts}`
-    );
     followUserClient(selectedFollowProfile.id, emailAlerts);
     setSelectedFollowProfile(null); // Close the modal
     setEmailAlerts(false); // Reset checkbox

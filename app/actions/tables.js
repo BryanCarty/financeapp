@@ -7,11 +7,13 @@ import {
   getSearchTable,
 } from "../lib/db/db_functions";
 import { verifySession } from "../lib/sessions";
+import { logger } from "../lib/logger";
 
 export default async function loadTable(type, searchQuery) {
   try {
     // Simulate database or external API call
     const { userId, username } = await verifySession();
+    logger.info(`loadTable called by user: ${userId}`);
     let tableData = false;
     switch (type) {
       case "fe": //follower
@@ -42,7 +44,7 @@ export default async function loadTable(type, searchQuery) {
         return { tableData, userId };
     }
   } catch (error) {
-    console.log("An error occurred in loadTable: " + error);
+    logger.error(`An error occurred in loadTable: ${error}`);
     return false;
   }
 }

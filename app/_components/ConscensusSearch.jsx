@@ -11,12 +11,13 @@ export default function ConscensusSearch({ onSearchChange }) {
   useEffect(() => {
     async function checkUserLogginStatus() {
       let isLoggedIn = await isAuthenticated();
+      console.log(`user logged in status: ${isLoggedIn != false}`);
       if (!isLoggedIn) {
         router.push("/login");
       }
     }
     checkUserLogginStatus();
-  }, [router]); // Add `router` as a dependency for the useEffect
+  }, [router]);
 
   const [ticker, setTicker] = useState("");
   const [date, setDate] = useState("");

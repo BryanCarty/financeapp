@@ -14,26 +14,32 @@ export default function Comment({
   commentId,
   isOwner,
   setCommentsList,
+  setErrorMessage,
 }) {
   const [editText, setEditText] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   async function editComment() {
-    // What if you try save back to back ?
     setEditText(commentBody);
   }
 
-  //NOte it does not update without a reload
   async function saveComment() {
+    setErrorMessage("");
     let success = await updateComment(commentId, editText);
+    console.log(`updateComment success: ${success}`);
     if (success) {
-      setEditText(null); // Reset the edit text field after saving
+      setEditText(null);
       setCommentsList((prevComments) =>
         prevComments.map((comment) =>
           comment.comment_id === commentId
-            ? { ...comment, text: editText } // Update the comment's text
+            ? { ...comment, text: editText }
             : comment
         )
       );
+      setErrorMessage("");
+    } else {
+      console.error(`unable to update comment`);
+      setErrorMessage("Unable to save comment");
     }
   }
 
@@ -42,13 +48,18 @@ export default function Comment({
   };
 
   async function deleteComment() {
+    setErrorMessage("");
     let id = await removeComment(commentId);
+    console.log(`removeComment success: ${success}`);
     if (id) {
       setShowDeleteModal(false);
-      //also need to remove the comment, iterate over and remove comment with id
       setCommentsList((prevComments) =>
         prevComments.filter((comment) => comment.comment_id !== id)
       );
+      setErrorMessage("");
+    } else {
+      setErrorMessage("Unable to delete comment");
+      console.error(`Unable to delete comment`);
     }
   }
 
@@ -67,7 +78,7 @@ export default function Comment({
             placeholder="Write your comment here..."
             rows="6"
             aria-label="Comment Input"
-            value={editText} // Bind the textarea value to the state
+            value={editText}
             onChange={handleCommentChange}
           ></textarea>
         ) : (

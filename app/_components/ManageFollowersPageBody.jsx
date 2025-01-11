@@ -1,6 +1,5 @@
 "use client";
-import styles from "@/app/_styles/PageBody.module.css";
-import manageFollowingstyles from "@/app/_styles/ManageFollowing.module.css";
+import styles from "@/app/_styles/ManageFollowing.module.css";
 import { useState } from "react";
 import FollowingTable from "./FollowingTable";
 import SearchBar from "./SearchBar";
@@ -12,6 +11,7 @@ import { logout } from "../actions/auth";
 import Feed from "./Feed";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import LoadingSquiggle from "./LoadingSquiggle";
+import ErrorPopUP from "./ErrorPopUp";
 
 export default function ({ isLoggedIn }) {
   const searchParams = useSearchParams();
@@ -33,6 +33,7 @@ export default function ({ isLoggedIn }) {
   const [userStats, setUserStats] = useState();
   const [editPostModalData, setEditPostModalData] = useState();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
@@ -69,12 +70,14 @@ export default function ({ isLoggedIn }) {
 
   useEffect(() => {
     const fetchStats = async () => {
+      setError("");
       try {
         const userStats = await getUserStats();
         if (!userStats) throw new Error("Failed to fetch user stats");
         setUserStats(userStats);
       } catch (error) {
-        console.log("Error fetching user stats:", error);
+        console.error(`Error fetching user stats: ${error}`);
+        setError("Failed to fetch user stats");
       }
     };
     fetchStats();
@@ -82,18 +85,15 @@ export default function ({ isLoggedIn }) {
 
   return (
     <>
+      {error && <ErrorPopUP message={error} />}
       {loading && (
         <div className={styles.loadingContainer}>
           <LoadingSquiggle />
         </div>
       )}
-      <div
-        className={`${manageFollowingstyles.pageBody} ${styles.mainContent}`}
-      >
-        <div
-          className={`${manageFollowingstyles.tableContainer} ${courierPrime.className}`}
-        >
-          <table className={manageFollowingstyles.profileTable}>
+      <div className={`${styles.pageBody}`}>
+        <div className={`${styles.tableContainer} ${courierPrime.className}`}>
+          <table className={styles.profileTable}>
             <caption>My Stats</caption>
             <thead>
               <tr>
@@ -123,29 +123,24 @@ export default function ({ isLoggedIn }) {
           </table>
         </div>
 
-        <div className={manageFollowingstyles.accountSettingsContainer}>
-          <div
-            className={`${manageFollowingstyles.grid} ${courierPrime.className}`}
-          >
+        <div className={styles.accountSettingsContainer}>
+          <div className={`${styles.grid} ${courierPrime.className}`}>
             <label
-              className={manageFollowingstyles.card}
+              className={styles.card}
               onClick={() => manageSubscription(0)}
             >
               <input
                 name="plan"
-                className={manageFollowingstyles.radio}
+                className={styles.radio}
                 type="radio"
                 checked={userStats?.account_type === 0}
               />
 
-              <span className={manageFollowingstyles.planDetails}>
-                <span className={manageFollowingstyles.planType}>Basic</span>
-                <span className={manageFollowingstyles.planCost}>
-                  €0<span className={manageFollowingstyles.slash}>/</span>
-                  <abbr
-                    className={manageFollowingstyles.planCycle}
-                    title="month"
-                  >
+              <span className={styles.planDetails}>
+                <span className={styles.planType}>Basic</span>
+                <span className={styles.planCost}>
+                  €0<span className={styles.slash}>/</span>
+                  <abbr className={styles.planCycle} title="month">
                     mo
                   </abbr>
                 </span>
@@ -153,26 +148,23 @@ export default function ({ isLoggedIn }) {
               </span>
             </label>
             <label
-              className={manageFollowingstyles.card}
+              className={styles.card}
               onClick={() => manageSubscription(1)}
             >
               <input
                 name="plan"
-                className={manageFollowingstyles.radio}
+                className={styles.radio}
                 type="radio"
                 checked={userStats?.account_type === 1}
               />
-              <span className={manageFollowingstyles.hiddenVisually}>
+              <span className={styles.hiddenVisually}>
                 Pro - €8 per month, 25 Follow User Limit
               </span>
-              <span
-                className={manageFollowingstyles.planDetails}
-                aria-hidden="true"
-              >
-                <span className={manageFollowingstyles.planType}>Pro</span>
-                <span className={manageFollowingstyles.planCost}>
-                  €8<span className={manageFollowingstyles.slash}>/</span>
-                  <span className={manageFollowingstyles.planCycle}>mo</span>
+              <span className={styles.planDetails} aria-hidden="true">
+                <span className={styles.planType}>Pro</span>
+                <span className={styles.planCost}>
+                  €8<span className={styles.slash}>/</span>
+                  <span className={styles.planCycle}>mo</span>
                 </span>
                 <span>Can Follow 25 Users 🚀</span>
               </span>
@@ -180,12 +172,12 @@ export default function ({ isLoggedIn }) {
           </div>
           <button
             onClick={logoutUser}
-            className={`${manageFollowingstyles.logoutButton} ${courierPrime.className}`}
+            className={`${styles.logoutButton} ${courierPrime.className}`}
           >
             Logout
           </button>
         </div>
-        <div className={manageFollowingstyles.hr}></div>
+        <div className={styles.hr}></div>
         <div className={styles.subnavbar}>
           <h5
             className={`${courierPrime.className} ${styles.subnavitem} ${
@@ -259,7 +251,7 @@ export default function ({ isLoggedIn }) {
             setEditPostData={setEditPostModalData}
           />
         )}
-        <div className={manageFollowingstyles.followingContainer}>
+        <div className={styles.followingContainer}>
           {activeTab == "following" && (
             <FollowingTable key={"fi"} type={"fi"} searchQuery={null} />
           )}
@@ -267,7 +259,7 @@ export default function ({ isLoggedIn }) {
             <FollowingTable key={"fe"} type={"fe"} searchQuery={null} />
           )}
           {activeTab == "search" && (
-            <div className={manageFollowingstyles.searchContainer}>
+            <div className={styles.searchContainer}>
               {/* Pass the handler to the SearchBar to update the state */}
               <SearchBar onSearchChange={handleSearchChange} />
               {/* Pass the updated search query to the FollowingTable */}

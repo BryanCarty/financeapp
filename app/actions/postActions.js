@@ -11,26 +11,34 @@ import {
 import { redirect } from "next/navigation";
 import DOMPurify from "isomorphic-dompurify";
 import { sendNewPostEmail } from "../lib/email";
+import { logger } from "../lib/logger";
 
 let tickers = null; // Initialize tickers to null for clarity
 function sanitizePostData(postData) {
-  const sanitizedData = {
-    ticker: DOMPurify.sanitize(postData.ticker),
-    condition: DOMPurify.sanitize(postData.condition),
-    price: DOMPurify.sanitize(postData.price.toString()), // Convert to string before sanitizing
-    futureDate: DOMPurify.sanitize(postData.futureDate), // Assuming it's a string; if it's a Date object, validate it
-    reasoning: DOMPurify.sanitize(postData.reasoning),
-  };
+  try {
+    logger.info(`sanitizePostData called`);
+    const sanitizedData = {
+      ticker: DOMPurify.sanitize(postData.ticker),
+      condition: DOMPurify.sanitize(postData.condition),
+      price: DOMPurify.sanitize(postData.price.toString()), // Convert to string before sanitizing
+      futureDate: DOMPurify.sanitize(postData.futureDate), // Assuming it's a string; if it's a Date object, validate it
+      reasoning: DOMPurify.sanitize(postData.reasoning),
+    };
 
-  if (postData.articleId) {
-    sanitizedData.articleId = DOMPurify.sanitize(postData.articleId);
+    if (postData.articleId) {
+      sanitizedData.articleId = DOMPurify.sanitize(postData.articleId);
+    }
+
+    return sanitizedData;
+  } catch (error) {
+    logger.error(`An error occurred in sanitizePostData: ${error}`);
+    throw error;
   }
-
-  return sanitizedData;
 }
 
 async function isValidTickerPrice(specificTicker, price, condition) {
   try {
+    logger.info(`isValidTickerPrice called`);
     const result = await getValidTickers();
     const entry = result.find(({ ticker }) => ticker === specificTicker);
 
@@ -59,7 +67,7 @@ async function isValidTickerPrice(specificTicker, price, condition) {
 
     return { validTicker: true, message: "Success" };
   } catch (error) {
-    console.log("Error checking if ticker exists: " + error);
+    logger.error(`An error occurred in isValidTickerPrice: ${error}`);
     return { validTicker: false, message: "Internal Server Error" };
   }
 }
@@ -69,6 +77,7 @@ export async function submitPost(postData) {
     // Destructure and validate data
 
     const { userId, username } = await verifySession();
+    logger.info(`submitPost called by user: ${userId}`);
     if (!userId) {
       redirect("/login");
     }
@@ -124,8 +133,7 @@ export async function submitPost(postData) {
     // Parse the futureDate and the current date
     const parsedFutureDate = new Date(futureDate);
     parsedFutureDate.setHours(16, 0, 0, 0);
-    console.log(parsedFutureDate);
-    console.log(typeof parsedFutureDate);
+
     const today = new Date();
 
     // Set the "tomorrow" date by adding one day to today's date
@@ -209,7 +217,7 @@ export async function submitPost(postData) {
     //Send Alert message to followers
     const followerEmailsAndNames = await getFollowerEmailsAndName(userId);
     if (followerEmailsAndNames && followerEmailsAndNames.length) {
-      let success = await sendNewPostEmail(
+      let { success, message } = await sendNewPostEmail(
         followerEmailsAndNames,
         username,
         postId
@@ -218,7 +226,7 @@ export async function submitPost(postData) {
 
     return { success: true, message: "Success" }; // Return the result for further use
   } catch (error) {
-    console.error("Failed to submit post:" + error);
+    logger.error(`An error occurred in submitPost: ${error}`);
     return {
       success: false,
       message: "An internal server error occurred",
@@ -229,6 +237,7 @@ export async function submitPost(postData) {
 export async function updatePost(postData) {
   try {
     const { userId, username } = await verifySession();
+    logger.info(`updatePost called by user: ${userId}`);
     if (!userId) {
       redirect("/login");
     }
@@ -239,23 +248,38 @@ export async function updatePost(postData) {
     ticker = ticker.toUpperCase();
 
     if (!articleId) {
-      throw new Error("ArticleId must be provided");
+      return {
+        success: false,
+        message: "ArticleId must be provided",
+      };
     }
 
     if (!ticker || typeof ticker !== "string" || ticker.trim() === "") {
-      throw new Error("Ticker is required and must be a non-empty string.");
+      return {
+        success: false,
+        message: "Ticker is required and must be a non-empty string.",
+      };
     }
 
     if (!["greater than", "less than"].includes(condition)) {
-      throw new Error("Condition must be 'greater than' or 'less than'.");
+      return {
+        success: false,
+        message: "Condition must be 'greater than' or 'less than'.",
+      };
     }
 
     if (!price || isNaN(price)) {
-      throw new Error("Price is required and must be a valid number.");
+      return {
+        success: false,
+        message: "Price is required and must be a valid number.",
+      };
     }
 
     if (!futureDate || isNaN(Date.parse(futureDate))) {
-      throw new Error("Future date is required and must be a valid date.");
+      return {
+        success: false,
+        message: "Future date is required and must be a valid date.",
+      };
     }
 
     if (
@@ -263,16 +287,22 @@ export async function updatePost(postData) {
       typeof reasoning !== "string" ||
       reasoning.trim() === ""
     ) {
-      throw new Error("Reasoning is required and must be a non-empty string.");
+      return {
+        success: false,
+        message: "Reasoning is required and must be a non-empty string.",
+      };
     }
 
     const postId = await updatePostDb(reasoning, userId, articleId);
     if (!postId) {
-      throw new Error("Unable to update post");
+      return {
+        success: false,
+        message: "Unable to update post",
+      };
     }
     return { success: true, message: "Success" }; // Return the result for further use
   } catch (error) {
-    console.log("Failed to update post:", error);
+    logger.error(`An error occurred in updatePost: ${error}`);
     return {
       success: false,
       message: "An internal server error occurred",
@@ -283,6 +313,7 @@ export async function updatePost(postData) {
 export async function deletePostRequest(articleId) {
   try {
     const { userId, username } = await verifySession();
+    logger.info(`deletePostRequest called by user: ${userId}`);
     if (!userId) {
       redirect("/login");
     }
@@ -297,7 +328,7 @@ export async function deletePostRequest(articleId) {
     }
     return postId; // Return the result for further use
   } catch (error) {
-    console.log("Failed to update post:", error);
+    logger.error(`An error occurred in deletePostRequest: ${error}`);
     return false;
   }
 }

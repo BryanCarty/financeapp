@@ -12,7 +12,6 @@ export default function ResetPassword() {
   const { email } = state?.values || {};
   const [success, setSuccess] = useState(false);
 
-  // Effect to track successful execution
   useEffect(() => {
     if (state?.success) {
       setSuccess(true);

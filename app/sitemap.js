@@ -1,6 +1,7 @@
 "use server";
 
 import { fetchArticleUrls } from "./lib/db/db_functions";
+import { logger } from "./lib/logger";
 
 function formatExpiryDate(expiryDateStr) {
   const date = new Date(expiryDateStr);
@@ -20,79 +21,84 @@ function formatExpiryDate(expiryDateStr) {
 }
 
 export default async function sitemap() {
-  // Fetch dynamic article URLs
-  const dynamicArticleUrls = await fetchArticleUrls();
+  try {
+    logger.info(`user accessing sitemap page: ${error}`);
+    // Fetch dynamic article URLs
+    const dynamicArticleUrls = await fetchArticleUrls();
 
-  // Format dynamic URLs based on fetched data
-  const dynamicPages = dynamicArticleUrls.map((article) => {
-    const { id, ticker, comparison, price, expiry } = article;
-    const comparisonVal = comparison == ">" ? "greater" : "less";
-    const formattedExpiry = formatExpiryDate(expiry);
-    const formattedUrl = `https://insightsofatrader.com/articles/why-${ticker.toLowerCase()}-stock-will-be-${comparisonVal}-than-${price}-by-market-close-on-the-${formattedExpiry}-${id}`;
+    // Format dynamic URLs based on fetched data
+    const dynamicPages = dynamicArticleUrls.map((article) => {
+      const { id, ticker, comparison, price, expiry } = article;
+      const comparisonVal = comparison == ">" ? "greater" : "less";
+      const formattedExpiry = formatExpiryDate(expiry);
+      const formattedUrl = `https://insightsofatrader.com/articles/why-${ticker.toLowerCase()}-stock-will-be-${comparisonVal}-than-${price}-by-market-close-on-the-${formattedExpiry}-${id}`;
 
-    return {
-      url: formattedUrl,
-      lastModified: new Date(), // Assuming the articles are modified now
-      changeFrequency: "daily", // You can adjust this frequency based on your needs
-      priority: 0.8, // Lower priority for dynamic articles, adjust if needed
-    };
-  });
+      return {
+        url: formattedUrl,
+        lastModified: new Date(), // Assuming the articles are modified now
+        changeFrequency: "daily", // You can adjust this frequency based on your needs
+        priority: 0.8, // Lower priority for dynamic articles, adjust if needed
+      };
+    });
 
-  // Static pages that will be included in the sitemap
-  const staticPages = [
-    {
-      url: "https://insightsofatrader.com",
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 1,
-    },
-    {
-      url: "https://insightsofatrader.com/about",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: "https://insightsofatrader.com/login",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: "https://insightsofatrader.com/signup",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: "https://insightsofatrader.com/reset-password",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: "https://insightsofatrader.com/new-password",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: "https://insightsofatrader.com/terms-and-conditions",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: "https://insightsofatrader.com/privacy-policy",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-  ];
+    // Static pages that will be included in the sitemap
+    const staticPages = [
+      {
+        url: "https://insightsofatrader.com",
+        lastModified: new Date(),
+        changeFrequency: "daily",
+        priority: 1,
+      },
+      {
+        url: "https://insightsofatrader.com/about",
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.9,
+      },
+      {
+        url: "https://insightsofatrader.com/login",
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.7,
+      },
+      {
+        url: "https://insightsofatrader.com/signup",
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.7,
+      },
+      {
+        url: "https://insightsofatrader.com/reset-password",
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.6,
+      },
+      {
+        url: "https://insightsofatrader.com/new-password",
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.6,
+      },
+      {
+        url: "https://insightsofatrader.com/terms-and-conditions",
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.7,
+      },
+      {
+        url: "https://insightsofatrader.com/privacy-policy",
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.7,
+      },
+    ];
 
-  // Combine dynamic pages with static pages
-  const allPages = [...staticPages, ...dynamicPages];
+    // Combine dynamic pages with static pages
+    const allPages = [...staticPages, ...dynamicPages];
 
-  // Return the combined pages
-  return allPages;
+    // Return the combined pages
+    return allPages;
+  } catch (error) {
+    logger.error(`error in sitemap(): ${error}`);
+  }
 }

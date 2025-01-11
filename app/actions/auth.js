@@ -18,8 +18,10 @@ import { deleteSession } from "../lib/sessions";
 import { sendResetPasswordEmail, sendWelcomeEmail } from "../lib/email";
 import { randomBytes } from "crypto";
 import { redirect } from "next/navigation";
+import { logger } from "../lib/logger";
 
 export async function signup(state, formData) {
+  logger.info(`signup server action called`);
   // Validate form fields
   const username = formData.get("username");
   const email = formData.get("email");
@@ -33,6 +35,34 @@ export async function signup(state, formData) {
     password: password,
     dateOfBirth: dateOfBirth,
   };
+
+  if (!username) {
+    return {
+      errors: { username: ["username is missing"] },
+      values: extractedData,
+    };
+  }
+
+  if (!email) {
+    return {
+      errors: { email: ["email is missing"] },
+      values: extractedData,
+    };
+  }
+
+  if (!password) {
+    return {
+      errors: { password: ["password is missing"] },
+      values: extractedData,
+    };
+  }
+
+  if (!dateOfBirth) {
+    return {
+      errors: { dateOfBirth: ["dateOfBirth is missing"] },
+      values: extractedData,
+    };
+  }
 
   try {
     const validatedFields = SignupFormSchema.safeParse(extractedData);
@@ -60,15 +90,9 @@ export async function signup(state, formData) {
       };
     }
 
-    errors = await createSession(userId, username, email);
-    if (errors) {
-      return {
-        errors: errors,
-        values: extractedData,
-      };
-    }
+    await createSession(userId, username, email);
 
-    let result = await sendWelcomeEmail(email, username);
+    let { success, message } = await sendWelcomeEmail(email, username);
 
     // 5. Redirect user
     if (redirectVal) {
@@ -78,7 +102,7 @@ export async function signup(state, formData) {
     }
   } catch (error) {
     if (error.message === "NEXT_REDIRECT") throw error;
-    console.log("An error occurred in signup: " + error);
+    logger.error(`An error occurred in signup: ${error}`);
     return {
       errors: { username: ["An Internal Server Error Occurred"] },
       values: extractedData,
@@ -88,24 +112,28 @@ export async function signup(state, formData) {
 
 export async function logout() {
   try {
+    logger.info(`logout server action called`);
     await deleteSession();
     redirect("/login");
   } catch (error) {
-    console.log("An error occurred in logout: " + error);
+    logger.error(`An error occurred in logout: ${error}`);
   }
 }
 
 export async function isAuthenticated() {
   try {
+    logger.info(`isAuthenticated() called`);
     let isLoggedIn = await verifySession();
     return isLoggedIn;
   } catch (error) {
-    console.log("An error occurred in isAuthenticated(): " + error);
+    logger.error(`An error occurred in isAuthenticated(): ${error}`);
     return false;
   }
 }
 
 export async function login(state, formData) {
+  logger.info(`login server action called`);
+
   // Validate form fields
   const email = formData.get("email");
   const password = formData.get("password");
@@ -115,6 +143,21 @@ export async function login(state, formData) {
     email: email,
     password: password,
   };
+
+  if (!email) {
+    return {
+      errors: { email: ["email is missing"] },
+      values: extractedData,
+    };
+  }
+
+  if (!password) {
+    return {
+      errors: { password: ["password is missing"] },
+      values: extractedData,
+    };
+  }
+
   try {
     const validatedFields = LoginFormSchema.safeParse(extractedData);
 
@@ -134,14 +177,9 @@ export async function login(state, formData) {
       };
     }
 
-    console.log("Creating Session for: " + user.user_id);
-    errors = await createSession(user.user_id, user.username, email);
-    if (errors) {
-      return {
-        errors: errors,
-        values: extractedData,
-      };
-    }
+    logger.info("Creating Session for: " + user.user_id);
+    await createSession(user.user_id, user.username, email);
+
     if (redirectVal) {
       redirect(redirectVal);
     } else {
@@ -149,7 +187,7 @@ export async function login(state, formData) {
     }
   } catch (error) {
     if (error.message === "NEXT_REDIRECT") throw error;
-    console.log("An error occurred in login(): " + error);
+    logger.error(`An error occurred in login(): ${error}`);
     return {
       errors: { username: ["An Internal Server Error Occurred"] },
       values: extractedData,
@@ -158,14 +196,22 @@ export async function login(state, formData) {
 }
 
 export async function resetPassword(state, formData) {
-  try {
-    // Validate form fields
-    const email = formData.get("email");
+  // Validate form fields
 
-    const extractedData = {
-      email: email,
+  logger.info(`resetPassword called`);
+  const email = formData.get("email");
+
+  const extractedData = {
+    email: email,
+  };
+
+  if (!email) {
+    return {
+      errors: { email: ["email is missing"] },
+      values: extractedData,
     };
-
+  }
+  try {
     const validatedFields = LoginFormSchema.safeParse(extractedData);
 
     // If any form fields are invalid, return early
@@ -189,6 +235,7 @@ export async function resetPassword(state, formData) {
       user.user_id,
       randomToken
     );
+
     if (!success || error) {
       return {
         errors: error,
@@ -196,13 +243,13 @@ export async function resetPassword(state, formData) {
       };
     }
 
-    let result = await sendResetPasswordEmail(
+    let emailResult = await sendResetPasswordEmail(
       user.email,
       user.username,
       process.env.DOMAIN + "/new-password?token=" + randomToken
     );
 
-    if (!result.success) {
+    if (!emailResult.success) {
       return {
         errors: { email: ["An unexpected error occurred!"] },
         values: extractedData,
@@ -213,23 +260,44 @@ export async function resetPassword(state, formData) {
       success: true,
     };
   } catch (error) {
-    console.log("An error occurred in resetPassword");
+    logger.error(`An error occurred in resetPassword: ${error}`);
     return {
-      success: false,
+      errors: { email: ["An unexpected error occurred!"] },
+      values: extractedData,
     };
   }
 }
 
 export async function updatePassword(state, formData) {
+  // Validate form fields
+
+  logger.info(`update password called`);
+  const password = formData.get("password");
+  const token = formData.get("token");
+
   const extractedData = {
     password: password,
+    token: token,
   };
-  try {
-    // Validate form fields
-    const password = formData.get("password");
-    const token = formData.get("token");
 
-    const validatedFields = ResetPasswordFormSchema.safeParse(extractedData);
+  if (!password) {
+    return {
+      errors: { password: ["password is missing"] },
+      values: extractedData,
+    };
+  }
+
+  if (!token) {
+    return {
+      errors: { password: ["Token is missing from request"] },
+      values: extractedData,
+    };
+  }
+
+  try {
+    const validatedFields = ResetPasswordFormSchema.safeParse({
+      password: password,
+    });
 
     // If any form fields are invalid, return early
     if (!validatedFields.success) {
@@ -259,7 +327,10 @@ export async function updatePassword(state, formData) {
 
     return { success: true };
   } catch (error) {
-    console.log("An error occurred in auth.js");
-    return { success: false };
+    logger.error(`An error occurred in update password: ${error}`);
+    return {
+      errors: { password: ["An Unexpected Error Occurred"] },
+      values: extractedData,
+    };
   }
 }

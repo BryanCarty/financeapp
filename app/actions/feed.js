@@ -7,11 +7,13 @@ import {
 } from "../lib/db/db_functions";
 import { verifySession } from "../lib/sessions";
 import { redirect } from "next/navigation";
+import { logger } from "../lib/logger";
 
 export default async function loadFeed(type, page) {
   try {
     // Simulate database or external API call
     const { userId, username } = await verifySession();
+    logger.info(`loadFeed called by user: ${userId}`);
 
     switch (type) {
       case "latest": //follower
@@ -84,7 +86,7 @@ export default async function loadFeed(type, page) {
         return null;
     }
   } catch (error) {
-    console.log("An error occurred in loadFeed(): " + error);
+    logger.error(`An error occurred in loadFeed(): ${error}`);
     if (error.message === "NEXT_REDIRECT") throw error;
     return false;
   }

@@ -6,10 +6,12 @@ import {
   unfollowUserDb,
 } from "../lib/db/db_functions";
 import { verifySession } from "../lib/sessions";
+import { logger } from "../lib/logger";
 
 export async function followUser(otherUserId, notified) {
   try {
     const { userId, username } = await verifySession();
+    logger.info(`followUser called by user: ${userId}`);
     if (!userId) {
       redirect("/login");
     }
@@ -29,7 +31,7 @@ export async function followUser(otherUserId, notified) {
     return { success: success, message: null };
   } catch (error) {
     if (error.message === "NEXT_REDIRECT") throw error;
-    console.log("An error occurred in followUser: " + error);
+    logger.error(`An error occurred in followUser: ${error}`);
     return { success: false, message: "Internal Server Error" };
   }
 }
@@ -37,6 +39,7 @@ export async function followUser(otherUserId, notified) {
 export async function unfollowUser(otherUserId) {
   try {
     const { userId, username } = await verifySession();
+    logger.info(`followUser called by user: ${userId}`);
     if (!userId) {
       redirect("/login");
     }
@@ -44,7 +47,7 @@ export async function unfollowUser(otherUserId) {
     return success;
   } catch (error) {
     if (error.message === "NEXT_REDIRECT") throw error;
-    console.log("An error occurred in unfollowUser: " + error);
+    logger.error(`An error occurred in unfollowUser: ${error}`);
     return false;
   }
 }

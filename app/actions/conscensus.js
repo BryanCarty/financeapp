@@ -2,10 +2,12 @@
 import { verifySession } from "../lib/sessions";
 import { redirect } from "next/navigation";
 import { getConscensusData } from "../lib/db/db_functions";
+import { logger } from "../lib/logger";
 
 export default async function fetchConscensusDataDb(ticker, date) {
   try {
     const { userId, username } = await verifySession();
+    logger.info(`fetchConscensusDataDb called by user: ${userId}`);
     if (!userId) {
       redirect("/login");
     }
@@ -48,7 +50,7 @@ export default async function fetchConscensusDataDb(ticker, date) {
     return returnData;
   } catch (error) {
     if (error.message === "NEXT_REDIRECT") throw error;
-    console.log("An error occurred in fetchConscensusData(): " + error);
+    logger.error(`An error occurred in fetchConscensusData(): ${error}`);
     return false;
   }
 }

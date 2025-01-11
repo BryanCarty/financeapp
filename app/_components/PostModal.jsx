@@ -1,5 +1,5 @@
 "use client";
-// Modal Component
+
 import styles from "@/app/_styles/PostModal.module.css";
 import courierPrime from "./CourierPrime";
 import { useState } from "react";
@@ -68,6 +68,7 @@ export default function PostModal({ isOpen, onClose, data }) {
 
     try {
       // Sending data to the server action
+      setError("");
       let success, message;
       if (isUpdate) {
         ({ success, message } = await updatePost({
@@ -75,11 +76,13 @@ export default function PostModal({ isOpen, onClose, data }) {
           reasoning: value, // Add the reasoning content
           articleId: articleId,
         }));
+        console.log(`update post success: ${success}, message: ${message}`);
       } else {
         ({ success, message } = await submitPost({
           ...formData,
           reasoning: value, // Add the reasoning content
         }));
+        console.log(`submit post success: ${success}, message: ${message}`);
       }
       if (!success && message) {
         setError(message);
@@ -89,7 +92,8 @@ export default function PostModal({ isOpen, onClose, data }) {
         window.location.reload();
       }
     } catch (error) {
-      console.log("Error submitting post:", error);
+      console.error(`Error submitting/updating post: ${error}`);
+      setError("An Unexpected Error Occurred");
     } finally {
       setIsSubmitting(false);
     }

@@ -12,11 +12,13 @@ import {
   sendSubscriptionCreatedEmail,
   sendUnsubscribeEmail,
 } from "@/app/lib/email";
+import { logger } from "@/app/lib/logger";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 export async function POST(req) {
+  logger.info(`stripe webhook invoked`);
   const body = await req.text();
 
   const signature = (await headers()).get("stripe-signature");
@@ -29,7 +31,7 @@ export async function POST(req) {
   try {
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err) {
-    console.error(`Webhook signature verification failed. ${err.message}`);
+    logger.error(`Webhook signature verification failed. ${err.message}`);
     return NextResponse.json({ error: err.message }, { status: 400 });
   }
 
@@ -100,7 +102,7 @@ export async function POST(req) {
       // Unhandled event type
     }
   } catch (e) {
-    console.error("stripe error: " + e.message + " | EVENT TYPE: " + eventType);
+    logger.error("stripe error: " + e.message + " | EVENT TYPE: " + eventType);
   }
 
   return NextResponse.json({});

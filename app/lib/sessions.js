@@ -1,16 +1,22 @@
 "server-only";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
+import { logger } from "./logger";
 
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload) {
-  return new SignJWT(payload)
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setExpirationTime("1d")
-    .sign(encodedKey);
+  try {
+    return new SignJWT(payload)
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime("1d")
+      .sign(encodedKey);
+  } catch (error) {
+    logger.error(`error occurred encrypting payload: ${error}`);
+    throw error;
+  }
 }
 
 export async function decrypt(session) {
@@ -20,29 +26,39 @@ export async function decrypt(session) {
     });
     return payload;
   } catch (error) {
-    console.log("Failed to verify session");
+    logger.error(`Error occurred during session decryption: ${error}`);
   }
 }
 
 export async function createSession(userId, username, email) {
-  const expiresAt = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
+  try {
+    const expiresAt = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
 
-  const session = await encrypt({ userId, username, email, expiresAt });
-  const cookieStore = await cookies();
+    const session = await encrypt({ userId, username, email, expiresAt });
+    const cookieStore = await cookies();
 
-  cookieStore.set("session", session, {
-    httpOnly: true,
-    secure: true,
-    expires: expiresAt,
-    sameSite: "lax",
-    path: "/",
-  });
+    cookieStore.set("session", session, {
+      httpOnly: true,
+      secure: true,
+      expires: expiresAt,
+      sameSite: "lax",
+      path: "/",
+    });
+  } catch (error) {
+    logger.error(`error occurred creating session: ${error}`);
+    throw error;
+  }
 }
 
 // For logging out
 export async function deleteSession() {
-  const cookieStore = await cookies();
-  cookieStore.delete("session");
+  try {
+    const cookieStore = await cookies();
+    cookieStore.delete("session");
+  } catch (error) {
+    logger.error(`error occurred deleting session: ${error}`);
+    throw error;
+  }
 }
 
 export async function verifySession() {
@@ -86,7 +102,7 @@ export async function verifySession() {
     return false;
   } catch (error) {
     // Handle any errors that might occur (decryption, cookie retrieval, etc.)
-    console.error("Error verifying session:", error);
+    logger.error(`error occurred verifying session: ${error}`);
     return false;
   }
 }

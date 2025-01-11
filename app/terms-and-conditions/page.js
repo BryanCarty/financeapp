@@ -1,6 +1,10 @@
 "use server";
+import { logger } from "../lib/logger";
+
 const MyPage = () => {
-  const rawHTML = `<style>
+  try {
+    logger.info(`user accessing terms and conditions page`);
+    const rawHTML = `<style>
   [data-custom-class='body'], [data-custom-class='body'] * {
           background: transparent !important;
         }
@@ -141,12 +145,17 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"><strong><bdt clas
       </div>
       `;
 
-  return (
-    <div
-      style={{ padding: "20px" }}
-      dangerouslySetInnerHTML={{ __html: rawHTML }}
-    />
-  );
+    return (
+      <div
+        style={{ padding: "20px" }}
+        dangerouslySetInnerHTML={{ __html: rawHTML }}
+      />
+    );
+  } catch (error) {
+    logger.error(
+      `an error occurred accessing terms and conditions page: ${error}`
+    );
+  }
 };
 
 export default MyPage;

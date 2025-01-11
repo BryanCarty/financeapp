@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import fetchArticleBySlug from "@/app/actions/articles";
 import ArticleDynamicContent from "@/app/_components/ArticleDyanmicContent";
 import { verifySession } from "@/app/lib/sessions";
+import { logger } from "@/app/lib/logger";
 
 function formatDateToHumanReadable(dateString, includeTime = false) {
   const date = new Date(dateString);
@@ -47,163 +48,169 @@ function makeHumanReadableDates(comments, loggedInUser) {
 }
 
 export async function generateMetadata({ params }) {
-  const slug = (await params).slug;
-  const array = slug.split("-");
-  array[1] = array[1].toUpperCase();
-  array[0] = array[0].charAt(0).toUpperCase() + array[0].slice(1); // Capitalize the first letter of the first word
-  array[15] = array[15].charAt(0).toUpperCase() + array[15].slice(1); // Capitalize the first letter of the first word
-  array.pop(); // Removes the last element (39)
+  try {
+    const slug = (await params).slug;
+    const array = slug.split("-");
+    array[1] = array[1].toUpperCase();
+    array[0] = array[0].charAt(0).toUpperCase() + array[0].slice(1); // Capitalize the first letter of the first word
+    array[15] = array[15].charAt(0).toUpperCase() + array[15].slice(1); // Capitalize the first letter of the first word
+    array.pop(); // Removes the last element (39)
 
-  const resultStr = array.join(" ");
+    const resultStr = array.join(" ");
+    logger.info(
+      `user accessing article page, generating metadata for: ${resultStr}`
+    );
 
-  return {
-    title: `Insights Of A Trader | ${resultStr}`,
-    description: `'Insights of a Trader' ${resultStr} article page. 'Insights of a Trader' is a dynamic platform designed for traders to collaborate and refine their market strategies. Users can share stock price predictions, log their trades, discuss individual stocks, and gain valuable insights into market trends. The platform also offers email notifications for trade prediction posts, allowing traders to stay updated. Additionally, users can search by ticker and date to discover what others foresee for the future performance of a stock, helping them make more informed decisions based on collective insights from the community.`,
-    icons: {
-      icon: "/images/icon.png",
-    },
-    keywords: [
-      "trading platform",
-      "stock predictions",
-      "market trends",
-      "trade logging",
-      "stock insights",
-      "financial community",
-      "trader collaboration",
-      "stock forecasting",
-      "ticker search",
-      "market predictions",
-      "trading insights",
-      "stock market analysis",
-      "future performance predictions",
-      "trader notifications",
-      "stock consensus",
-      "investment strategies",
-      "copy trading",
-      "stock forum",
-      resultStr,
-    ],
-    metadataBase: new URL("https://insightsofatrader.com"),
-    alternates: {
-      canonical: `/articles/${slug}`,
-      languages: {
-        "en-US": "/en-US",
+    return {
+      title: `Insights Of A Trader | ${resultStr}`,
+      description: `'Insights of a Trader' ${resultStr} article page. 'Insights of a Trader' is a dynamic platform designed for traders to collaborate and refine their market strategies. Users can share stock price predictions, log their trades, discuss individual stocks, and gain valuable insights into market trends. The platform also offers email notifications for trade prediction posts, allowing traders to stay updated. Additionally, users can search by ticker and date to discover what others foresee for the future performance of a stock, helping them make more informed decisions based on collective insights from the community.`,
+      icons: {
+        icon: "/images/icon.png",
       },
-    },
-    openGraph: {
-      images: "/icon.png",
-    },
-  };
+      keywords: [
+        "trading platform",
+        "stock predictions",
+        "market trends",
+        "trade logging",
+        "stock insights",
+        "financial community",
+        "trader collaboration",
+        "stock forecasting",
+        "ticker search",
+        "market predictions",
+        "trading insights",
+        "stock market analysis",
+        "future performance predictions",
+        "trader notifications",
+        "stock consensus",
+        "investment strategies",
+        "copy trading",
+        "stock forum",
+        resultStr,
+      ],
+      metadataBase: new URL("https://insightsofatrader.com"),
+      alternates: {
+        canonical: `/articles/${slug}`,
+        languages: {
+          "en-US": "/en-US",
+        },
+      },
+      openGraph: {
+        images: "/icon.png",
+      },
+    };
+  } catch (error) {
+    logger.error(
+      `error occurred accessing article page, generating metadata: ${error}`
+    );
+  }
 }
 
 export default async function ArticlePage({ params }) {
-  const userId = await verifySession();
-
-  const slug = (await params).slug;
-  const array = slug.split("-");
-  array[1] = array[1].toUpperCase();
-  array[0] = array[0].charAt(0).toUpperCase() + array[0].slice(1); // Capitalize the first letter of the first word
-  array[15] = array[15].charAt(0).toUpperCase() + array[15].slice(1); // Capitalize the first letter of the first word
-  array.pop(); // Removes the last element (39)
-
-  const resultStr = array.join(" ");
-
-  //if (!userId) {
-  //  const redirectUrl = slug ? `/login?redirect=${slug}` : "/login";
-  //  redirect(redirectUrl);
-  //}
-
-  let article;
   try {
+    const userId = await verifySession();
+    const slug = (await params).slug;
+    const array = slug.split("-");
+    array[1] = array[1].toUpperCase();
+    array[0] = array[0].charAt(0).toUpperCase() + array[0].slice(1); // Capitalize the first letter of the first word
+    array[15] = array[15].charAt(0).toUpperCase() + array[15].slice(1); // Capitalize the first letter of the first word
+    array.pop(); // Removes the last element (39)
+
+    const resultStr = array.join(" ");
+    logger.info(`user accessing article page: ${resultStr}`);
+
+    let article;
+
     article = await fetchArticleBySlug(slug);
-  } catch (error) {
-    console.log(
-      "An error occurred fetching article by id: " + slug + ": " + error
+
+    if (!article) {
+      redirect(
+        `/?tab=latest&error=${encodeURIComponent("Unable To Locate Article")}`
+      );
+    }
+
+    let {
+      id,
+      ticker,
+      comparison,
+      price,
+      expiry,
+      content,
+      status,
+      stock_last_update_time,
+      author_id,
+      comments,
+      post_date,
+      post_author_username,
+      post_author_accuracy,
+      total_agreements,
+      total_disagreements,
+      user_agreement_status,
+      current_user_id,
+      true_claim,
+    } = article;
+
+    expiry = new Date(expiry);
+    let rawExpiry = expiry;
+
+    const currentDate = new Date();
+
+    // Calculate the difference in milliseconds
+    const timeDifference = expiry - currentDate;
+
+    // Convert milliseconds to days
+    const daysUntilExpiry = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+    expiry = expiry.toLocaleDateString("en-US", {
+      weekday: "long", // Day of the week (e.g., 'Monday')
+      year: "numeric", // Full year (e.g., '2027')
+      month: "long", // Full month name (e.g., 'January')
+      day: "numeric", // Day of the month (e.g., '1')
+    });
+    post_date = formatDateToHumanReadable(post_date);
+
+    if (user_agreement_status === true) {
+      user_agreement_status = 1;
+    } else if (user_agreement_status === false) {
+      user_agreement_status = -1;
+    } else {
+      user_agreement_status = 0;
+    }
+
+    if (comments) {
+      comments = makeHumanReadableDates(comments, userId.userId);
+    }
+
+    return (
+      <div className={styles.pageBody}>
+        <StandardPageHeader isLoggedIn={userId} />
+        <ArticleDynamicContent
+          id={id}
+          ticker={ticker}
+          comparison={comparison}
+          price={price}
+          expiry={expiry}
+          rawExpiry={rawExpiry}
+          daysUntilExpiry={daysUntilExpiry}
+          content={content}
+          status={{ price: status, last_updated: stock_last_update_time }}
+          comments={comments}
+          post_date={post_date}
+          username={post_author_username}
+          accuracy={post_author_accuracy}
+          total_agreements={total_agreements}
+          total_disagreements={total_disagreements}
+          user_agreement_status={user_agreement_status}
+          current_user_id={current_user_id}
+          result={true_claim}
+          isPostOwner={userId.userId == author_id}
+          title={resultStr}
+        />
+        <Footer />
+      </div>
     );
-    redirect("/");
+  } catch (error) {
+    logger.error(`an error occurred accessing article page: ${error}`);
+    if (error.message === "NEXT_REDIRECT") throw error;
+    redirect(`/?error=${encodeURIComponent("An Unexpected Error Occurred")}`);
   }
-
-  if (!article) {
-    redirect("/");
-  }
-
-  let {
-    id,
-    ticker,
-    comparison,
-    price,
-    expiry,
-    content,
-    status,
-    stock_last_update_time,
-    author_id,
-    comments,
-    post_date,
-    post_author_username,
-    post_author_accuracy,
-    total_agreements,
-    total_disagreements,
-    user_agreement_status,
-    current_user_id,
-    true_claim,
-  } = article;
-
-  expiry = new Date(expiry);
-  let rawExpiry = expiry;
-
-  const currentDate = new Date();
-
-  // Calculate the difference in milliseconds
-  const timeDifference = expiry - currentDate;
-
-  // Convert milliseconds to days
-  const daysUntilExpiry = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-  expiry = expiry.toLocaleDateString("en-US", {
-    weekday: "long", // Day of the week (e.g., 'Monday')
-    year: "numeric", // Full year (e.g., '2027')
-    month: "long", // Full month name (e.g., 'January')
-    day: "numeric", // Day of the month (e.g., '1')
-  });
-  post_date = formatDateToHumanReadable(post_date);
-
-  if (user_agreement_status === true) {
-    user_agreement_status = 1;
-  } else if (user_agreement_status === false) {
-    user_agreement_status = -1;
-  } else {
-    user_agreement_status = 0;
-  }
-
-  if (comments) {
-    comments = makeHumanReadableDates(comments, userId.userId);
-  }
-
-  return (
-    <div className={styles.pageBody}>
-      <StandardPageHeader isLoggedIn={userId} />
-      <ArticleDynamicContent
-        id={id}
-        ticker={ticker}
-        comparison={comparison}
-        price={price}
-        expiry={expiry}
-        rawExpiry={rawExpiry}
-        daysUntilExpiry={daysUntilExpiry}
-        content={content}
-        status={{ price: status, last_updated: stock_last_update_time }}
-        comments={comments}
-        post_date={post_date}
-        username={post_author_username}
-        accuracy={post_author_accuracy}
-        total_agreements={total_agreements}
-        total_disagreements={total_disagreements}
-        user_agreement_status={user_agreement_status}
-        current_user_id={current_user_id}
-        result={true_claim}
-        isPostOwner={userId.userId == author_id}
-        title={resultStr}
-      />
-      <Footer />
-    </div>
-  );
 }

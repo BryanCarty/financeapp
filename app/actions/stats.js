@@ -2,18 +2,20 @@
 import { redirect } from "next/navigation";
 import { loadUserStats } from "../lib/db/db_functions";
 import { verifySession } from "../lib/sessions";
+import { logger } from "../lib/logger";
 
 export default async function getUserStats() {
   try {
     const { userId, username } = await verifySession();
+    logger.info(`getUserStats called by user: ${userId}`);
     if (!userId) {
-      console.log("user is not logged in, redirecting...");
+      logger.info("user is not logged in, redirecting...");
       redirect("/login");
     }
     const userStats = await loadUserStats(userId);
     return userStats;
   } catch (error) {
-    console.log("An error occurred in getUserStats(): " + error);
+    logger.error(`An error occurred in getUserStats: ${error}`);
     return false;
   }
 }

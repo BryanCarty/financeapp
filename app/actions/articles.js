@@ -1,8 +1,8 @@
 "use server";
-import { useId } from "react";
 //import { redirect } from "next/navigation";
 import { getArticleBySlug } from "../lib/db/db_functions";
 import { verifySession } from "../lib/sessions";
+import { logger } from "../lib/logger";
 
 //Example slug = 'why-aapl-stock-will-be-greater-than-232.23-by-market-close-on-the-31st-of-march-2025-232'
 //Example slug = 'why-goog-stock-will-be-less-than-160.34-by-market-close-on-the-2nd-of-june-2026-12'
@@ -11,10 +11,7 @@ export default async function fetchArticleBySlug(slug) {
   try {
     let { userId, username } = await verifySession();
     userId = userId === undefined ? null : userId;
-    //if (!userId) {
-    //  redirect("/login");
-    //}
-
+    logger.info(`fetchArticleBySlug called by user ${userId}`);
     // Step 1: Extract key information from the slug
     //const slugPattern =
     //  /^why-(\w+)-stock-will-be-(\w+)-than-(\d+(\.\d+)?)-by-market-close-on-the-(\d+)(?:st|nd|rd|th)-of-(\w+)-(\d{4})-(\d+)$/;
@@ -60,7 +57,7 @@ export default async function fetchArticleBySlug(slug) {
 
     return article;
   } catch (error) {
-    console.log("An error occurred in fetchArticleBySlug: " + error);
-    return false;
+    logger.error(`An error occurred in fetchArticleBySlug: ${error}`);
+    throw error;
   }
 }

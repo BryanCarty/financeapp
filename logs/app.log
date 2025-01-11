@@ -1,0 +1,989 @@
+{"level":"info","message":"yoo","timestamp":"2025-01-11T12:21:15.394Z"}
+{"level":"error","message":"Error in sitemap(): Error: abidfn","timestamp":"2025-01-11T12:24:41.598Z"}
+{"level":"info","message":"yoo","timestamp":"2025-01-11T12:24:41.712Z"}
+{"level":"info","message":"User accessing home page, user_id: 58","timestamp":"2025-01-11T12:28:27.246Z"}
+{"level":"info","message":"User accessing home page, user_id: undefined","timestamp":"2025-01-11T12:28:48.465Z"}
+{"level":"info","message":"User accessing home page, user_id: undefined","timestamp":"2025-01-11T12:28:48.877Z"}
+{"level":"info","message":"User accessing home page, user_id: undefined","timestamp":"2025-01-11T12:28:49.858Z"}
+{"level":"info","message":"User accessing home page, user_id: undefined","timestamp":"2025-01-11T12:29:16.206Z"}
+{"level":"info","message":"User accessing home page, user_id: undefined","timestamp":"2025-01-11T12:29:16.590Z"}
+{"level":"info","message":"User accessing home page, user_id: undefined","timestamp":"2025-01-11T12:29:17.582Z"}
+{"level":"info","message":"User accessing home page, user_id: undefined","timestamp":"2025-01-11T12:31:03.293Z"}
+{"level":"info","message":"User accessing home page, user_id: undefined","timestamp":"2025-01-11T12:32:33.885Z"}
+{"level":"info","message":"User accessing home page, user_id: undefined","timestamp":"2025-01-11T12:35:25.101Z"}
+{"level":"info","message":"User accessing home page, user_id: undefined","timestamp":"2025-01-11T12:37:30.585Z"}
+{"level":"info","message":"User accessing home page, user_id: undefined","timestamp":"2025-01-11T12:37:31.032Z"}
+{"level":"info","message":"User accessing home page, user_id: undefined","timestamp":"2025-01-11T12:37:32.049Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T12:37:50.656Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T12:37:54.009Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T12:56:19.346Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T12:56:50.698Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T12:57:24.811Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:04:11.362Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:04:44.390Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:05:01.271Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:11:17.466Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:11:48.795Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:14:04.207Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:14:45.032Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:15:08.917Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:15:30.740Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:15:36.352Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:16:02.641Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:16:31.612Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:16:36.794Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:17:13.359Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:18:30.098Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:19:02.834Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:19:09.160Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:19:13.266Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:19:16.414Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:20:23.298Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:20:27.893Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:20:54.174Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:20:57.971Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:21:42.179Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:22:08.161Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:22:28.673Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:22:34.430Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:23:07.829Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:23:25.365Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:23:38.131Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:23:47.166Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:24:48.835Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:25:00.282Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:25:17.656Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:25:33.861Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:26:20.788Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:26:33.179Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:27:13.070Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:27:17.733Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:27:56.178Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:28:21.787Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:28:26.558Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:28:36.164Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:32:18.312Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:32:48.805Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:32:48.806Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 3431.196 seconds.","timestamp":"2025-01-11T13:32:48.806Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27791.196 seconds.","timestamp":"2025-01-11T13:32:48.806Z"}
+{"level":"info","message":"Scheduling next day's check in 55631.193 seconds.","timestamp":"2025-01-11T13:32:48.807Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:32:48.822Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:33:14.552Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:33:14.552Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 3405.448 seconds.","timestamp":"2025-01-11T13:33:14.553Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27765.448 seconds.","timestamp":"2025-01-11T13:33:14.553Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55605.447 seconds.","timestamp":"2025-01-11T13:33:14.553Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:33:14.558Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:33:43.453Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:33:43.454Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:33:43.454Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 3376.547 seconds.","timestamp":"2025-01-11T13:33:43.454Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27736.547 seconds.","timestamp":"2025-01-11T13:33:43.454Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55576.546 seconds.","timestamp":"2025-01-11T13:33:43.454Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:33:43.459Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:34:14.116Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:34:14.116Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:34:14.117Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:34:14.117Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 3345.883 seconds.","timestamp":"2025-01-11T13:34:14.117Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27705.883 seconds.","timestamp":"2025-01-11T13:34:14.118Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55545.882 seconds.","timestamp":"2025-01-11T13:34:14.118Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:34:14.131Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:34:55.808Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:34:55.808Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:34:55.809Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:34:55.809Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 3304.192 seconds.","timestamp":"2025-01-11T13:34:55.809Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27664.192 seconds.","timestamp":"2025-01-11T13:34:55.809Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55504.191 seconds.","timestamp":"2025-01-11T13:34:55.810Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:34:55.816Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:35:47.201Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:35:47.201Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:35:47.201Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:35:47.202Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 3252.799 seconds.","timestamp":"2025-01-11T13:35:47.202Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27612.799 seconds.","timestamp":"2025-01-11T13:35:47.202Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55452.798 seconds.","timestamp":"2025-01-11T13:35:47.202Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:35:47.207Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:37:48.754Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:37:48.754Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:37:48.755Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:37:48.755Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 3131.246 seconds.","timestamp":"2025-01-11T13:37:48.755Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27491.246 seconds.","timestamp":"2025-01-11T13:37:48.755Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55331.245 seconds.","timestamp":"2025-01-11T13:37:48.756Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:37:48.767Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:38:16.029Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:38:16.029Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:38:16.030Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:38:16.030Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 3103.971 seconds.","timestamp":"2025-01-11T13:38:16.030Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27463.971 seconds.","timestamp":"2025-01-11T13:38:16.030Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55303.97 seconds.","timestamp":"2025-01-11T13:38:16.030Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:38:16.035Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:39:04.035Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:39:04.035Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:39:04.036Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:39:04.036Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 3055.965 seconds.","timestamp":"2025-01-11T13:39:04.036Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27415.965 seconds.","timestamp":"2025-01-11T13:39:04.036Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55255.964 seconds.","timestamp":"2025-01-11T13:39:04.036Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:39:04.042Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:39:19.622Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:39:19.622Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:39:19.623Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:39:19.623Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 3040.378 seconds.","timestamp":"2025-01-11T13:39:19.623Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27400.378 seconds.","timestamp":"2025-01-11T13:39:19.623Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55240.377 seconds.","timestamp":"2025-01-11T13:39:19.623Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:39:19.628Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:39:27.829Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:39:27.829Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:39:27.830Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:39:27.830Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 3032.171 seconds.","timestamp":"2025-01-11T13:39:27.830Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27392.171 seconds.","timestamp":"2025-01-11T13:39:27.830Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55232.17 seconds.","timestamp":"2025-01-11T13:39:27.831Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:39:27.845Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:39:54.553Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:39:54.553Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:39:54.554Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:39:54.554Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 3005.446 seconds.","timestamp":"2025-01-11T13:39:54.555Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27365.446 seconds.","timestamp":"2025-01-11T13:39:54.555Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55205.445 seconds.","timestamp":"2025-01-11T13:39:54.555Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:39:54.564Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:40:00.481Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:40:00.481Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:40:00.482Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:40:00.482Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2999.519 seconds.","timestamp":"2025-01-11T13:40:00.482Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27359.519 seconds.","timestamp":"2025-01-11T13:40:00.482Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55199.518 seconds.","timestamp":"2025-01-11T13:40:00.483Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:40:00.491Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:40:42.050Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:40:42.050Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:40:42.051Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:40:42.051Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2957.949 seconds.","timestamp":"2025-01-11T13:40:42.051Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27317.949 seconds.","timestamp":"2025-01-11T13:40:42.051Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55157.949 seconds.","timestamp":"2025-01-11T13:40:42.052Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:40:42.057Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:40:52.508Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:40:52.508Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:40:52.509Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:40:52.509Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2947.492 seconds.","timestamp":"2025-01-11T13:40:52.509Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27307.492 seconds.","timestamp":"2025-01-11T13:40:52.509Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55147.491 seconds.","timestamp":"2025-01-11T13:40:52.509Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:40:52.519Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:41:20.032Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:41:20.033Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:41:20.033Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:41:20.033Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2919.967 seconds.","timestamp":"2025-01-11T13:41:20.033Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27279.967 seconds.","timestamp":"2025-01-11T13:41:20.033Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55119.967 seconds.","timestamp":"2025-01-11T13:41:20.034Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:41:20.043Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:41:34.168Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:41:34.168Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:41:34.168Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:41:34.168Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2905.832 seconds.","timestamp":"2025-01-11T13:41:34.169Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27265.832 seconds.","timestamp":"2025-01-11T13:41:34.169Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55105.831 seconds.","timestamp":"2025-01-11T13:41:34.169Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:41:34.177Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:42:05.298Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:42:05.298Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:42:05.298Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:42:05.299Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2874.702 seconds.","timestamp":"2025-01-11T13:42:05.299Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27234.702 seconds.","timestamp":"2025-01-11T13:42:05.299Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55074.701 seconds.","timestamp":"2025-01-11T13:42:05.299Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:42:05.307Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:42:14.441Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:42:14.442Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:42:14.442Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:42:14.442Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2865.558 seconds.","timestamp":"2025-01-11T13:42:14.443Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27225.558 seconds.","timestamp":"2025-01-11T13:42:14.443Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 55065.557 seconds.","timestamp":"2025-01-11T13:42:14.443Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:42:14.463Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:43:40.974Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:43:40.974Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:43:40.976Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:43:40.976Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2779.025 seconds.","timestamp":"2025-01-11T13:43:40.976Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27139.025 seconds.","timestamp":"2025-01-11T13:43:40.977Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54979.023 seconds.","timestamp":"2025-01-11T13:43:40.977Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:43:40.993Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:44:00.956Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:44:00.957Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:44:00.958Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:44:00.958Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2759.043 seconds.","timestamp":"2025-01-11T13:44:00.959Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 27119.043 seconds.","timestamp":"2025-01-11T13:44:00.959Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54959.041 seconds.","timestamp":"2025-01-11T13:44:00.960Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:44:00.974Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:47:00.707Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:47:00.707Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:47:00.708Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:47:00.708Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2579.293 seconds.","timestamp":"2025-01-11T13:47:00.708Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26939.293 seconds.","timestamp":"2025-01-11T13:47:00.709Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54779.291 seconds.","timestamp":"2025-01-11T13:47:00.709Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:47:00.714Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:47:46.429Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:47:46.429Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:47:46.430Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:47:46.430Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2533.571 seconds.","timestamp":"2025-01-11T13:47:46.430Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26893.571 seconds.","timestamp":"2025-01-11T13:47:46.430Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54733.57 seconds.","timestamp":"2025-01-11T13:47:46.431Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:47:46.439Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:48:05.396Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:48:05.396Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:48:05.397Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:48:05.397Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2514.604 seconds.","timestamp":"2025-01-11T13:48:05.397Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26874.604 seconds.","timestamp":"2025-01-11T13:48:05.397Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54714.603 seconds.","timestamp":"2025-01-11T13:48:05.397Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:48:05.407Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:48:31.585Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:48:31.585Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:48:31.586Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:48:31.586Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2488.414 seconds.","timestamp":"2025-01-11T13:48:31.586Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26848.414 seconds.","timestamp":"2025-01-11T13:48:31.586Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54688.414 seconds.","timestamp":"2025-01-11T13:48:31.587Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:48:31.592Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:49:01.550Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:49:01.550Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:49:01.550Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:49:01.551Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2458.45 seconds.","timestamp":"2025-01-11T13:49:01.551Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26818.45 seconds.","timestamp":"2025-01-11T13:49:01.551Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54658.449 seconds.","timestamp":"2025-01-11T13:49:01.551Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:49:01.564Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:49:23.003Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:49:23.003Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:49:23.004Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:49:23.004Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2436.997 seconds.","timestamp":"2025-01-11T13:49:23.004Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26796.997 seconds.","timestamp":"2025-01-11T13:49:23.004Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54636.996 seconds.","timestamp":"2025-01-11T13:49:23.005Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:49:23.014Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:49:53.548Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:49:53.549Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:49:53.549Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:49:53.549Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2406.451 seconds.","timestamp":"2025-01-11T13:49:53.549Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26766.451 seconds.","timestamp":"2025-01-11T13:49:53.549Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54606.451 seconds.","timestamp":"2025-01-11T13:49:53.550Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:49:53.555Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:50:17.183Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:50:17.183Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:50:17.184Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:50:17.184Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2382.817 seconds.","timestamp":"2025-01-11T13:50:17.184Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26742.817 seconds.","timestamp":"2025-01-11T13:50:17.184Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54582.816 seconds.","timestamp":"2025-01-11T13:50:17.184Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:50:17.190Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:50:40.385Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:50:40.385Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:50:40.386Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:50:40.386Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2359.615 seconds.","timestamp":"2025-01-11T13:50:40.386Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26719.615 seconds.","timestamp":"2025-01-11T13:50:40.386Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54559.614 seconds.","timestamp":"2025-01-11T13:50:40.386Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:50:40.395Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:51:36.988Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:51:36.989Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:51:36.989Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:51:36.989Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2303.011 seconds.","timestamp":"2025-01-11T13:51:36.990Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26663.011 seconds.","timestamp":"2025-01-11T13:51:36.990Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54503.01 seconds.","timestamp":"2025-01-11T13:51:36.990Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:51:36.999Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:52:13.119Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:52:13.120Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:52:13.120Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:52:13.120Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2266.88 seconds.","timestamp":"2025-01-11T13:52:13.120Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26626.88 seconds.","timestamp":"2025-01-11T13:52:13.120Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54466.88 seconds.","timestamp":"2025-01-11T13:52:13.121Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:52:13.126Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:53:00.542Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:53:00.542Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:53:00.543Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:53:00.543Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2219.457 seconds.","timestamp":"2025-01-11T13:53:00.543Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26579.457 seconds.","timestamp":"2025-01-11T13:53:00.543Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54419.457 seconds.","timestamp":"2025-01-11T13:53:00.543Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:53:00.549Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:53:20.915Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:53:20.915Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:53:20.916Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:53:20.916Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2199.085 seconds.","timestamp":"2025-01-11T13:53:20.917Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26559.085 seconds.","timestamp":"2025-01-11T13:53:20.917Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54399.083 seconds.","timestamp":"2025-01-11T13:53:20.917Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:53:20.927Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:53:30.282Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:53:30.282Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:53:30.283Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:53:30.283Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2189.718 seconds.","timestamp":"2025-01-11T13:53:30.283Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26549.718 seconds.","timestamp":"2025-01-11T13:53:30.283Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54389.717 seconds.","timestamp":"2025-01-11T13:53:30.283Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:53:30.292Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:53:43.042Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:53:43.042Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:53:43.043Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:53:43.043Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2176.958 seconds.","timestamp":"2025-01-11T13:53:43.043Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26536.958 seconds.","timestamp":"2025-01-11T13:53:43.043Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54376.957 seconds.","timestamp":"2025-01-11T13:53:43.043Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:53:43.048Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:54:07.634Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:54:07.634Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:54:07.634Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:54:07.634Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2152.366 seconds.","timestamp":"2025-01-11T13:54:07.635Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26512.366 seconds.","timestamp":"2025-01-11T13:54:07.635Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54352.365 seconds.","timestamp":"2025-01-11T13:54:07.635Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:54:07.642Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:54:42.568Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:54:42.568Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:54:42.569Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:54:42.569Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2117.432 seconds.","timestamp":"2025-01-11T13:54:42.569Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26477.432 seconds.","timestamp":"2025-01-11T13:54:42.569Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54317.431 seconds.","timestamp":"2025-01-11T13:54:42.569Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:54:42.574Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:55:37.510Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:55:37.510Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:55:37.511Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:55:37.511Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2062.49 seconds.","timestamp":"2025-01-11T13:55:37.511Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26422.49 seconds.","timestamp":"2025-01-11T13:55:37.511Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54262.489 seconds.","timestamp":"2025-01-11T13:55:37.512Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:55:37.519Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:56:06.604Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:56:06.604Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:56:06.605Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:56:06.605Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2033.396 seconds.","timestamp":"2025-01-11T13:56:06.605Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26393.396 seconds.","timestamp":"2025-01-11T13:56:06.605Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54233.395 seconds.","timestamp":"2025-01-11T13:56:06.605Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:56:06.628Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:56:24.357Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:56:24.357Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:56:24.359Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:56:24.359Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2015.643 seconds.","timestamp":"2025-01-11T13:56:24.359Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26375.643 seconds.","timestamp":"2025-01-11T13:56:24.359Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54215.641 seconds.","timestamp":"2025-01-11T13:56:24.360Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:56:24.369Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:56:36.567Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:56:36.568Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:56:36.569Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:56:36.569Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 2003.432 seconds.","timestamp":"2025-01-11T13:56:36.569Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26363.432 seconds.","timestamp":"2025-01-11T13:56:36.569Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54203.431 seconds.","timestamp":"2025-01-11T13:56:36.569Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:56:36.579Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:56:51.800Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:56:51.800Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:56:51.801Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:56:51.801Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1988.2 seconds.","timestamp":"2025-01-11T13:56:51.801Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26348.2 seconds.","timestamp":"2025-01-11T13:56:51.801Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54188.199 seconds.","timestamp":"2025-01-11T13:56:51.802Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:56:51.811Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T13:57:12.254Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T13:57:12.254Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T13:57:12.255Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T13:57:12.255Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1967.746 seconds.","timestamp":"2025-01-11T13:57:12.255Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26327.746 seconds.","timestamp":"2025-01-11T13:57:12.255Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 54167.745 seconds.","timestamp":"2025-01-11T13:57:12.255Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T13:57:12.264Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:00:18.546Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:00:18.546Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:00:18.548Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:00:18.548Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1781.453 seconds.","timestamp":"2025-01-11T14:00:18.548Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26141.453 seconds.","timestamp":"2025-01-11T14:00:18.549Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53981.451 seconds.","timestamp":"2025-01-11T14:00:18.549Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:00:18.555Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:00:40.461Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:00:40.461Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:00:40.462Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:00:40.462Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1759.539 seconds.","timestamp":"2025-01-11T14:00:40.462Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26119.539 seconds.","timestamp":"2025-01-11T14:00:40.462Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53959.538 seconds.","timestamp":"2025-01-11T14:00:40.462Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:00:40.467Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:00:52.760Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:00:52.760Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:00:52.761Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:00:52.761Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1747.24 seconds.","timestamp":"2025-01-11T14:00:52.761Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26107.24 seconds.","timestamp":"2025-01-11T14:00:52.761Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53947.239 seconds.","timestamp":"2025-01-11T14:00:52.761Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:00:52.770Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:00:57.239Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:00:57.239Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:00:57.239Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:00:57.239Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1742.761 seconds.","timestamp":"2025-01-11T14:00:57.240Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26102.761 seconds.","timestamp":"2025-01-11T14:00:57.240Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53942.76 seconds.","timestamp":"2025-01-11T14:00:57.240Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:00:57.248Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:01:17.245Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:01:17.245Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:01:17.246Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:01:17.246Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1722.755 seconds.","timestamp":"2025-01-11T14:01:17.247Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26082.755 seconds.","timestamp":"2025-01-11T14:01:17.247Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53922.753 seconds.","timestamp":"2025-01-11T14:01:17.247Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:01:17.253Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:01:43.366Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:01:43.366Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:01:43.366Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:01:43.366Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1696.634 seconds.","timestamp":"2025-01-11T14:01:43.367Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26056.634 seconds.","timestamp":"2025-01-11T14:01:43.367Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53896.633 seconds.","timestamp":"2025-01-11T14:01:43.367Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:01:43.372Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:01:48.746Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:01:48.746Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:01:48.747Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:01:48.747Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1691.253 seconds.","timestamp":"2025-01-11T14:01:48.747Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26051.253 seconds.","timestamp":"2025-01-11T14:01:48.747Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53891.253 seconds.","timestamp":"2025-01-11T14:01:48.748Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:01:48.756Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:02:00.640Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:02:00.641Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:02:00.641Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:02:00.641Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1679.359 seconds.","timestamp":"2025-01-11T14:02:00.641Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26039.359 seconds.","timestamp":"2025-01-11T14:02:00.641Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53879.359 seconds.","timestamp":"2025-01-11T14:02:00.642Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:02:00.647Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:02:09.220Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:02:09.221Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:02:09.222Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:02:09.222Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1670.779 seconds.","timestamp":"2025-01-11T14:02:09.223Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26030.779 seconds.","timestamp":"2025-01-11T14:02:09.223Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53870.777 seconds.","timestamp":"2025-01-11T14:02:09.223Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:02:09.249Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:02:21.531Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:02:21.531Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:02:21.532Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:02:21.532Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1658.469 seconds.","timestamp":"2025-01-11T14:02:21.533Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26018.469 seconds.","timestamp":"2025-01-11T14:02:21.533Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53858.467 seconds.","timestamp":"2025-01-11T14:02:21.533Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:02:21.540Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:02:30.939Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:02:30.939Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:02:30.940Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:02:30.940Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1649.061 seconds.","timestamp":"2025-01-11T14:02:30.940Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26009.061 seconds.","timestamp":"2025-01-11T14:02:30.940Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53849.06 seconds.","timestamp":"2025-01-11T14:02:30.940Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:02:30.945Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:02:39.454Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:02:39.454Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:02:39.455Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:02:39.455Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1640.546 seconds.","timestamp":"2025-01-11T14:02:39.456Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 26000.546 seconds.","timestamp":"2025-01-11T14:02:39.456Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53840.544 seconds.","timestamp":"2025-01-11T14:02:39.456Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:02:39.468Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:02:49.735Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:02:49.735Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:02:49.736Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:02:49.736Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1630.265 seconds.","timestamp":"2025-01-11T14:02:49.736Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25990.265 seconds.","timestamp":"2025-01-11T14:02:49.736Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53830.264 seconds.","timestamp":"2025-01-11T14:02:49.736Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:02:49.745Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:02:54.008Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:02:54.008Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:02:54.009Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:02:54.009Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1625.992 seconds.","timestamp":"2025-01-11T14:02:54.009Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25985.992 seconds.","timestamp":"2025-01-11T14:02:54.009Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53825.991 seconds.","timestamp":"2025-01-11T14:02:54.009Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:02:54.020Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:03:00.371Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:03:00.371Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:03:00.372Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:03:00.372Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1619.629 seconds.","timestamp":"2025-01-11T14:03:00.372Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25979.629 seconds.","timestamp":"2025-01-11T14:03:00.372Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53819.628 seconds.","timestamp":"2025-01-11T14:03:00.372Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:03:00.381Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:03:06.298Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:03:06.298Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:03:06.299Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:03:06.299Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1613.702 seconds.","timestamp":"2025-01-11T14:03:06.299Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25973.702 seconds.","timestamp":"2025-01-11T14:03:06.299Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53813.701 seconds.","timestamp":"2025-01-11T14:03:06.299Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:03:06.304Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:03:21.639Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:03:21.639Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:03:21.640Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:03:21.640Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1598.361 seconds.","timestamp":"2025-01-11T14:03:21.640Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25958.361 seconds.","timestamp":"2025-01-11T14:03:21.640Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53798.36 seconds.","timestamp":"2025-01-11T14:03:21.640Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:03:21.651Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:03:25.613Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:03:25.613Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:03:25.614Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:03:25.614Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1594.387 seconds.","timestamp":"2025-01-11T14:03:25.614Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25954.387 seconds.","timestamp":"2025-01-11T14:03:25.614Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53794.386 seconds.","timestamp":"2025-01-11T14:03:25.614Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:03:25.619Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:03:33.908Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:03:33.908Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:03:33.908Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:03:33.909Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1586.092 seconds.","timestamp":"2025-01-11T14:03:33.909Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25946.092 seconds.","timestamp":"2025-01-11T14:03:33.909Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53786.091 seconds.","timestamp":"2025-01-11T14:03:33.909Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:03:33.914Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:03:41.352Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:03:41.352Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:03:41.353Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:03:41.353Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1578.648 seconds.","timestamp":"2025-01-11T14:03:41.353Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25938.648 seconds.","timestamp":"2025-01-11T14:03:41.353Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53778.647 seconds.","timestamp":"2025-01-11T14:03:41.353Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:03:41.361Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:03:54.713Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:03:54.713Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:03:54.714Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:03:54.714Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1565.287 seconds.","timestamp":"2025-01-11T14:03:54.714Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25925.287 seconds.","timestamp":"2025-01-11T14:03:54.714Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53765.286 seconds.","timestamp":"2025-01-11T14:03:54.714Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:03:54.720Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:04:02.906Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:04:02.906Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:04:02.907Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:04:02.907Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1557.094 seconds.","timestamp":"2025-01-11T14:04:02.907Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25917.094 seconds.","timestamp":"2025-01-11T14:04:02.907Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53757.093 seconds.","timestamp":"2025-01-11T14:04:02.908Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:04:02.932Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:04:12.085Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:04:12.085Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:04:12.086Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:04:12.086Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1547.915 seconds.","timestamp":"2025-01-11T14:04:12.086Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25907.915 seconds.","timestamp":"2025-01-11T14:04:12.086Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53747.914 seconds.","timestamp":"2025-01-11T14:04:12.086Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:04:12.095Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:04:18.085Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:04:18.085Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:04:18.086Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:04:18.086Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1541.915 seconds.","timestamp":"2025-01-11T14:04:18.086Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25901.915 seconds.","timestamp":"2025-01-11T14:04:18.086Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53741.914 seconds.","timestamp":"2025-01-11T14:04:18.086Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:04:18.091Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:04:24.312Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:04:24.313Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:04:24.313Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:04:24.313Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1535.687 seconds.","timestamp":"2025-01-11T14:04:24.314Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25895.687 seconds.","timestamp":"2025-01-11T14:04:24.314Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53735.686 seconds.","timestamp":"2025-01-11T14:04:24.314Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:04:24.322Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:04:32.040Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:04:32.040Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:04:32.041Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:04:32.041Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1527.96 seconds.","timestamp":"2025-01-11T14:04:32.041Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25887.96 seconds.","timestamp":"2025-01-11T14:04:32.041Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53727.959 seconds.","timestamp":"2025-01-11T14:04:32.041Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:04:32.047Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:04:40.821Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:04:40.821Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:04:40.822Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:04:40.822Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1519.179 seconds.","timestamp":"2025-01-11T14:04:40.822Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25879.179 seconds.","timestamp":"2025-01-11T14:04:40.822Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53719.178 seconds.","timestamp":"2025-01-11T14:04:40.822Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:04:40.831Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:04:44.689Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:04:44.690Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:04:44.690Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:04:44.690Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1515.31 seconds.","timestamp":"2025-01-11T14:04:44.690Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25875.31 seconds.","timestamp":"2025-01-11T14:04:44.690Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53715.31 seconds.","timestamp":"2025-01-11T14:04:44.691Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:04:44.699Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:04:51.648Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:04:51.648Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:04:51.649Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:04:51.649Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1508.351 seconds.","timestamp":"2025-01-11T14:04:51.650Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25868.351 seconds.","timestamp":"2025-01-11T14:04:51.650Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53708.35 seconds.","timestamp":"2025-01-11T14:04:51.650Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:04:51.656Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:04:58.560Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:04:58.561Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:04:58.561Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:04:58.561Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1501.439 seconds.","timestamp":"2025-01-11T14:04:58.561Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25861.439 seconds.","timestamp":"2025-01-11T14:04:58.561Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53701.439 seconds.","timestamp":"2025-01-11T14:04:58.562Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:04:58.570Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:05:04.446Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:05:04.446Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:05:04.447Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:05:04.447Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1495.554 seconds.","timestamp":"2025-01-11T14:05:04.447Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25855.554 seconds.","timestamp":"2025-01-11T14:05:04.447Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53695.553 seconds.","timestamp":"2025-01-11T14:05:04.447Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:05:04.452Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:05:15.007Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:05:15.007Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:05:15.008Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:05:15.008Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1484.993 seconds.","timestamp":"2025-01-11T14:05:15.008Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25844.993 seconds.","timestamp":"2025-01-11T14:05:15.008Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53684.992 seconds.","timestamp":"2025-01-11T14:05:15.008Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:05:15.018Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:05:23.641Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:05:23.641Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:05:23.642Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:05:23.642Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1476.359 seconds.","timestamp":"2025-01-11T14:05:23.642Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25836.359 seconds.","timestamp":"2025-01-11T14:05:23.642Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53676.358 seconds.","timestamp":"2025-01-11T14:05:23.642Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:05:23.651Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:05:28.870Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:05:28.870Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:05:28.871Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:05:28.871Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1471.13 seconds.","timestamp":"2025-01-11T14:05:28.871Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25831.13 seconds.","timestamp":"2025-01-11T14:05:28.871Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53671.129 seconds.","timestamp":"2025-01-11T14:05:28.871Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:05:28.877Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:05:37.084Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:05:37.085Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:05:37.085Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:05:37.085Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1462.915 seconds.","timestamp":"2025-01-11T14:05:37.086Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25822.915 seconds.","timestamp":"2025-01-11T14:05:37.086Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53662.914 seconds.","timestamp":"2025-01-11T14:05:37.086Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:05:37.094Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:05:40.550Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:05:40.550Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:05:40.551Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:05:40.551Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1459.45 seconds.","timestamp":"2025-01-11T14:05:40.551Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25819.45 seconds.","timestamp":"2025-01-11T14:05:40.551Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53659.449 seconds.","timestamp":"2025-01-11T14:05:40.551Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:05:40.557Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:05:51.143Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:05:51.144Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:05:51.144Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:05:51.144Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1448.856 seconds.","timestamp":"2025-01-11T14:05:51.144Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25808.856 seconds.","timestamp":"2025-01-11T14:05:51.144Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53648.856 seconds.","timestamp":"2025-01-11T14:05:51.145Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:05:51.153Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:06:05.221Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:06:05.221Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:06:05.222Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:06:05.222Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1434.779 seconds.","timestamp":"2025-01-11T14:06:05.222Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25794.779 seconds.","timestamp":"2025-01-11T14:06:05.222Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53634.778 seconds.","timestamp":"2025-01-11T14:06:05.222Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:06:05.235Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:06:09.776Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:06:09.777Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:06:09.777Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:06:09.778Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1430.223 seconds.","timestamp":"2025-01-11T14:06:09.778Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25790.223 seconds.","timestamp":"2025-01-11T14:06:09.778Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53630.222 seconds.","timestamp":"2025-01-11T14:06:09.778Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:06:09.784Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:06:24.059Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:06:24.060Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:06:24.060Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:06:24.060Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1415.94 seconds.","timestamp":"2025-01-11T14:06:24.061Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25775.94 seconds.","timestamp":"2025-01-11T14:06:24.061Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53615.939 seconds.","timestamp":"2025-01-11T14:06:24.061Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:06:24.071Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:06:33.462Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:06:33.462Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:06:33.462Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:06:33.462Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1406.538 seconds.","timestamp":"2025-01-11T14:06:33.463Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25766.538 seconds.","timestamp":"2025-01-11T14:06:33.463Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53606.537 seconds.","timestamp":"2025-01-11T14:06:33.463Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:06:33.472Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:06:40.994Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:06:40.994Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:06:40.994Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:06:40.995Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1399.006 seconds.","timestamp":"2025-01-11T14:06:40.995Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25759.006 seconds.","timestamp":"2025-01-11T14:06:40.995Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53599.005 seconds.","timestamp":"2025-01-11T14:06:40.995Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:06:41.000Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:06:46.934Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:06:46.934Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:06:46.935Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:06:46.935Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1393.066 seconds.","timestamp":"2025-01-11T14:06:46.935Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25753.066 seconds.","timestamp":"2025-01-11T14:06:46.935Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53593.065 seconds.","timestamp":"2025-01-11T14:06:46.935Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:06:46.944Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:06:54.107Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:06:54.108Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:06:54.108Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:06:54.108Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1385.892 seconds.","timestamp":"2025-01-11T14:06:54.109Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25745.892 seconds.","timestamp":"2025-01-11T14:06:54.109Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53585.891 seconds.","timestamp":"2025-01-11T14:06:54.109Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:06:54.124Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:07:00.028Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:07:00.028Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:07:00.029Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:07:00.029Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1379.972 seconds.","timestamp":"2025-01-11T14:07:00.029Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25739.972 seconds.","timestamp":"2025-01-11T14:07:00.029Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53579.971 seconds.","timestamp":"2025-01-11T14:07:00.029Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:07:00.035Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:07:42.565Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:07:42.565Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:07:42.566Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:07:42.566Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1337.435 seconds.","timestamp":"2025-01-11T14:07:42.567Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25697.435 seconds.","timestamp":"2025-01-11T14:07:42.567Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53537.433 seconds.","timestamp":"2025-01-11T14:07:42.568Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:07:42.576Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:07:48.322Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:07:48.323Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:07:48.323Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:07:48.323Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1331.677 seconds.","timestamp":"2025-01-11T14:07:48.324Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25691.677 seconds.","timestamp":"2025-01-11T14:07:48.324Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53531.676 seconds.","timestamp":"2025-01-11T14:07:48.324Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:07:48.333Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:08:09.251Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:08:09.252Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:08:09.252Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:08:09.252Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1310.748 seconds.","timestamp":"2025-01-11T14:08:09.253Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25670.748 seconds.","timestamp":"2025-01-11T14:08:09.253Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53510.747 seconds.","timestamp":"2025-01-11T14:08:09.253Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:08:09.265Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:08:33.433Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:08:33.434Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:08:33.434Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:08:33.434Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1286.566 seconds.","timestamp":"2025-01-11T14:08:33.435Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25646.566 seconds.","timestamp":"2025-01-11T14:08:33.435Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53486.565 seconds.","timestamp":"2025-01-11T14:08:33.435Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:08:33.444Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T14:08:51.196Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T14:08:51.196Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-01-11T14:08:51.197Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-01-11T14:08:51.197Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 1268.804 seconds.","timestamp":"2025-01-11T14:08:51.197Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 25628.804 seconds.","timestamp":"2025-01-11T14:08:51.197Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 53468.803 seconds.","timestamp":"2025-01-11T14:08:51.197Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T14:08:51.203Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T16:27:54.265Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T16:27:54.266Z"}
+{"level":"info","message":"Market is open. Ensuring WebSocket is connected.","timestamp":"2025-01-11T16:27:54.272Z"}
+{"level":"info","message":"executing connectWebSocket...","timestamp":"2025-01-11T16:27:54.273Z"}
+{"level":"info","message":"initializing stock feed","timestamp":"2025-01-11T16:27:54.273Z"}
+{"level":"info","message":"WebSocket connection established.","timestamp":"2025-01-11T16:27:54.276Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 17285.733 seconds.","timestamp":"2025-01-11T16:27:54.276Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 45125.723 seconds.","timestamp":"2025-01-11T16:27:54.277Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:27:54.288Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T16:27:54.331Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:27:55.221Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T16:27:55.473Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T16:27:55.284Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T16:27:55.284Z"}
+{"level":"info","message":"Market is open. Ensuring WebSocket is connected.","timestamp":"2025-01-11T16:27:55.286Z"}
+{"level":"info","message":"executing connectWebSocket...","timestamp":"2025-01-11T16:27:55.286Z"}
+{"level":"info","message":"initializing stock feed","timestamp":"2025-01-11T16:27:55.286Z"}
+{"level":"info","message":"WebSocket connection established.","timestamp":"2025-01-11T16:27:55.287Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 17284.716 seconds.","timestamp":"2025-01-11T16:27:55.287Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 45124.712 seconds.","timestamp":"2025-01-11T16:27:55.288Z"}
+{"level":"info","message":"loadTable called by user: undefined","timestamp":"2025-01-11T16:27:55.473Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:27:55.958Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:27:56.101Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:27:56.101Z"}
+{"level":"info","message":"Subscribing to the minute aggregates channel for tickers","timestamp":"2025-01-11T16:27:56.101Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:27:56.274Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:27:56.274Z"}
+{"level":"info","message":"Subscribing to the minute aggregates channel for tickers","timestamp":"2025-01-11T16:27:56.274Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:27:56.372Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:27:56.376Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-01-11T16:27:56.377Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:27:58.062Z"}
+{"level":"info","message":"WebSocket closed.","timestamp":"2025-01-11T16:27:58.066Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T16:27:59.982Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T16:27:59.983Z"}
+{"level":"info","message":"Market is open. Ensuring WebSocket is connected.","timestamp":"2025-01-11T16:27:59.984Z"}
+{"level":"info","message":"executing connectWebSocket...","timestamp":"2025-01-11T16:27:59.985Z"}
+{"level":"info","message":"initializing stock feed","timestamp":"2025-01-11T16:27:59.985Z"}
+{"level":"info","message":"WebSocket connection established.","timestamp":"2025-01-11T16:27:59.986Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 17280.017 seconds.","timestamp":"2025-01-11T16:27:59.986Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 45120.014 seconds.","timestamp":"2025-01-11T16:27:59.987Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:27:59.995Z"}
+{"level":"info","message":"user accessing about page, userId: undefined","timestamp":"2025-01-11T16:28:00.001Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:00.287Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:00.372Z"}
+{"level":"info","message":"Subscribing to the minute aggregates channel for tickers","timestamp":"2025-01-11T16:28:00.372Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:00.463Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T16:28:03.254Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T16:28:03.255Z"}
+{"level":"info","message":"Market is open. Ensuring WebSocket is connected.","timestamp":"2025-01-11T16:28:03.257Z"}
+{"level":"info","message":"executing connectWebSocket...","timestamp":"2025-01-11T16:28:03.257Z"}
+{"level":"info","message":"initializing stock feed","timestamp":"2025-01-11T16:28:03.257Z"}
+{"level":"info","message":"WebSocket connection established.","timestamp":"2025-01-11T16:28:03.258Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 17276.745 seconds.","timestamp":"2025-01-11T16:28:03.258Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 45116.741 seconds.","timestamp":"2025-01-11T16:28:03.259Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:28:03.267Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-01-11T16:28:03.272Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:03.542Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:03.627Z"}
+{"level":"info","message":"Subscribing to the minute aggregates channel for tickers","timestamp":"2025-01-11T16:28:03.627Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:03.713Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:05.129Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:05.132Z"}
+{"level":"info","message":"WebSocket closed.","timestamp":"2025-01-11T16:28:05.134Z"}
+{"level":"info","message":"WebSocket closed.","timestamp":"2025-01-11T16:28:05.134Z"}
+{"level":"info","message":"login server action called","timestamp":"2025-01-11T16:28:10.731Z"}
+{"level":"info","message":"Creating Session for: 58","timestamp":"2025-01-11T16:28:10.785Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:28:10.804Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-01-11T16:28:10.806Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:28:11.153Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-01-11T16:28:11.228Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T16:28:11.212Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T16:28:11.213Z"}
+{"level":"info","message":"Market is open. Ensuring WebSocket is connected.","timestamp":"2025-01-11T16:28:11.214Z"}
+{"level":"info","message":"executing connectWebSocket...","timestamp":"2025-01-11T16:28:11.214Z"}
+{"level":"info","message":"initializing stock feed","timestamp":"2025-01-11T16:28:11.214Z"}
+{"level":"info","message":"WebSocket connection established.","timestamp":"2025-01-11T16:28:11.215Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 17268.787 seconds.","timestamp":"2025-01-11T16:28:11.216Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 45108.784 seconds.","timestamp":"2025-01-11T16:28:11.216Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:28:11.589Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-01-11T16:28:11.591Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:11.772Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:11.861Z"}
+{"level":"info","message":"Subscribing to the minute aggregates channel for tickers","timestamp":"2025-01-11T16:28:11.861Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:11.951Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:28:14.489Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-01-11T16:28:14.494Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:28:14.856Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-01-11T16:28:14.858Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:15.163Z"}
+{"level":"info","message":"WebSocket closed.","timestamp":"2025-01-11T16:28:15.165Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T16:28:44.183Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T16:28:44.184Z"}
+{"level":"info","message":"Market is open. Ensuring WebSocket is connected.","timestamp":"2025-01-11T16:28:44.185Z"}
+{"level":"info","message":"executing connectWebSocket...","timestamp":"2025-01-11T16:28:44.185Z"}
+{"level":"info","message":"initializing stock feed","timestamp":"2025-01-11T16:28:44.186Z"}
+{"level":"info","message":"WebSocket connection established.","timestamp":"2025-01-11T16:28:44.187Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 17235.816 seconds.","timestamp":"2025-01-11T16:28:44.187Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 45075.812 seconds.","timestamp":"2025-01-11T16:28:44.188Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-01-11T16:28:44.204Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:44.484Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:44.573Z"}
+{"level":"info","message":"Subscribing to the minute aggregates channel for tickers","timestamp":"2025-01-11T16:28:44.573Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:44.663Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:46.112Z"}
+{"level":"info","message":"WebSocket closed.","timestamp":"2025-01-11T16:28:46.115Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T16:28:47.301Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T16:28:47.301Z"}
+{"level":"info","message":"Market is open. Ensuring WebSocket is connected.","timestamp":"2025-01-11T16:28:47.303Z"}
+{"level":"info","message":"executing connectWebSocket...","timestamp":"2025-01-11T16:28:47.303Z"}
+{"level":"info","message":"initializing stock feed","timestamp":"2025-01-11T16:28:47.303Z"}
+{"level":"info","message":"WebSocket connection established.","timestamp":"2025-01-11T16:28:47.304Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 17232.698 seconds.","timestamp":"2025-01-11T16:28:47.304Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 45072.695 seconds.","timestamp":"2025-01-11T16:28:47.305Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:28:47.312Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-01-11T16:28:47.336Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:47.699Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:28:47.765Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-01-11T16:28:47.767Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-01-11T16:28:47.767Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:47.787Z"}
+{"level":"info","message":"Subscribing to the minute aggregates channel for tickers","timestamp":"2025-01-11T16:28:47.787Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:47.903Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-01-11T16:28:48.645Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:28:48.807Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-01-11T16:28:48.809Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:28:50.291Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-01-11T16:28:50.296Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-01-11T16:28:50.296Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-01-11T16:28:50.304Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:28:50.313Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-01-11T16:28:50.315Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:51.413Z"}
+{"level":"info","message":"WebSocket closed.","timestamp":"2025-01-11T16:28:51.415Z"}
+{"level":"info","message":"user accessing profile page, user_id: 58","timestamp":"2025-01-11T16:28:53.081Z"}
+{"level":"info","message":"user accessing profile page, user_id: 58","timestamp":"2025-01-11T16:28:53.484Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T16:28:53.464Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T16:28:53.465Z"}
+{"level":"info","message":"Market is open. Ensuring WebSocket is connected.","timestamp":"2025-01-11T16:28:53.465Z"}
+{"level":"info","message":"executing connectWebSocket...","timestamp":"2025-01-11T16:28:53.466Z"}
+{"level":"info","message":"initializing stock feed","timestamp":"2025-01-11T16:28:53.466Z"}
+{"level":"info","message":"WebSocket connection established.","timestamp":"2025-01-11T16:28:53.466Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 17226.535 seconds.","timestamp":"2025-01-11T16:28:53.467Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 45066.533 seconds.","timestamp":"2025-01-11T16:28:53.467Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-01-11T16:28:53.485Z"}
+{"level":"info","message":"getUserStats called by user: 58","timestamp":"2025-01-11T16:28:53.510Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-01-11T16:28:53.524Z"}
+{"level":"info","message":"user accessing profile page, user_id: 58","timestamp":"2025-01-11T16:28:53.586Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:53.765Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:53.854Z"}
+{"level":"info","message":"Subscribing to the minute aggregates channel for tickers","timestamp":"2025-01-11T16:28:53.855Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:53.945Z"}
+{"level":"info","message":"user accessing profile page, user_id: 58","timestamp":"2025-01-11T16:28:55.487Z"}
+{"level":"info","message":"loadTable called by user: 58","timestamp":"2025-01-11T16:28:55.488Z"}
+{"level":"info","message":"user accessing profile page, user_id: 58","timestamp":"2025-01-11T16:28:55.508Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:28:58.069Z"}
+{"level":"info","message":"WebSocket closed.","timestamp":"2025-01-11T16:28:58.071Z"}
+{"level":"info","message":"logout server action called","timestamp":"2025-01-11T16:29:01.289Z"}
+{"level":"error","message":"An error occurred in logout: Error: NEXT_REDIRECT","timestamp":"2025-01-11T16:29:01.292Z"}
+{"level":"info","message":"user accessing profile page, user_id: undefined","timestamp":"2025-01-11T16:29:01.301Z"}
+{"level":"error","message":"an error occurred accessing profile page: Error: NEXT_REDIRECT","timestamp":"2025-01-11T16:29:01.302Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-01-11T16:29:01.359Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-01-11T16:29:01.359Z"}
+{"level":"info","message":"Market is open. Ensuring WebSocket is connected.","timestamp":"2025-01-11T16:29:01.360Z"}
+{"level":"info","message":"executing connectWebSocket...","timestamp":"2025-01-11T16:29:01.360Z"}
+{"level":"info","message":"initializing stock feed","timestamp":"2025-01-11T16:29:01.361Z"}
+{"level":"info","message":"WebSocket connection established.","timestamp":"2025-01-11T16:29:01.361Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 17218.641 seconds.","timestamp":"2025-01-11T16:29:01.362Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 45058.638 seconds.","timestamp":"2025-01-11T16:29:01.363Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-01-11T16:29:01.363Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-01-11T16:29:01.365Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:29:01.631Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:29:01.720Z"}
+{"level":"info","message":"Subscribing to the minute aggregates channel for tickers","timestamp":"2025-01-11T16:29:01.720Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:29:01.806Z"}
+{"level":"info","message":"stock feed websocket received message: [object Object]","timestamp":"2025-01-11T16:29:05.135Z"}
+{"level":"info","message":"WebSocket closed.","timestamp":"2025-01-11T16:29:05.138Z"}

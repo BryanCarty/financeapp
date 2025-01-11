@@ -7,10 +7,12 @@ import {
 } from "../lib/db/db_functions";
 import { redirect } from "next/navigation";
 import DOMPurify from "isomorphic-dompurify";
+import { logger } from "../lib/logger";
 
 export async function submitComment(postId, text, redirectUrl) {
   try {
     const { userId, username } = await verifySession();
+    logger.info(`submitComment called by user: ${userId}`);
     if (!userId) {
       const redirectVal = redirectUrl
         ? `/login?redirect=${redirectUrl}`
@@ -22,7 +24,7 @@ export async function submitComment(postId, text, redirectUrl) {
     return comment;
   } catch (error) {
     if (error.message === "NEXT_REDIRECT") throw error;
-    console.log("An error occurred in submitComment: " + error);
+    logger.error(`An error occurred in submitComment: ${error}`);
     return false;
   }
 }
@@ -30,6 +32,7 @@ export async function submitComment(postId, text, redirectUrl) {
 export async function updateComment(commentId, text) {
   try {
     const { userId, username } = await verifySession();
+    logger.info(`updateComment called by user: ${userId}`);
     if (!userId) {
       redirect("/login");
     }
@@ -37,7 +40,7 @@ export async function updateComment(commentId, text) {
     let result = await updateCommentDb(commentId, userId, sanitizedText);
     return result;
   } catch (error) {
-    console.log("An error occurred in updateComment");
+    logger.error(`An error occurred in updateComment: ${error}`);
     return false;
   }
 }
@@ -45,13 +48,14 @@ export async function updateComment(commentId, text) {
 export async function removeComment(commentId) {
   try {
     const { userId, username } = await verifySession();
+    logger.info(`removeComment called by user: ${userId}`);
     if (!userId) {
       redirect("/login");
     }
     let result = await removeCommentDb(commentId, userId);
     return result;
   } catch (error) {
-    console.log("An error occurred in removeComment()");
+    logger.error(`An error occurred in removeComment(): ${error}`);
     return false;
   }
 }

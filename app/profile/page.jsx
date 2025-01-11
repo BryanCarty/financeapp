@@ -5,17 +5,24 @@ import Footer from "../_components/Footer";
 import { verifySession } from "../lib/sessions";
 import { redirect } from "next/navigation";
 import styles from "@/app/_styles/PageContainer.module.css";
+import { logger } from "../lib/logger";
 
 export default async function () {
-  const isLoggedIn = await verifySession();
-  if (!isLoggedIn) {
-    redirect("/login?redirect=/profile");
+  try {
+    const isLoggedIn = await verifySession();
+    logger.info(`user accessing profile page, user_id: ${isLoggedIn?.userId}`);
+    if (!isLoggedIn) {
+      redirect("/login?redirect=/profile");
+    }
+    return (
+      <div className={styles.pageContainer}>
+        <StandardPageHeader isLoggedIn={isLoggedIn} />
+        <ManageFollowersPageBody isLoggedIn={isLoggedIn} />
+        <Footer />
+      </div>
+    );
+  } catch (error) {
+    logger.error(`an error occurred accessing profile page: ${error}`);
+    if (error.message === "NEXT_REDIRECT") throw error;
   }
-  return (
-    <div className={styles.pageContainer}>
-      <StandardPageHeader isLoggedIn={isLoggedIn} />
-      <ManageFollowersPageBody isLoggedIn={isLoggedIn} />
-      <Footer />
-    </div>
-  );
 }

@@ -4,7 +4,7 @@ import styles from "@/app/_styles/SignUp.module.css";
 import Link from "next/link";
 import courierPrime from "./CourierPrime";
 import { signup } from "@/app/actions/auth";
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
 
 export default function SignUpForm() {
@@ -99,7 +99,6 @@ export default function SignUpForm() {
             )}
           </div>
 
-          {/* Terms and Conditions Checkbox */}
           <div className={styles.checkboxContainer}>
             <label className={`${courierPrime.className}`} htmlFor="terms">
               <input
