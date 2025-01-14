@@ -5,7 +5,7 @@ import Image from "next/image";
 import courierPrime from "./CourierPrime";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import getPriceByTickers from "../actions/tickers";
+import getPriceByTickers from "../_actions/tickers";
 const { DateTime } = require("luxon");
 
 export default function ArticleHeader({
@@ -93,7 +93,11 @@ export default function ArticleHeader({
           <span className={styles.claimText}>
             {ticker} {comparison} {price} by {expiry}
           </span>
-          <span className={styles.claimExpiry}>({daysUntilExpiry} days)</span>
+          <span className={styles.claimExpiry}>
+            <span className={styles.daysUntilExpiryText}>
+              ({daysUntilExpiry} days)
+            </span>
+          </span>
         </div>
         <div className={`${styles.profile} ${courierPrime.className}`}>
           {postDate} |&nbsp;

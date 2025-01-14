@@ -1,7 +1,7 @@
 "use server";
 
-import { fetchArticleUrls } from "./lib/db/db_functions";
-import { logger } from "./lib/logger";
+import { fetchArticleUrls } from "./_lib/db/db_functions";
+import { logger } from "./_lib/logger";
 
 function formatExpiryDate(expiryDateStr) {
   const date = new Date(expiryDateStr);

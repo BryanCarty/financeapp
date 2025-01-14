@@ -2,8 +2,8 @@
 import styles from "@/app/_styles/Comment.module.css";
 import courierPrime from "./CourierPrime";
 import { useState } from "react";
-import { updateComment } from "../actions/comments";
-import { removeComment } from "../actions/comments";
+import { updateComment } from "../_actions/comments";
+import { removeComment } from "../_actions/comments";
 
 export default function Comment({
   created_at,

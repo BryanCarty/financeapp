@@ -107,3 +107,55 @@
 .delBtn:hover {
   cursor: pointer;
 }
+
+/* Default Styles */
+/* Place your base styles here. These will apply to all devices unless overridden by media queries */
+
+/* Extra Small Devices (0px to 575px) */
+@media (max-width: 575px) {
+  /* Styles for extra small devices (mobile phones in portrait mode) */
+  .comment {
+    font-size: 9px;
+  }
+  .commentBody {
+    font-size: 10px;
+    padding: 5px;
+  }
+  .upperSpan {
+    margin-left: 2px;
+    font-size: 9px;
+  }
+  .lowerSpan {
+    margin-right: 10px;
+
+    font-size: 9px;
+  }
+  .btn {
+    font-size: 9px;
+  }
+}
+
+/* Small Devices (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  /* Styles for small devices (mobile phones in landscape mode) */
+}
+
+/* Medium Devices (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Styles for medium devices (tablets in portrait mode) */
+}
+
+/* Large Devices (992px to 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* Styles for large devices (tablets in landscape mode or small laptops) */
+}
+
+/* Extra Large Devices (1200px to 1919px) */
+@media (min-width: 1200px) and (max-width: 1919px) {
+  /* Styles for extra large devices (large laptops and desktops) */
+}
+
+/* Ultra-Wide Devices (1920px and above) */
+@media (min-width: 1920px) {
+  /* Styles for ultra-wide devices (4K monitors and above) */
+}

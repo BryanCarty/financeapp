@@ -2,7 +2,7 @@
 import styles from "@/app/_styles/Article.module.css";
 import courierPrime from "./CourierPrime";
 import { usePathname } from "next/navigation";
-import updateAgreementStatus from "../actions/agree";
+import updateAgreementStatus from "../_actions/agree";
 import { useState } from "react";
 import ErrorPopUP from "./ErrorPopUp";
 

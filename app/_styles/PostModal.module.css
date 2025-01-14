@@ -31,6 +31,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  max-width: 1500px;
 }
 
 .modalHeading {
@@ -175,10 +176,156 @@
   align-items: center;
   justify-content: space-around;
   padding: 20px;
+  color: #353535;
 }
 
 .error {
   margin-top: 3px;
   color: rgb(187, 75, 75);
   text-align: center;
+}
+
+.tickerField {
+  width: 60px;
+}
+
+.priceField {
+  width: 70px;
+}
+
+.modalBody {
+}
+.rowOne {
+  margin: 5px;
+}
+
+.rowTwo {
+  margin: 5px;
+}
+.conditionField {
+  width: 70px;
+}
+
+/* Default Styles */
+/* Place your base styles here. These will apply to all devices unless overridden by media queries */
+
+/* Extra Small Devices (0px to 575px) */
+@media (max-width: 575px) {
+  .buttonStyle {
+    padding: 5px 10px;
+    margin-top: 200px;
+    font-size: 15px;
+  }
+  .claimSection {
+    flex-direction: column;
+    font-size: 12px;
+    width: 100%;
+  }
+  .textareaStyle {
+    width: 90%;
+    height: 40%;
+  }
+
+  .tickerField {
+    width: 60px;
+  }
+
+  .priceField {
+    font-size: 12px;
+    width: 70px;
+  }
+
+  .conditionField {
+    font-size: 12px;
+  }
+  .priceField {
+    margin-top: 2px;
+  }
+  .claimSection input,
+  .claimSection select {
+    margin: 0.2rem 0.5rem;
+    font-size: 12px;
+  }
+  .typedSiteName {
+    font-size: 20px;
+  }
+  .modalHeading {
+    height: 5%;
+  }
+  .closeButton {
+    margin-top: -10px;
+    margin-left: auto;
+    font-size: 55px;
+  }
+  .modalBody {
+    height: 60%;
+    padding: 0px;
+  }
+  .modalStyle {
+    height: 93%;
+    justify-content: start;
+  }
+  .because {
+    font-size: 20px;
+    padding: 0px;
+    margin: 0px;
+  }
+}
+
+/* Small Devices (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .claimSection {
+    flex-direction: column;
+    font-size: 15px;
+  }
+  .textareaStyle {
+    width: 90%;
+    height: 60%;
+  }
+  .tickerField {
+    font-size: 15px;
+    width: 60px;
+  }
+
+  .priceField {
+    font-size: 15px;
+    width: 70px;
+  }
+
+  .conditionField {
+    font-size: 15px;
+  }
+}
+
+/* Medium Devices (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .claimSection {
+    flex-direction: column;
+  }
+  .textareaStyle {
+    width: 90%;
+  }
+}
+
+/* Large Devices (992px to 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .claimSection {
+    flex-direction: column;
+  }
+  .textareaStyle {
+    width: 90%;
+  }
+}
+
+/* Extra Large Devices (1200px to 1919px) */
+@media (min-width: 1200px) and (max-width: 1919px) {
+  /* Styles for extra large devices (large laptops and desktops) */
+  .textareaStyle {
+    width: 80%;
+  }
+}
+
+/* Ultra-Wide Devices (1920px and above) */
+@media (min-width: 1920px) {
+  /* Styles for ultra-wide devices (4K monitors and above) */
 }

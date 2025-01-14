@@ -1,8 +1,8 @@
 "use server";
-import { verifySession } from "../lib/sessions";
+import { verifySession } from "../_lib/sessions";
 import { redirect } from "next/navigation";
-import { getConscensusData } from "../lib/db/db_functions";
-import { logger } from "../lib/logger";
+import { getConscensusData } from "../_lib/db/db_functions";
+import { logger } from "../_lib/logger";
 
 export default async function fetchConscensusDataDb(ticker, date) {
   try {

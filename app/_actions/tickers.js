@@ -1,6 +1,6 @@
 "use server";
-import { getTickerPrices } from "../lib/db/db_functions";
-import { logger } from "../lib/logger";
+import { getTickerPrices } from "../_lib/db/db_functions";
+import { logger } from "../_lib/logger";
 export default async function getPriceByTickers(tickers) {
   try {
     logger.info(`getPriceByTickers called`);

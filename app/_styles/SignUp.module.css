@@ -44,10 +44,14 @@
 .formInput {
   color: #353535;
   margin: 20px;
-  width: 300px; /* Width of the input field */
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 96%; /* Width of the input field */
   height: 25px; /* Height of the input field */
   font-size: 22px; /* Increases text size */
-  padding: 10px; /* Adds internal space around text */
+  padding-left: 5px;
+  padding-top: 10px; /* Adds internal space around text */
+  padding-bottom: 10px; /* Adds internal space around text */
   border: 2px solid #ccc; /* Sets border width and color */
   border-radius: 15px; /* Makes the border curved */
   outline: none; /* Removes default focus outline */
@@ -97,7 +101,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  max-width: 700px;
   width: 30%;
 }
 
@@ -143,6 +147,7 @@
   text-decoration: none;
   margin: 15px;
   font-size: 25px;
+  text-align: center;
 }
 
 .loginButton:hover {
@@ -218,4 +223,85 @@
 
 .link:hover {
   text-decoration: underline;
+}
+
+/* Default Styles */
+/* Place your base styles here. These will apply to all devices unless overridden by media queries */
+
+/* Extra Small Devices (0px to 575px) */
+@media (max-width: 575px) {
+  /* Styles for extra small devices (mobile phones in portrait mode) */
+  .mainSection {
+    width: 95%;
+  }
+  .loginButton {
+    font-size: 15px;
+  }
+  .heading {
+    font-size: 30px;
+  }
+  .formInput {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    padding: 0px;
+    padding-left: 5px;
+  }
+  .dateOfBirthField {
+    margin-top: 5px;
+    font-size: 15px; /* Increases text size */
+  }
+  .checkboxContainer {
+    margin: 0px;
+    font-size: 12px;
+  }
+  .error {
+    margin-top: 2px;
+    color: rgb(187, 75, 75);
+    text-align: center;
+    font-size: 10px;
+  }
+}
+
+/* Small Devices (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  /* Styles for small devices (mobile phones in landscape mode) */
+  .mainSection {
+    width: 70%;
+  }
+  .loginButton {
+    font-size: 20px;
+  }
+}
+
+/* Medium Devices (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Styles for medium devices (tablets in portrait mode) */
+  .mainSection {
+    width: 55%;
+  }
+  .loginButton {
+    font-size: 20px;
+  }
+}
+
+/* Large Devices (992px to 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* Styles for large devices (tablets in landscape mode or small laptops) */
+  .mainSection {
+    width: 50%;
+  }
+}
+
+/* Extra Large Devices (1200px to 1919px) */
+@media (min-width: 1200px) and (max-width: 1919px) {
+  /* Styles for extra large devices (large laptops and desktops) */
+  .mainSection {
+    width: 40%;
+  }
+}
+
+/* Ultra-Wide Devices (1920px and above) */
+@media (min-width: 1920px) {
+  /* Styles for ultra-wide devices (4K monitors and above) */
 }

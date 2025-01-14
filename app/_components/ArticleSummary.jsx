@@ -5,13 +5,13 @@ import Image from "next/image";
 import courierPrime from "./CourierPrime";
 import { useRouter } from "next/navigation"; // if using Next.js for routing
 import { useState } from "react";
-import { deletePostRequest } from "../actions/postActions";
+import { deletePostRequest } from "../_actions/postActions";
 import {
   extractSnippet,
   calculateDaysUntilExpiry,
   formatDateToHumanReadable,
   formatDateToUrl,
-} from "../client_utils/utils";
+} from "../_client_utils/utils";
 const { DateTime } = require("luxon");
 
 export default function ArticleSummary({
@@ -119,7 +119,10 @@ export default function ArticleSummary({
             <span className={styles.claimText}>
               {ticker} {comparison} {price} by {humanReadableExpiry}
             </span>
-            <span className={styles.claimExpiry}>({daysUntilExpiry} days)</span>
+            <span className={styles.claimExpiry}>
+              {" "}
+              ({daysUntilExpiry} days)
+            </span>
           </div>
           <div
             className={`${styles.profile} ${courierPrime.className}`}
@@ -178,7 +181,7 @@ export default function ArticleSummary({
               <div className={styles.commentCount}>({commentCount})</div>
             </div>
             {setEditPostData && (
-              <>
+              <div className={styles.editDeleteOption}>
                 <div className={styles.editDelBtnSpace}>|</div>
                 <div
                   onClick={(e) => {
@@ -204,7 +207,7 @@ export default function ArticleSummary({
                 >
                   Delete
                 </div>
-              </>
+              </div>
             )}
           </div>
         </div>

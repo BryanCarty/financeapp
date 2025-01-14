@@ -3,8 +3,8 @@
 import styles from "@/app/_styles/FollowingTable.module.css";
 import courierPrime from "./CourierPrime";
 import { useState, useEffect } from "react";
-import loadTable from "../actions/tables";
-import { followUser, unfollowUser } from "../actions/following";
+import loadTable from "../_actions/tables";
+import { followUser, unfollowUser } from "../_actions/following";
 import LoadingSquiggle from "./LoadingSquiggle";
 import { useRouter } from "next/navigation";
 

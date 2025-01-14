@@ -1,5 +1,5 @@
 "use server";
-import { verifySession } from "../lib/sessions";
+import { verifySession } from "../_lib/sessions";
 import {
   createPost,
   updatePostDb,
@@ -7,11 +7,11 @@ import {
   getValidTickers,
   getFollowerEmailsAndName,
   eligibleToPost,
-} from "../lib/db/db_functions";
+} from "../_lib/db/db_functions";
 import { redirect } from "next/navigation";
 import DOMPurify from "isomorphic-dompurify";
-import { sendNewPostEmail } from "../lib/email";
-import { logger } from "../lib/logger";
+import { sendNewPostEmail } from "../_lib/email";
+import { logger } from "../_lib/logger";
 
 let tickers = null; // Initialize tickers to null for clarity
 function sanitizePostData(postData) {

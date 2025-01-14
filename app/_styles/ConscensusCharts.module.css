@@ -4,6 +4,7 @@
   justify-content: space-around;
   align-items: center;
   width: 75%;
+  max-width: 1500px;
 }
 
 .barContainer {
@@ -28,9 +29,88 @@
   margin: 25px; /* Adds some space around the text */
   text-align: center; /* Center the text */
   max-width: 800px; /* Optional, limits text width */
-  margin-left: auto; /* Center align */
-  margin-right: auto; /* Center align */
+  margin-left: 5px; /* Center align */
+  margin-right: 5px; /* Center align */
   border: 2px solid #353535;
   padding: 20px;
   border-radius: 15px;
+}
+
+/* Default Styles */
+/* Place your base styles here. These will apply to all devices unless overridden by media queries */
+
+/* Extra Small Devices (0px to 575px) */
+@media (max-width: 575px) {
+  /* Styles for extra small devices (mobile phones in portrait mode) */
+  .histogramContainer {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 75%;
+    max-width: 1500px;
+  }
+  .barContainer {
+    height: 225px;
+    width: 300px;
+  }
+  .font {
+    font-size: 15px;
+  }
+}
+
+/* Small Devices (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .histogramContainer {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 75%;
+    max-width: 1500px;
+  }
+  .barContainer {
+    height: 225px;
+    width: 300px;
+  }
+  .font {
+    font-size: 15px;
+  }
+}
+
+/* Medium Devices (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Styles for medium devices (tablets in portrait mode) */
+  .barContainer {
+    height: 225px;
+    width: 300px;
+  }
+  .font {
+    font-size: 15px;
+  }
+}
+
+/* Large Devices (992px to 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* Styles for large devices (tablets in landscape mode or small laptops) */
+  /* Styles for extra large devices (large laptops and desktops) */
+  .barContainer {
+    height: 300px;
+    width: 400px;
+  }
+  .font {
+    font-size: 17px;
+  }
+}
+
+/* Extra Large Devices (1200px to 1919px) */
+@media (min-width: 1200px) and (max-width: 1919px) {
+  /* Styles for extra large devices (large laptops and desktops) */
+  .barContainer {
+    height: 300px;
+    width: 400px;
+  }
+}
+
+/* Ultra-Wide Devices (1920px and above) */
+@media (min-width: 1920px) {
+  /* Styles for ultra-wide devices (4K monitors and above) */
 }

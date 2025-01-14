@@ -3,7 +3,7 @@
 import styles from "@/app/_styles/SignUp.module.css";
 import Link from "next/link";
 import courierPrime from "./CourierPrime";
-import { signup } from "@/app/actions/auth";
+import { signup } from "@/app/_actions/auth";
 import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
 

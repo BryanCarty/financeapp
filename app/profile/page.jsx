@@ -2,10 +2,10 @@
 import StandardPageHeader from "../_components/StandardPageHeader";
 import ManageFollowersPageBody from "../_components/ManageFollowersPageBody";
 import Footer from "../_components/Footer";
-import { verifySession } from "../lib/sessions";
+import { verifySession } from "../_lib/sessions";
 import { redirect } from "next/navigation";
 import styles from "@/app/_styles/PageContainer.module.css";
-import { logger } from "../lib/logger";
+import { logger } from "../_lib/logger";
 
 export default async function () {
   try {

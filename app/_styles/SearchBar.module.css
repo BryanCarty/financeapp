@@ -25,3 +25,11 @@
   border: 1px solid #353535;
   text-align: center;
 }
+
+@media (max-width: 575px) {
+  /* Styles for extra small devices (mobile phones in portrait mode) */
+  .searchBar {
+    flex-direction: column;
+    width: 300px;
+  }
+}

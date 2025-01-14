@@ -59,15 +59,14 @@
 }
 
 .claim {
-}
-
-.claimText {
   margin-left: 25px;
   font-weight: 700;
 }
 
+.claimText {
+}
+
 .claimExpiry {
-  margin-left: 25px;
 }
 
 .profile {
@@ -252,4 +251,72 @@
 
 .deleteModalWarning {
   margin-top: 0px;
+}
+
+.editDeleteOption {
+  display: flex;
+}
+
+/* Extra Small Devices (0px to 575px) */
+/* From 320 pixels*/
+@media (max-width: 575px) {
+  .articleSummary {
+    width: 95%;
+    height: 450px;
+    margin: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+  }
+  .claim {
+    text-align: left;
+    max-width: 45%;
+    margin-left: 10px;
+  }
+  .profile {
+    text-align: right;
+    margin-right: 10px;
+    max-width: 45%;
+  }
+  .leftFooter {
+    max-width: 45%;
+    margin-left: 10px;
+  }
+  .editDeleteOption {
+    display: none;
+  }
+}
+
+/* Small Devices (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .articleSummary {
+    width: 95%;
+    height: 300px;
+    margin: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+  }
+  .claim {
+    text-align: left;
+    max-width: 45%;
+  }
+  .profile {
+    text-align: right;
+  }
+  .leftFooter {
+    max-width: 45%;
+  }
+}
+
+/* Medium Devices (768px to 991px) */
+@media (min-width: 768px) and (max-width: 999px) {
+  .articleSummary {
+    width: 94%;
+    height: 300px;
+    margin: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+  }
 }

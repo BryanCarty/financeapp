@@ -2,9 +2,9 @@
 import styles from "@/app/_styles/SignUp.module.css";
 import LogInForm from "@/app/_components/LogInForm";
 import Footer from "../_components/Footer";
-import { isAuthenticated } from "../actions/auth";
+import { isAuthenticated } from "../_actions/auth";
 import { redirect } from "next/navigation";
-import { logger } from "../lib/logger";
+import { logger } from "../_lib/logger";
 
 export default async function SignUpPage() {
   try {

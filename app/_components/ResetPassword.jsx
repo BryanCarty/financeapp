@@ -3,7 +3,7 @@
 import styles from "@/app/_styles/SignUp.module.css";
 import Link from "next/link";
 import courierPrime from "./CourierPrime";
-import { resetPassword } from "@/app/actions/auth";
+import { resetPassword } from "@/app/_actions/auth";
 import { useActionState } from "react";
 import { useState, useEffect } from "react";
 

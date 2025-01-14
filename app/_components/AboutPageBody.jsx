@@ -22,7 +22,7 @@ export default async function AboutPageBody() {
         </p>
         <br />
         <h2>What We Offer:</h2>
-        <ul>
+        <ul className={styles.list}>
           <li>
             <strong>Express and Track Your Ideas:</strong> Share your
             predictions, record your trades, and showcase your thought process

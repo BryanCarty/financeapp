@@ -17,6 +17,7 @@
   margin: 15px 0;
   background-color: #f7f7f7;
   border-bottom: 2px dashed #353535;
+  text-align: center;
 }
 
 .context {
@@ -31,6 +32,7 @@
   border: 2px dashed #353535;
   padding: 20px;
   border-radius: 15px;
+  margin: 5px;
 }
 
 .subnavitem {
@@ -78,6 +80,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 1900px;
 }
 
 /* styles.css or your preferred CSS file */
@@ -92,12 +95,14 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow */
   margin-top: 35px;
   margin-bottom: 25px;
+  max-width: 1500px;
 }
 
 .profileTable {
   width: 100%;
   border-collapse: separate; /* Use separate borders to avoid conflict */
   border-spacing: 0; /* Ensure no space between borders */
+  table-layout: fixed;
 }
 
 .profileTable th,
@@ -105,6 +110,10 @@
   padding: 10px;
   text-align: center;
   border: 1px solid #353535; /* Add border between rows and columns */
+}
+.profileTable td {
+  word-wrap: break-word; /* Ensure text breaks into next line */
+  white-space: normal;
 }
 
 .profileTable caption {
@@ -126,6 +135,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: end;
+  max-width: 1500px;
+}
+.subContainer {
+  display: flex;
 }
 
 .logoutButton {
@@ -154,7 +167,7 @@
   max-width: 60em;
   padding: 0;
 
-  @media (min-width: 42em) {
+  @media (min-width: 27em) {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -227,6 +240,7 @@
   flex-direction: column;
   padding: var(--card-padding);
   transition: border-color 0.2s ease-out;
+  height: 77%;
 }
 
 .card:hover .plan-details {
@@ -294,4 +308,86 @@
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+@media (min-width: 320px) {
+  .followingContainer {
+    width: 100%;
+  }
+}
+
+@media (max-width: 575px) {
+  .accountSettingsContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .logoutButton {
+    margin-top: 15px;
+  }
+  .tableContainer {
+    width: 95%;
+  }
+  .profileTable {
+    font-size: 10px;
+  }
+
+  .profileTable th,
+  .profileTable td {
+    padding: 5px;
+  }
+  .subnavbar {
+    flex-direction: column;
+  }
+}
+
+/* Small Devices (576px to 767px) */
+@media (min-width: 576px) and (max-width: 1053px) {
+  .accountSettingsContainer {
+    width: 100%;
+  }
+  .tableContainer {
+    width: 100%;
+  }
+  .subnavbar {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 1054px) {
+  .followingContainer {
+    width: 95%;
+  }
+  .accountSettingsContainer {
+    width: 80%;
+  }
+  .tableContainer {
+    width: 80%;
+  }
+}
+
+@media (min-width: 1055px) and (max-width: 1249px) {
+  .followingContainer {
+    width: 95%;
+  }
+}
+
+/* Extra Large Devices (1200px to 1919px) */
+@media (min-width: 1250px) and (max-width: 1640px) {
+  .followingContainer {
+    width: 95%;
+  }
+}
+
+@media (min-width: 1641px) and (max-width: 1990px) {
+  .followingContainer {
+    width: 90%;
+  }
+}
+
+/* Ultra-Wide Devices (1920px and above) */
+/*test up to 2560px*/
+@media (min-width: 1920px) {
+  .followingContainer {
+    width: 90%;
+  }
 }

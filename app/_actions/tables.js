@@ -5,9 +5,9 @@ import {
   getFollowerTable,
   getFollowingTable,
   getSearchTable,
-} from "../lib/db/db_functions";
-import { verifySession } from "../lib/sessions";
-import { logger } from "../lib/logger";
+} from "../_lib/db/db_functions";
+import { verifySession } from "../_lib/sessions";
+import { logger } from "../_lib/logger";
 
 export default async function loadTable(type, searchQuery) {
   try {

@@ -2,9 +2,9 @@
 import StandardPageHeader from "@/app/_components/StandardPageHeader";
 import PageBody from "@/app/_components/PageBody";
 import Footer from "./_components/Footer";
-import { isAuthenticated } from "@/app/actions/auth";
+import { isAuthenticated } from "@/app/_actions/auth";
 import styles from "@/app/_styles/PageContainer.module.css";
-import { logger } from "./lib/logger";
+import { logger } from "./_lib/logger";
 
 export default async function HomePage() {
   try {

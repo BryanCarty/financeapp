@@ -3,8 +3,8 @@ import StandardPageHeader from "../_components/StandardPageHeader";
 import AboutPageBody from "../_components/AboutPageBody";
 import styles from "@/app/_styles/About.module.css";
 import Footer from "../_components/Footer";
-import { isAuthenticated } from "../actions/auth";
-import { logger } from "../lib/logger";
+import { isAuthenticated } from "../_actions/auth";
+import { logger } from "../_lib/logger";
 
 export default async function () {
   try {

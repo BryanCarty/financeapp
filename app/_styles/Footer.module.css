@@ -32,3 +32,59 @@
   ); /* Optional: adds a semi-transparent background */
   z-index: 9999; /* Ensures it stays on top of other content */
 }
+
+/* Extra Small Devices (0px to 575px) */
+/* From 320 pixels*/
+@media (max-width: 575px) {
+  .footer {
+    min-height: 50px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 8px;
+    padding: 2px 0px;
+  }
+}
+
+/* Small Devices (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .footer {
+    min-height: 60px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 14px;
+    padding: 2px 0px;
+  }
+}
+
+/* Medium Devices (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .footer {
+    min-height: 60px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 20px;
+    padding: 2px 0px;
+  }
+}
+
+/* Large Devices (992px to 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .footer {
+    font-size: 14px;
+  }
+}
+
+/* Extra Large Devices (1200px to 1919px) */
+@media (min-width: 1200px) and (max-width: 1919px) {
+  .footer {
+    font-size: 17px;
+  }
+}
+
+/* Ultra-Wide Devices (1920px and above) */
+@media (min-width: 1920px) {
+  /* Styles for ultra-wide devices (4K monitors and above) */
+}

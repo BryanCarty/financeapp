@@ -1,7 +1,7 @@
 "use client";
 
 import LoadingSquiggle from "./LoadingSquiggle";
-import fetchConscensusDataDb from "../actions/conscensus";
+import fetchConscensusDataDb from "../_actions/conscensus";
 import { useState, useEffect } from "react";
 import courierPrime from "./CourierPrime";
 import Histogram from "./Histogram";

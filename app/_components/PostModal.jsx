@@ -5,7 +5,7 @@ import courierPrime from "./CourierPrime";
 import { useState } from "react";
 import "react-quill-new/dist/quill.snow.css";
 import ReactQuill from "react-quill-new";
-import { submitPost, updatePost } from "../actions/postActions";
+import { submitPost, updatePost } from "../_actions/postActions";
 
 const modules = {
   toolbar: [
@@ -113,52 +113,58 @@ export default function PostModal({ isOpen, onClose, data }) {
         <div className={styles.modalBody}>
           {error && <div className={styles.error}>{error}</div>}
           <div className={styles.claimSection}>
-            <input
-              className={courierPrime.className}
-              type="text"
-              name="ticker"
-              value={formData.ticker}
-              onChange={handleInputChange}
-              placeholder="Ticker e.g. AAPL"
-              maxLength={8}
-              disabled={isUpdate}
-            />
-            will be
-            <select
-              className={courierPrime.className}
-              name="condition"
-              value={formData.condition}
-              onChange={handleInputChange}
-              disabled={isUpdate}
-            >
-              <option value="greater than">greater than</option>
-              <option value="less than">less than</option>
-            </select>
-            <input
-              type="number"
-              name="price"
-              value={formData.price}
-              onChange={handleInputChange}
-              placeholder="price e.g. 234.20"
-              step={0.01}
-              className={courierPrime.className}
-              disabled={isUpdate}
-            />
-            by market close on the
-            <input
-              type="date"
-              name="futureDate"
-              value={formData.futureDate}
-              onChange={handleInputChange}
-              className={courierPrime.className}
-              min={
-                new Date(new Date().setDate(new Date().getDate() + 1))
-                  .toISOString()
-                  .split("T")[0]
-              } // Set minimum to tomorrow
-              disabled={isUpdate}
-            />
+            <div className={styles.rowOne}>
+              <input
+                className={`${courierPrime.className} ${styles.tickerField}`}
+                type="text"
+                name="ticker"
+                value={formData.ticker}
+                onChange={handleInputChange}
+                placeholder="Ticker"
+                maxLength={8}
+                disabled={isUpdate}
+              />
+              will be
+              <select
+                className={`${courierPrime.className} ${styles.conditionField}`}
+                name="condition"
+                value={formData.condition}
+                onChange={handleInputChange}
+                disabled={isUpdate}
+              >
+                <option value="greater than">above</option>
+                <option value="less than">below</option>
+              </select>
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleInputChange}
+                placeholder="price"
+                step={0.01}
+                className={`${courierPrime.className} ${styles.priceField}`}
+                disabled={isUpdate}
+              />
+            </div>
+            <div className={styles.rowTwo}>
+              {" "}
+              by market close on the
+              <input
+                type="date"
+                name="futureDate"
+                value={formData.futureDate}
+                onChange={handleInputChange}
+                className={`${courierPrime.className} ${styles.dateField}`}
+                min={
+                  new Date(new Date().setDate(new Date().getDate() + 1))
+                    .toISOString()
+                    .split("T")[0]
+                } // Set minimum to tomorrow
+                disabled={isUpdate}
+              />
+            </div>
           </div>
+
           <div className={styles.because}>because ...</div>
 
           <ReactQuill

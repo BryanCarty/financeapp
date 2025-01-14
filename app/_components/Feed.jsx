@@ -1,11 +1,11 @@
 "use client";
 import ArticleSummary from "./ArticleSummary";
 import { useEffect, useState, useCallback, useRef } from "react";
-import loadFeed from "../actions/feed";
+import loadFeed from "../_actions/feed";
 import LoadingSquiggle from "./LoadingSquiggle";
 import styles from "@/app/_styles/PageBody.module.css";
 import courierPrime from "./CourierPrime";
-import getPriceByTickers from "../actions/tickers";
+import getPriceByTickers from "../_actions/tickers";
 
 export default function Feed({ type, setEditPostData }) {
   const [feed, setFeed] = useState([]);

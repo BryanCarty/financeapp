@@ -7,7 +7,7 @@ const logger = winston.createLogger({
   format: combine(timestamp(), json()),
   transports: [
     new winston.transports.File({
-      filename: "logs/app.log",
+      filename: "_logs/app.log",
     }),
     new winston.transports.Console(),
   ],

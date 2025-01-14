@@ -4,10 +4,10 @@ import {
   getTrendingFeed,
   getPersonalFeed,
   getMyPosts,
-} from "../lib/db/db_functions";
-import { verifySession } from "../lib/sessions";
+} from "../_lib/db/db_functions";
+import { verifySession } from "../_lib/sessions";
 import { redirect } from "next/navigation";
-import { logger } from "../lib/logger";
+import { logger } from "../_lib/logger";
 
 export default async function loadFeed(type, page) {
   try {

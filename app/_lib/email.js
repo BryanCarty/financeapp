@@ -422,8 +422,20 @@ export async function sendUnsubscribeEmail(email) {
   }
 }
 
+let lastEmailTimestamp = null;
 export async function errorEmail(error) {
   try {
+    const currentTime = Date.now(); // Current timestamp in milliseconds
+
+    // Check if the last email timestamp exists and whether 1 minute has passed
+    if (lastEmailTimestamp && currentTime - lastEmailTimestamp < 60000) {
+      logger.warn("Email not sent: Rate limit of 1 email per minute exceeded.");
+      return {
+        success: false,
+        message: "Rate limit exceeded: Only 1 email can be sent per minute.",
+      };
+    }
+
     logger.info(`sending error email: ${error}`);
     const htmlToSend = `
       <html>

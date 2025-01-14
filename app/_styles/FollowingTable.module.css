@@ -15,6 +15,8 @@
   width: 100%;
   border-collapse: separate; /* Use separate borders to avoid conflict */
   border-spacing: 0; /* Ensure no space between borders */
+  table-layout: fixed;
+  /* Allow text to wrap */
 }
 
 .profileTable th,
@@ -26,6 +28,11 @@
 
 .profileTable th {
   font-weight: bold;
+}
+
+.profileTable td {
+  word-wrap: break-word; /* Ensure text breaks into next line */
+  white-space: normal;
 }
 
 .followBtn {
@@ -119,4 +126,36 @@
   border: 2px solid #353535;
   padding: 20px;
   border-radius: 15px;
+}
+
+@media (max-width: 575px) {
+  .tableContainer {
+    width: 95%;
+  }
+  .profileTable {
+    font-size: 8px;
+  }
+  .followBtn {
+    border-radius: 5px;
+    padding: 2px;
+    font-size: 8px;
+  }
+  .profileTable th,
+  .profileTable td {
+    padding: 5px;
+  }
+}
+
+/* Small Devices (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .tableContainer {
+    width: 95%;
+  }
+}
+
+/* Medium Devices (768px to 991px) */
+@media (min-width: 768px) and (max-width: 999px) {
+  .tableContainer {
+    width: 90%;
+  }
 }

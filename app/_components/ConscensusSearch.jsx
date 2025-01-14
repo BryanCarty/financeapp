@@ -2,7 +2,7 @@
 import styles from "@/app/_styles/ConscensusSearch.module.css";
 import courierPrime from "./CourierPrime";
 import { useState } from "react";
-import { isAuthenticated } from "../actions/auth";
+import { isAuthenticated } from "../_actions/auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 

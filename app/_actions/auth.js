@@ -3,7 +3,7 @@ import {
   SignupFormSchema,
   LoginFormSchema,
   ResetPasswordFormSchema,
-} from "@/app/lib/definitions";
+} from "@/app/_lib/definitions";
 import {
   createUser,
   getUserByEmailAndPassword,
@@ -11,14 +11,14 @@ import {
   insertResetPasswordToken,
   updatePasswordHash,
   getUserIdByToken,
-} from "../lib/db/db_functions";
+} from "../_lib/db/db_functions";
 import bcrypt from "bcrypt";
-import { createSession, verifySession } from "../lib/sessions";
-import { deleteSession } from "../lib/sessions";
-import { sendResetPasswordEmail, sendWelcomeEmail } from "../lib/email";
+import { createSession, verifySession } from "../_lib/sessions";
+import { deleteSession } from "../_lib/sessions";
+import { sendResetPasswordEmail, sendWelcomeEmail } from "../_lib/email";
 import { randomBytes } from "crypto";
 import { redirect } from "next/navigation";
-import { logger } from "../lib/logger";
+import { logger } from "../_lib/logger";
 
 export async function signup(state, formData) {
   logger.info(`signup server action called`);

@@ -1,13 +1,13 @@
 "use server";
-import { verifySession } from "../lib/sessions";
+import { verifySession } from "../_lib/sessions";
 import {
   createComment,
   updateCommentDb,
   removeCommentDb,
-} from "../lib/db/db_functions";
+} from "../_lib/db/db_functions";
 import { redirect } from "next/navigation";
 import DOMPurify from "isomorphic-dompurify";
-import { logger } from "../lib/logger";
+import { logger } from "../_lib/logger";
 
 export async function submitComment(postId, text, redirectUrl) {
   try {

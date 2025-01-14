@@ -2,7 +2,7 @@
 import styles from "@/app/_styles/SignUp.module.css";
 import Link from "next/link";
 import courierPrime from "./CourierPrime";
-import { updatePassword } from "@/app/actions/auth";
+import { updatePassword } from "@/app/_actions/auth";
 import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";

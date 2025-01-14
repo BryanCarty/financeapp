@@ -41,15 +41,14 @@
 }
 
 .claim {
-}
-
-.claimText {
   margin-left: 25px;
   font-weight: 700;
 }
 
+.claimText {
+}
+
 .claimExpiry {
-  margin-left: 25px;
 }
 
 .profile {
@@ -172,4 +171,127 @@
   text-align: center;
   line-height: 1;
   padding-bottom: 0.9px;
+}
+.daysUntilExpiryText {
+}
+
+/* Extra Small Devices (0px to 575px) */
+@media (max-width: 575px) {
+  /* Styles for extra small devices (mobile phones in portrait mode) */
+  .articleHeader {
+    font-size: 11px;
+  }
+
+  .daysUntilExpiryText {
+    display: none;
+  }
+  .summaryHeading {
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+  }
+  .summaryFooter {
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+  }
+}
+
+/* Small Devices (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  /* Styles for small devices (mobile phones in landscape mode) */
+  .articleHeader {
+    font-size: 15px;
+  }
+
+  .daysUntilExpiryText {
+    display: none;
+  }
+  .summaryHeading {
+    flex-direction: column;
+    padding: 12px;
+  }
+  .summaryFooter {
+    flex-direction: column;
+    padding: 12px;
+  }
+}
+
+/*
+@media (min-width: 768px) and (max-width: 991px) {
+
+  .articleHeader {
+    font-size: 12px;
+  }
+  .summaryHeading {
+    flex-direction: column;
+    padding: 12px;
+  }
+  .summaryFooter {
+    flex-direction: column;
+    padding: 12px;
+  }
+  .daysUntilExpiryText {
+    display: none;
+  }
+}
+
+
+@media (min-width: 992px) and (max-width: 1199px) {
+
+  .articleHeader {
+    font-size: 15px;
+  }
+  .summaryHeading {
+    flex-direction: column;
+    padding: 12px;
+  }
+  .summaryFooter {
+    flex-direction: column;
+    padding: 12px;
+  }
+}
+
+
+@media (min-width: 1200px) and (max-width: 1919px) {
+
+
+  .summaryHeading {
+    flex-direction: column;
+    padding: 12px;
+  }
+  .summaryFooter {
+    flex-direction: column;
+    padding: 12px;
+  }
+}*/
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .articleHeader {
+    font-size: 15px;
+  }
+
+  .daysUntilExpiryText {
+    display: none;
+  }
+  .summaryHeading {
+    flex-direction: column;
+    padding: 12px;
+  }
+  .summaryFooter {
+    flex-direction: column;
+    padding: 12px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .articleHeader {
+    font-size: 15px;
+  }
+
+  .daysUntilExpiryText {
+    display: none;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1919px) {
 }

@@ -7,12 +7,12 @@ import {
   recoverFollowerData,
   cancelSubscription,
   backupUserFollowers,
-} from "@/app/lib/db/db_functions";
+} from "@/app/_lib/db/db_functions";
 import {
   sendSubscriptionCreatedEmail,
   sendUnsubscribeEmail,
-} from "@/app/lib/email";
-import { logger } from "@/app/lib/logger";
+} from "@/app/_lib/email";
+import { logger } from "@/app/_lib/logger";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;

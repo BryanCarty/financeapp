@@ -1,5 +1,5 @@
 "use server";
-import { logger } from "../lib/logger";
+import { logger } from "../_lib/logger";
 
 const MyPage = () => {
   try {

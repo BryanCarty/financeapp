@@ -62,10 +62,10 @@
 
 .feed {
   width: 60%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 1500px;
 }
 
 .active {
@@ -78,6 +78,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 1500px;
 }
 
 .searchBar {
@@ -140,6 +141,7 @@
   border: 2px dashed #353535;
   padding: 20px;
   border-radius: 15px;
+  margin: 5px;
 }
 
 .loadingError {
@@ -149,8 +151,8 @@
   margin: 25px; /* Adds some space around the text */
   text-align: center; /* Center the text */
   max-width: 800px; /* Optional, limits text width */
-  margin-left: auto; /* Center align */
-  margin-right: auto; /* Center align */
+  margin-left: 5px; /* Center align */
+  margin-right: 5px; /* Center align */
   border: 2px solid #353535;
   padding: 20px;
   border-radius: 15px;
@@ -172,4 +174,79 @@
     0.3
   ); /* Optional: adds a semi-transparent background */
   z-index: 9999; /* Ensures it stays on top of other content */
+}
+
+@media (max-width: 575px) {
+  .leaderboardBody {
+    width: 100%;
+  }
+  .subnavbar {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .feed {
+    width: 100%;
+  }
+}
+/* Small Devices (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  /* Styles for small devices (mobile phones in landscape mode) */
+  .subnavbar {
+    font-size: 18px;
+    text-align: center;
+  }
+  .leaderboardBody {
+    width: 100%;
+  }
+  .feed {
+    width: 100%;
+  }
+}
+
+/* Medium Devices (768px to 991px) */
+@media (min-width: 768px) and (max-width: 1054px) {
+  /* Styles for medium devices (tablets in portrait mode) */
+  .leaderboardBody {
+    width: 100%;
+  }
+  .feed {
+    width: 100%;
+  }
+  .subnavbar {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 1054px) {
+}
+
+@media (min-width: 1055px) and (max-width: 1249px) {
+  .feed {
+    width: 95%;
+  }
+  .leaderboardBody {
+    width: 95%;
+  }
+}
+
+/* Extra Large Devices (1200px to 1919px) */
+@media (min-width: 1250px) and (max-width: 1640px) {
+  .feed {
+    width: 80%;
+  }
+  .leaderboardBody {
+    width: 95%;
+  }
+}
+
+@media (min-width: 1641px) and (max-width: 1990px) {
+  .leaderboardBody {
+    width: 90%;
+  }
+}
+
+/* Ultra-Wide Devices (1920px and above) */
+/*test up to 2560px*/
+@media (min-width: 1920px) {
 }

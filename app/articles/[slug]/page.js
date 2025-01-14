@@ -3,10 +3,10 @@ import StandardPageHeader from "@/app/_components/StandardPageHeader";
 import styles from "@/app/_styles/Article.module.css";
 import Footer from "@/app/_components/Footer";
 import { redirect } from "next/navigation";
-import fetchArticleBySlug from "@/app/actions/articles";
+import fetchArticleBySlug from "@/app/_actions/articles";
 import ArticleDynamicContent from "@/app/_components/ArticleDyanmicContent";
-import { verifySession } from "@/app/lib/sessions";
-import { logger } from "@/app/lib/logger";
+import { verifySession } from "@/app/_lib/sessions";
+import { logger } from "@/app/_lib/logger";
 
 function formatDateToHumanReadable(dateString, includeTime = false) {
   const date = new Date(dateString);

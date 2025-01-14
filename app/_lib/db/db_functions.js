@@ -11,7 +11,7 @@ const { DateTime } = require("luxon");
 let ws; // WebSocket instance
 let isWebSocketConnected = false;
 
-function scheduleWebSocketLifecycle() {
+export async function scheduleWebSocketLifecycle() {
   try {
     logger.info(`executing scheduleWebSocketLifecycle...`);
     checkAndScheduleWebSocket(); // Initial check for the current day
@@ -92,7 +92,9 @@ async function checkAndScheduleWebSocket() {
 
 function connectWebSocket() {
   try {
-    logger.info("executing connectWebSocket...");
+    logger.info(
+      `executing connectWebSocket... (already_connected: ${isWebSocketConnected})`
+    );
     if (isWebSocketConnected) {
       logger.info("WebSocket is already connected.");
       return;
@@ -105,6 +107,7 @@ function connectWebSocket() {
       try {
         const parsedMessage = JSON.parse(msg.data);
         logger.info(`stock feed websocket received message`);
+        logger.info(`parsed message: `, parsedMessage);
         if (
           parsedMessage[0].ev === "status" &&
           parsedMessage[0].status === "auth_success"
@@ -213,11 +216,14 @@ async function updatePostStatusesAndAuthorAccuracy() {
     await client.release();
   }
 }
+
 // Start the scheduler
-scheduleWebSocketLifecycle();
+//scheduleWebSocketLifecycle();
+//logger.info("here")
 
 const updateDBStockDataBatch = async (stockDataArray) => {
   try {
+    logger.info(`updating db with latest stock data`);
     if (process.env.STOCK_FEED_ENABLED?.toLowerCase() === "true") {
       const tickers = stockDataArray.map((row) => row.ticker);
       const prices = stockDataArray.map((row) => row.price);

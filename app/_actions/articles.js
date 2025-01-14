@@ -1,8 +1,8 @@
 "use server";
 //import { redirect } from "next/navigation";
-import { getArticleBySlug } from "../lib/db/db_functions";
-import { verifySession } from "../lib/sessions";
-import { logger } from "../lib/logger";
+import { getArticleBySlug } from "../_lib/db/db_functions";
+import { verifySession } from "../_lib/sessions";
+import { logger } from "../_lib/logger";
 
 //Example slug = 'why-aapl-stock-will-be-greater-than-232.23-by-market-close-on-the-31st-of-march-2025-232'
 //Example slug = 'why-goog-stock-will-be-less-than-160.34-by-market-close-on-the-2nd-of-june-2026-12'

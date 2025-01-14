@@ -5,9 +5,9 @@ import FollowingTable from "./FollowingTable";
 import SearchBar from "./SearchBar";
 import courierPrime from "./CourierPrime";
 import { useEffect } from "react";
-import getUserStats from "../actions/stats";
+import getUserStats from "../_actions/stats";
 import PostModal from "./PostModal";
-import { logout } from "../actions/auth";
+import { logout } from "../_actions/auth";
 import Feed from "./Feed";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import LoadingSquiggle from "./LoadingSquiggle";
@@ -124,51 +124,53 @@ export default function ({ isLoggedIn }) {
         </div>
 
         <div className={styles.accountSettingsContainer}>
-          <div className={`${styles.grid} ${courierPrime.className}`}>
-            <label
-              className={styles.card}
-              onClick={() => manageSubscription(0)}
-            >
-              <input
-                name="plan"
-                className={styles.radio}
-                type="radio"
-                checked={userStats?.account_type === 0}
-              />
+          <div className={styles.subContainer}>
+            <div className={`${styles.grid} ${courierPrime.className}`}>
+              <label
+                className={styles.card}
+                onClick={() => manageSubscription(0)}
+              >
+                <input
+                  name="plan"
+                  className={styles.radio}
+                  type="radio"
+                  checked={userStats?.account_type === 0}
+                />
 
-              <span className={styles.planDetails}>
-                <span className={styles.planType}>Basic</span>
-                <span className={styles.planCost}>
-                  €0<span className={styles.slash}>/</span>
-                  <abbr className={styles.planCycle} title="month">
-                    mo
-                  </abbr>
+                <span className={styles.planDetails}>
+                  <span className={styles.planType}>Basic</span>
+                  <span className={styles.planCost}>
+                    €0<span className={styles.slash}>/</span>
+                    <abbr className={styles.planCycle} title="month">
+                      mo
+                    </abbr>
+                  </span>
+                  <span>Can't Follow 😔</span>
                 </span>
-                <span>Can't Follow 😔</span>
-              </span>
-            </label>
-            <label
-              className={styles.card}
-              onClick={() => manageSubscription(1)}
-            >
-              <input
-                name="plan"
-                className={styles.radio}
-                type="radio"
-                checked={userStats?.account_type === 1}
-              />
-              <span className={styles.hiddenVisually}>
-                Pro - €8 per month, 25 Follow User Limit
-              </span>
-              <span className={styles.planDetails} aria-hidden="true">
-                <span className={styles.planType}>Pro</span>
-                <span className={styles.planCost}>
-                  €8<span className={styles.slash}>/</span>
-                  <span className={styles.planCycle}>mo</span>
+              </label>
+              <label
+                className={styles.card}
+                onClick={() => manageSubscription(1)}
+              >
+                <input
+                  name="plan"
+                  className={styles.radio}
+                  type="radio"
+                  checked={userStats?.account_type === 1}
+                />
+                <span className={styles.hiddenVisually}>
+                  Pro - €8 per month, 25 Follow User Limit
                 </span>
-                <span>Can Follow 25 Users 🚀</span>
-              </span>
-            </label>
+                <span className={styles.planDetails} aria-hidden="true">
+                  <span className={styles.planType}>Pro</span>
+                  <span className={styles.planCost}>
+                    €8<span className={styles.slash}>/</span>
+                    <span className={styles.planCycle}>mo</span>
+                  </span>
+                  <span>Can Follow 25 Users 🚀</span>
+                </span>
+              </label>
+            </div>
           </div>
           <button
             onClick={logoutUser}

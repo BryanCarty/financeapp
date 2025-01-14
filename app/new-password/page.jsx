@@ -2,9 +2,9 @@
 import styles from "@/app/_styles/SignUp.module.css";
 import NewPassword from "../_components/NewPassword";
 import Footer from "../_components/Footer";
-import { logger } from "../lib/logger";
+import { logger } from "../_lib/logger";
 
-export default function ResetPassword() {
+export default async function ResetPassword() {
   try {
     logger.info(`user accessing new password page`);
     return (

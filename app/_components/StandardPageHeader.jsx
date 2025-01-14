@@ -14,6 +14,7 @@ import ErrorPopUP from "./ErrorPopUp";
 export default function ({ isLoggedIn }) {
   const [loading, setLoading] = useState(false);
   const currentPath = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false); // State to toggle the menu
 
   const handleLinkClick = (href) => {
     if (currentPath !== href) {
@@ -23,6 +24,10 @@ export default function ({ isLoggedIn }) {
 
   const searchParams = useSearchParams();
   let error = searchParams.get("error");
+
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+  };
 
   return (
     <>
@@ -44,6 +49,7 @@ export default function ({ isLoggedIn }) {
             </h1>
           </Link>
         </div>
+
         <div className={styles.rightOfHeader}>
           <HomeLink handleLinkClick={handleLinkClick} />
           <Link
@@ -55,7 +61,7 @@ export default function ({ isLoggedIn }) {
           </Link>
           {isLoggedIn ? (
             <>
-              <PostModalButton />
+              <PostModalButton id={"standard"} />
 
               <Link
                 className={`${styles.profileCircle} ${courierPrime.className}`}
@@ -79,6 +85,68 @@ export default function ({ isLoggedIn }) {
                 className={`${styles.navButton} ${courierPrime.className} ${styles.underline}`}
                 href="/signup"
                 onClick={(e) => handleLinkClick("/signup")}
+              >
+                Sign up
+              </Link>
+            </>
+          )}
+          {/* Hamburger menu */}
+          <button className={styles.hamburger} onClick={toggleMenu}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+
+        <div
+          className={`${styles.menuOverlay} ${menuOpen ? styles.active : ""}`}
+        >
+          <button
+            className={styles.closeButton}
+            onClick={() => setMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            &times;
+          </button>
+          <Link
+            href="/"
+            onClick={(e) => handleLinkClick("/")}
+            className={`${styles.mobileLink} ${courierPrime.className}`}
+          >
+            Home
+          </Link>
+          <Link
+            href="/about"
+            onClick={(e) => handleLinkClick("/about")}
+            className={`${styles.mobileLink} ${courierPrime.className}`}
+          >
+            About
+          </Link>
+
+          {isLoggedIn ? (
+            <>
+              <Link
+                href="/profile"
+                onClick={(e) => handleLinkClick("/profile")}
+                className={`${styles.mobileLink} ${courierPrime.className}`}
+              >
+                Profile
+              </Link>
+              <PostModalButton id={"mobile"} />
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                onClick={(e) => handleLinkClick("/login")}
+                className={`${styles.mobileLink} ${courierPrime.className}`}
+              >
+                Log in
+              </Link>
+              <Link
+                href="/signup"
+                onClick={(e) => handleLinkClick("/signup")}
+                className={`${styles.mobileLink} ${courierPrime.className}`}
               >
                 Sign up
               </Link>

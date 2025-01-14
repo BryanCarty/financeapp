@@ -2,7 +2,7 @@
 import styles from "@/app/_styles/SignUp.module.css";
 import SignUpForm from "@/app/_components/SignUpForm";
 import Footer from "../_components/Footer";
-import { logger } from "../lib/logger";
+import { logger } from "../_lib/logger";
 
 export default async function SignUpPage() {
   try {
