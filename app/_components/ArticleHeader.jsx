@@ -28,6 +28,7 @@ export default function ArticleHeader({
   scrollToComments,
 }) {
   const [livePrice, setLivePrice] = useState(status);
+  const [tooltipVisible, setToolTipVisible] = useState(false);
   const router = useRouter();
 
   function redirectToUserInfo() {
@@ -58,6 +59,11 @@ export default function ArticleHeader({
     return () => clearInterval(intervalId);
   }, []);
 
+  function toggleTooltip(e) {
+    e.stopPropagation();
+    setToolTipVisible((visible) => !visible);
+  }
+
   let glow = null;
 
   const newYorkTimeNow = DateTime.now().setZone("America/New_York");
@@ -85,6 +91,21 @@ export default function ArticleHeader({
   } else {
     color = result ? styles.green : styles.red;
   }
+
+  const isTouchDevice =
+    "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+  <span
+    className={`${styles.tooltipText} ${
+      tooltipVisible
+        ? isTouchDevice
+          ? styles.toolTipTextVisibleTouch
+          : styles.toolTipTextVisible
+        : isTouchDevice
+        ? styles.toolTipTextInvisibleTouch
+        : styles.toolTipTextInvisible
+    }`}
+  />;
 
   return (
     <div className={`${styles.articleHeader} ${glow}`}>
@@ -122,8 +143,17 @@ export default function ArticleHeader({
           </span>
           {result === null && (
             <span className={`${styles.tooltip} ${courierPrime.className}`}>
-              <span className={styles.tooltipIcon}>i</span>
-              <span className={styles.tooltipText}>
+              <span className={styles.tooltipIcon} onClick={toggleTooltip}>
+                i
+              </span>
+              <span
+                className={`${styles.tooltipText} ${
+                  isTouchDevice &&
+                  (tooltipVisible
+                    ? styles.toolTipTextVisible
+                    : styles.toolTipTextInvisible)
+                }`}
+              >
                 Price is at least 15 minutes delayed. The displayed price
                 reflects the price as of{" "}
                 {livePrice?.last_updated.toLocaleString()}

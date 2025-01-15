@@ -21,7 +21,7 @@ export default function Feed({ type, setEditPostData }) {
     async (page) => {
       try {
         const feedData = await loadFeed(type, page);
-        console.log(`loadFeed status: ${feedData != false}`);
+
         if (!feedData || feedData.length === 0) {
           setHasMore(false);
           setNoMorePosts(true);

@@ -1,10 +1,12 @@
 "use client";
+import dynamic from "next/dynamic";
 
 import styles from "@/app/_styles/PostModal.module.css";
 import courierPrime from "./CourierPrime";
 import { useState } from "react";
 import "react-quill-new/dist/quill.snow.css";
-import ReactQuill from "react-quill-new";
+//import ReactQuill from "react-quill-new";
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 import { submitPost, updatePost } from "../_actions/postActions";
 
 const modules = {

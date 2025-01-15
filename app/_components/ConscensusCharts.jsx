@@ -103,7 +103,6 @@ export default function ConscensusCharts({ searchQuery }) {
       if (!conscensusData) {
         setLoadingError("Hmm.. There appears to be no data for this date 😞");
         setLoading(false);
-        console.error(`failed to fetch conscensus data`);
         return;
       }
 

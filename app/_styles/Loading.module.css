@@ -7,6 +7,6 @@
   display: flex;
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
-  background-color: #f7f7f7; /* Optional: adds a semi-transparent background */
+  background-color: #f7f7f7;
   z-index: 9999; /* Ensures it stays on top of other content */
 }

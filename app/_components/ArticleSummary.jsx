@@ -34,11 +34,21 @@ export default function ArticleSummary({
 }) {
   const router = useRouter();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [tooltipVisible, setToolTipVisible] = useState(false);
+
+  const isTouchDevice =
+    "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
   let comparisonText = null;
   if (comparison == ">") {
     comparisonText = "greater-than";
   } else if (comparison == "<") {
     comparisonText = "less-than";
+  }
+
+  function toggleTooltip(e) {
+    e.stopPropagation();
+    setToolTipVisible((visible) => !visible);
   }
 
   const handleArticleClick = () => {
@@ -152,8 +162,17 @@ export default function ArticleSummary({
             </span>
             {result === null && (
               <span className={`${styles.tooltip} ${courierPrime.className}`}>
-                <span className={styles.tooltipIcon}>i</span>
-                <span className={styles.tooltipText}>
+                <span className={styles.tooltipIcon} onClick={toggleTooltip}>
+                  i
+                </span>
+                <span
+                  className={`${styles.tooltipText} ${
+                    isTouchDevice &&
+                    (tooltipVisible
+                      ? styles.toolTipTextVisible
+                      : styles.toolTipTextInvisible)
+                  }`}
+                >
                   Price is at least 15 minutes delayed. The displayed price
                   reflects the price as of{" "}
                   {priceStatus.last_updated.toLocaleString()}

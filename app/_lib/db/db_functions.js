@@ -102,12 +102,11 @@ function connectWebSocket() {
 
     ws = initiateStockFeed();
     isWebSocketConnected = true;
+    let lastLoggedMinute = null; // Track the last minute logged
 
     ws.onmessage = async (msg) => {
       try {
         const parsedMessage = JSON.parse(msg.data);
-        logger.info(`stock feed websocket received message`);
-        logger.info(`parsed message: `, parsedMessage);
         if (
           parsedMessage[0].ev === "status" &&
           parsedMessage[0].status === "auth_success"
@@ -127,6 +126,14 @@ function connectWebSocket() {
           }));
 
         if (stockDataArray.length > 0) {
+          const currentMinute = stockDataArray[0].last_updated.slice(0, 16); // Format: 'YYYY-MM-DDTHH:mm'
+
+          if (currentMinute !== lastLoggedMinute) {
+            lastLoggedMinute = currentMinute;
+            logger.info(
+              `Received a batch of stock updates for ${currentMinute}`
+            );
+          }
           await updateDBStockDataBatch(stockDataArray);
         }
       } catch (error) {
@@ -217,13 +224,8 @@ async function updatePostStatusesAndAuthorAccuracy() {
   }
 }
 
-// Start the scheduler
-//scheduleWebSocketLifecycle();
-//logger.info("here")
-
 const updateDBStockDataBatch = async (stockDataArray) => {
   try {
-    logger.info(`updating db with latest stock data`);
     if (process.env.STOCK_FEED_ENABLED?.toLowerCase() === "true") {
       const tickers = stockDataArray.map((row) => row.ticker);
       const prices = stockDataArray.map((row) => row.price);

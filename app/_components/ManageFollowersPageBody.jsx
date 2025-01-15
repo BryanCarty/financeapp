@@ -135,6 +135,7 @@ export default function ({ isLoggedIn }) {
                   className={styles.radio}
                   type="radio"
                   checked={userStats?.account_type === 0}
+                  readOnly
                 />
 
                 <span className={styles.planDetails}>
@@ -157,6 +158,7 @@ export default function ({ isLoggedIn }) {
                   className={styles.radio}
                   type="radio"
                   checked={userStats?.account_type === 1}
+                  readOnly
                 />
                 <span className={styles.hiddenVisually}>
                   Pro - €8 per month, 25 Follow User Limit

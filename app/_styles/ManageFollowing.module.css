@@ -20,6 +20,10 @@
   text-align: center;
 }
 
+.active {
+  background-color: #eeeeee;
+}
+
 .context {
   font-size: 1.35rem; /* Slightly larger text */
   color: #353535; /* Dark color for readability */
@@ -57,12 +61,7 @@
   display: flex;
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.3
-  ); /* Optional: adds a semi-transparent background */
+  background-color: #f7f7f7;
   z-index: 9999; /* Ensures it stays on top of other content */
 }
 
