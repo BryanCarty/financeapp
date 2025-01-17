@@ -1,0 +1,48 @@
+//docker dev env file:
+
+DB_USERNAME="postgres"
+DB_PASSWORD="password"
+DB_HOST="db"
+DB_PORT="5432"
+DB_DATABASE="postgres"
+DUPLICATE_EMAIL_DB_CONSTRAINT="users_email_key"
+DUPLICATE_USERNAME_DB_CONSTRAINT="users_username_key"
+SESSION_SECRET="Rj8R+O0YpUuNjvkocDV85EMHkMVvrAMse0GGPBa0e1U="
+THE_TRADERS_JOURNAL_EMAIL="thetraderslog@gmail.com"
+THE_TRADERS_JOURNAL_EMAIL_PASSWORD="yvld ssod arrt gnjl"
+DOMAIN="http://localhost:3000"
+TICKER_DATA_DIR="/home/bryan/Desktop/Code Stuff/financewebsite/financeapp/app/lib/tickers.json"
+POLY_API_KEY="HnY70PtBmIpCpVdyVx96WDQdnu_Rpmrm"
+POLY_URL="wss://delayed.polygon.io"
+STOCK_FEED_ENABLED=true
+STRIPE_SECRET_KEY=sk_test_51Qcp6GQ5EMmWUYtfTRd5zKuLdBFEoKQfi5T3RR1NYPfAlntsbiI1b878WMDUlRZnRh7OmhYB7bpQVxDNLlgVyozY00OJoKjJvz
+STRIPE_PUBLISHABLE_KEY=pk_test_51Qcp6GQ5EMmWUYtfVZjj9yyrw8GxYyT9R7uhXWwFyAiL9cgtJzaEFKL7aYxd2NfXFSDj3vqRvYTzXBLafLA7R0wi00TVoLP9zu
+STRIPE_WEBHOOK_SECRET=whsec_74a1ee5685a48fe7f36443cd4f73b2d13ed5b980a978de62a8e000c1c02d05af
+NEXT_PUBLIC_SUBSCRIPTION_LINK=https://buy.stripe.com/test_6oEbK9fDq8hD9YQ4gg
+NEXT_PUBLIC_MANAGE_SUBSCRIPTION_LINK=https://billing.stripe.com/p/login/test_dR6aHf74t9B9fuM5kk
+
+
+
+
+local env file
+
+DB_USERNAME="postgres"
+DB_PASSWORD="password"
+DB_HOST="localhost"
+DB_PORT="5432"
+DB_DATABASE="postgres"
+DUPLICATE_EMAIL_DB_CONSTRAINT="users_email_key"
+DUPLICATE_USERNAME_DB_CONSTRAINT="users_username_key"
+SESSION_SECRET="Rj8R+O0YpUuNjvkocDV85EMHkMVvrAMse0GGPBa0e1U="
+THE_TRADERS_JOURNAL_EMAIL="thetraderslog@gmail.com"
+THE_TRADERS_JOURNAL_EMAIL_PASSWORD="yvld ssod arrt gnjl"
+DOMAIN="http://localhost:3000"
+TICKER_DATA_DIR="/home/bryan/Desktop/Code Stuff/financewebsite/financeapp/app/lib/tickers.json"
+POLY_API_KEY="HnY70PtBmIpCpVdyVx96WDQdnu_Rpmrm"
+POLY_URL="wss://delayed.polygon.io"
+STOCK_FEED_ENABLED=true
+STRIPE_SECRET_KEY=sk_test_51Qcp6GQ5EMmWUYtfTRd5zKuLdBFEoKQfi5T3RR1NYPfAlntsbiI1b878WMDUlRZnRh7OmhYB7bpQVxDNLlgVyozY00OJoKjJvz
+STRIPE_PUBLISHABLE_KEY=pk_test_51Qcp6GQ5EMmWUYtfVZjj9yyrw8GxYyT9R7uhXWwFyAiL9cgtJzaEFKL7aYxd2NfXFSDj3vqRvYTzXBLafLA7R0wi00TVoLP9zu
+STRIPE_WEBHOOK_SECRET=whsec_74a1ee5685a48fe7f36443cd4f73b2d13ed5b980a978de62a8e000c1c02d05af
+NEXT_PUBLIC_SUBSCRIPTION_LINK=https://buy.stripe.com/test_6oEbK9fDq8hD9YQ4gg
+NEXT_PUBLIC_MANAGE_SUBSCRIPTION_LINK=https://billing.stripe.com/p/login/test_dR6aHf74t9B9fuM5kk

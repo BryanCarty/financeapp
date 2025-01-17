@@ -22,7 +22,7 @@ function formatExpiryDate(expiryDateStr) {
 
 export default async function sitemap() {
   try {
-    logger.info(`user accessing sitemap page: ${error}`);
+    logger.info(`user accessing sitemap page`);
     // Fetch dynamic article URLs
     const dynamicArticleUrls = await fetchArticleUrls();
 

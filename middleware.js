@@ -1,4 +1,24 @@
+"use server";
 import { NextResponse } from "next/server";
+
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    {
+      source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
+      missing: [
+        { type: "header", key: "next-router-prefetch" },
+        { type: "header", key: "purpose", value: "prefetch" },
+      ],
+    },
+  ],
+};
 
 export function middleware(request) {
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
@@ -6,20 +26,20 @@ export function middleware(request) {
   // Determine if we are in development mode
   const isDev = process.env.NODE_ENV === "development";
 
-  let scriptSrc = "'self'";
-  let styleSrc = "'self' https://fonts.googleapis.com";
+  let scriptSrc = `'self' 'nonce-${nonce}' 'strict-dynamic'`;
+  let styleSrc = `'self' https://fonts.googleapis.com`;
   let upgradeInsecureRequests = "upgrade-insecure-requests";
-  let connectSrc = "https://insightsofatrader.com";
-  let accessControlAllowOrigin = "https://insightsofatrader.com";
+  let connectSrc = "'self' http://localhost:3000";
+  let accessControlAllowOrigin = "http://localhost:3000";
   let workerSource = "'self'";
+
   // If in development mode, add 'unsafe-eval'
   if (isDev) {
-    scriptSrc += " 'unsafe-eval' 'unsafe-inline'";
-    styleSrc += " 'unsafe-eval' 'unsafe-inline'";
+    scriptSrc += " 'unsafe-eval'";
+    styleSrc += " 'unsafe-inline'";
     upgradeInsecureRequests = "";
-    connectSrc = "https://0.0.0.0:8080 http://0.0.0.0:8080";
-    accessControlAllowOrigin = "*";
-    workerSource += " blob:";
+  } else {
+    styleSrc += ` 'nonce-${nonce}'`;
   }
 
   const cspHeader = `
@@ -48,6 +68,7 @@ export function middleware(request) {
     .trim();
 
   const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-nonce", nonce);
   requestHeaders.set(
     "Content-Security-Policy",
     contentSecurityPolicyHeaderValue
@@ -87,10 +108,10 @@ export function middleware(request) {
 
   // Clear-Site-Data: Clears browsing data (cookies, storage, cache) to enhance security, especially useful after a user logs out
 
-  /*requestHeaders.set(
-    "Clear-Site-Data",
-    '"cache", "cookies", "storage", "executionContexts"'
-  );*/
+  //requestHeaders.set(
+  //  "Clear-Site-Data",
+  //  '"cache", "cookies", "storage", "executionContexts"'
+  //);
 
   const response = NextResponse.next({
     request: {
@@ -118,10 +139,10 @@ export function middleware(request) {
 
   response.headers.set("X-Download-Options", "noopen");
   response.headers.set("X-Permitted-Cross-Domain-Policies", "none");
-  /*response.headers.set(
-    "Clear-Site-Data",
-    '"cache", "cookies", "storage", "executionContexts"'
-  );*/
+  //response.headers.set(
+  //  "Clear-Site-Data",
+  //  '"cache", "cookies", "storage", "executionContexts"'
+  //);
 
   response.headers.set("Access-Control-Allow-Origin", accessControlAllowOrigin); // Needs to be updated
 

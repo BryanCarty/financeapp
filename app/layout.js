@@ -1,5 +1,7 @@
 import "@/app/_styles/globals.css";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Insights Of A Trader | Home",
   description:
