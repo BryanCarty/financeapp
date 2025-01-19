@@ -1,5 +1,4 @@
 //docker dev env file:
-
 DB_USERNAME="postgres"
 DB_PASSWORD="password"
 DB_HOST="db"
@@ -24,8 +23,7 @@ NEXT_PUBLIC_MANAGE_SUBSCRIPTION_LINK=https://billing.stripe.com/p/login/test_dR6
 
 
 
-local env file
-
+//local env file
 DB_USERNAME="postgres"
 DB_PASSWORD="password"
 DB_HOST="localhost"
@@ -46,3 +44,151 @@ STRIPE_PUBLISHABLE_KEY=pk_test_51Qcp6GQ5EMmWUYtfVZjj9yyrw8GxYyT9R7uhXWwFyAiL9cgt
 STRIPE_WEBHOOK_SECRET=whsec_74a1ee5685a48fe7f36443cd4f73b2d13ed5b980a978de62a8e000c1c02d05af
 NEXT_PUBLIC_SUBSCRIPTION_LINK=https://buy.stripe.com/test_6oEbK9fDq8hD9YQ4gg
 NEXT_PUBLIC_MANAGE_SUBSCRIPTION_LINK=https://billing.stripe.com/p/login/test_dR6aHf74t9B9fuM5kk
+
+
+
+
+
+//DockerFile dev: 
+FROM node:20.18.1-alpine
+ 
+RUN mkdir app
+COPY ../package.json ../package-lock.json ./app/
+WORKDIR /app
+ 
+RUN npm ci
+ 
+CMD ["npm", "run", "dev"]
+
+
+//DockerCompose Dev:
+services:
+  insights-of-a-trader:
+    build:
+      context: ../
+      dockerfile: compose/DockerFile
+      args:
+        NEXT_PUBLIC_CLIENTVAR: "clientvar"
+    ports:
+      - 3000:3000
+    volumes:
+      - ../:/app
+    env_file:
+      - ../.env.development
+    depends_on:
+      - db
+  db:
+    image: postgres:14.15
+    container_name: postgres
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+volumes:
+  postgres-data:
+
+
+
+
+
+//Production Docker File
+# Use a specific version of Node.js for consistency and security
+FROM node:20.18.1-alpine
+
+# Set environment to production for optimized dependency installation
+ENV NODE_ENV=production
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy package files to install dependencies
+COPY package.json package-lock.json ./
+
+# Install only production dependencies
+RUN npm ci --only=production
+
+# Copy the rest of the application code
+COPY . .
+
+# (Optional) Build the application if required
+RUN npm run build
+
+# Expose the port your app runs on (if needed)
+EXPOSE 3000
+
+# Use a production-ready command to start the application
+CMD ["npm", "start"]
+
+
+
+//production docker compose files:
+services:
+  insights-of-a-trader:
+    build:
+      context: ../
+      dockerfile: compose/DockerFile
+      args:
+        NEXT_PUBLIC_CLIENTVAR: "clientvar"
+    ports:
+      - 3000:3000
+    volumes:
+      - ../:/app
+    env_file:
+      - ../.env.production
+    depends_on:
+      - db
+  db:
+    image: postgres:14.15
+    container_name: postgres
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+volumes:
+  postgres-data:
+
+
+
+
+//Build docker image:
+docker build -t my-nextjs-app .
+
+docker-compose build
+
+ docker compose -f compose/docker-compose.yaml build
+
+
+
+
+try locally
+docker compose up
+
+
+
+//Push to dockerhub:
+docker tag my-nextjs-app:latest my-dockerhub-username/my-nextjs-app:latest
+docker push my-dockerhub-username/my-nextjs-app:latest
+
+
+
+//Run Docker Image on Your Servers
+docker pull my-dockerhub-username/my-nextjs-app:latest
+docker run -d -p 3000:3000 my-dockerhub-username/my-nextjs-app:latest
+
+
+
+
+
+docker compose -f ... up
+docker tag compose-insights-of-a-trader:latest bryan890/insights-of-a-trader:latest
+docker push bryan890/insights-of-a-trader:latest

@@ -7,6 +7,7 @@ import fetchArticleBySlug from "@/app/_actions/articles";
 import ArticleDynamicContent from "@/app/_components/ArticleDyanmicContent";
 import { verifySession } from "@/app/_lib/sessions";
 import { logger } from "@/app/_lib/logger";
+import DOMPurify from "isomorphic-dompurify";
 
 function formatDateToHumanReadable(dateString, includeTime = false) {
   const date = new Date(dateString);
@@ -179,6 +180,9 @@ export default async function ArticlePage({ params }) {
     if (comments) {
       comments = makeHumanReadableDates(comments, userId.userId);
     }
+
+    //Dp again to make sure!
+    content = DOMPurify.sanitize(content);
 
     return (
       <div className={styles.pageBody}>

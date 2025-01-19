@@ -24,7 +24,7 @@ export default function NewPassword() {
   return (
     <div className={styles.mainSection}>
       <div className={styles.signUpForm}>
-        <h1 className={`${styles.headingSmall} ${courierPrime.className}`}>
+        <h1 className={`${styles.heading} ${courierPrime.className}`}>
           Reset Password
         </h1>
         <form action={action} className={styles.form}>
@@ -34,10 +34,12 @@ export default function NewPassword() {
               id="password"
               name="password"
               placeholder="New Password..."
-              className={`${styles.formInput} ${courierPrime.className}`}
+              className={`${styles.formInput} ${courierPrime.className} ${styles.moreMargin}`}
             />
             {state?.errors?.password && (
-              <div className={`${styles.error} ${courierPrime.className}`}>
+              <div
+                className={`${styles.error} ${courierPrime.className} ${styles.moreMargin}`}
+              >
                 <div>password must:</div>
                 <div>
                   {state.errors.password.map((error) => (
@@ -52,13 +54,15 @@ export default function NewPassword() {
               <input type="hidden" name="token" value={token || ""} />
             </div>
           ) : (
-            <div className={`${styles.error} ${courierPrime.className}`}>
+            <div
+              className={`${styles.error} ${courierPrime.className} ${styles.moreMargin}`}
+            >
               No token!
             </div>
           )}
           {success && (
             <div
-              className={`${styles.successMessage} ${courierPrime.className}`}
+              className={`${styles.successMessage} ${courierPrime.className} ${styles.moreMargin}`}
             >
               Password updated successfully!
             </div>
@@ -66,7 +70,7 @@ export default function NewPassword() {
           <div>
             {!pending ? (
               <button
-                className={`${styles.loginButton} ${courierPrime.className}`}
+                className={`${styles.loginButton} ${courierPrime.className} ${styles.moreMargin}`}
                 type="submit"
               >
                 Reset

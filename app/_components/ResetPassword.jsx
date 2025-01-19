@@ -23,7 +23,7 @@ export default function ResetPassword() {
   return (
     <div className={styles.mainSection}>
       <div className={styles.signUpForm}>
-        <h1 className={`${styles.headingSmall} ${courierPrime.className}`}>
+        <h1 className={`${styles.heading} ${courierPrime.className}`}>
           Reset Password
         </h1>
         <form action={action} className={styles.form}>
@@ -34,18 +34,20 @@ export default function ResetPassword() {
               name="email"
               placeholder="Email..."
               required
-              className={`${styles.formInput} ${courierPrime.className}`}
+              className={`${styles.formInput} ${courierPrime.className} ${styles.moreMargin}`}
               defaultValue={email || ""}
             />
             {state?.errors?.email && (
-              <div className={`${styles.error} ${courierPrime.className}`}>
+              <div
+                className={`${styles.error} ${courierPrime.className} ${styles.moreMargin}`}
+              >
                 {state.errors.email}
               </div>
             )}
           </div>
           {success && (
             <div
-              className={`${styles.successMessage} ${courierPrime.className}`}
+              className={`${styles.successMessage} ${courierPrime.className} ${styles.moreMargin}`}
             >
               Password reset email sent successfully!
             </div>
@@ -54,7 +56,7 @@ export default function ResetPassword() {
             {!pending ? (
               <button
                 disabled={pending}
-                className={`${styles.loginButton} ${courierPrime.className}`}
+                className={`${styles.loginButton} ${courierPrime.className} ${styles.moreMargin}`}
                 type="submit"
               >
                 Reset

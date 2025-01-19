@@ -176,12 +176,18 @@
     width: 100%;
   }
   .subnavbar {
+    border-top: 2px dashed #353535;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 25px;
+    padding: 5px;
   }
   .feed {
     width: 100%;
+  }
+  .subnavitem {
+    margin: 0px;
   }
 }
 /* Small Devices (576px to 767px) */

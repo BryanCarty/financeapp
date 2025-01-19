@@ -1,5 +1,5 @@
 services:
-  web:
+  insights-of-a-trader:
     build:
       context: ../
       dockerfile: compose/DockerFile
@@ -10,7 +10,7 @@ services:
     volumes:
       - ../:/app
     env_file:
-      - ../.env.development
+      - ../.env.production
     depends_on:
       - db
   db:

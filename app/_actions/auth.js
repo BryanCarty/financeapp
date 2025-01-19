@@ -95,7 +95,7 @@ export async function signup(state, formData) {
     let { success, message } = await sendWelcomeEmail(email, username);
 
     // 5. Redirect user
-    if (redirectVal) {
+    if (redirectVal && redirectVal[0] == "/" && !redirectVal.includes("..")) {
       redirect(redirectVal);
     } else {
       redirect("/");
@@ -180,7 +180,7 @@ export async function login(state, formData) {
     logger.info("Creating Session for: " + user.user_id);
     await createSession(user.user_id, user.username, email);
 
-    if (redirectVal) {
+    if (redirectVal && redirectVal[0] == "/" && !redirectVal.includes("..")) {
       redirect(redirectVal);
     } else {
       redirect("/");

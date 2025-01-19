@@ -27,12 +27,14 @@ export default function LogInForm() {
               id="email"
               name="email"
               placeholder="Email..."
-              className={`${styles.formInput} ${courierPrime.className}`}
+              className={`${styles.formInput} ${courierPrime.className} ${styles.moreMargin}`}
               defaultValue={email || ""}
               required
             />
             {state?.errors?.email && (
-              <div className={`${styles.error} ${courierPrime.className}`}>
+              <div
+                className={`${styles.error} ${courierPrime.className} ${styles.moreMargin}`}
+              >
                 {state.errors.email}
               </div>
             )}
@@ -44,11 +46,13 @@ export default function LogInForm() {
               id="password"
               name="password"
               placeholder="Password..."
-              className={`${styles.formInput} ${courierPrime.className}`}
+              className={`${styles.formInput} ${courierPrime.className} ${styles.moreMargin}`}
               required
             />
             {state?.errors?.password && (
-              <div className={`${styles.error} ${courierPrime.className}`}>
+              <div
+                className={`${styles.error} ${courierPrime.className} ${styles.moreMargin}`}
+              >
                 {state.errors.password}
               </div>
             )}
@@ -58,7 +62,7 @@ export default function LogInForm() {
             {!pending ? (
               <button
                 disabled={pending}
-                className={`${styles.loginButton} ${courierPrime.className}`}
+                className={`${styles.loginButton} ${courierPrime.className} ${styles.moreMargin}`}
                 type="submit"
               >
                 Login

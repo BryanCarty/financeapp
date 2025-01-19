@@ -30,6 +30,7 @@ export default function SignUpForm() {
               placeholder="Username..."
               className={`${styles.formInput} ${courierPrime.className}`}
               defaultValue={username || ""}
+              maxLength={15}
             />
             {state?.errors?.username && (
               <div className={`${styles.error} ${courierPrime.className}`}>

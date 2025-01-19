@@ -61,6 +61,7 @@
 .claim {
   margin-left: 25px;
   font-weight: 700;
+  max-width: 45%;
 }
 
 .claimText {
@@ -71,6 +72,7 @@
 
 .profile {
   margin-right: 25px;
+  max-width: 45%;
 }
 
 .profileUsername:hover {
@@ -313,6 +315,7 @@
   }
   .profile {
     text-align: right;
+    max-width: 45%;
   }
   .leftFooter {
     max-width: 45%;

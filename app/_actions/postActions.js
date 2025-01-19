@@ -13,7 +13,6 @@ import DOMPurify from "isomorphic-dompurify";
 import { sendNewPostEmail } from "../_lib/email";
 import { logger } from "../_lib/logger";
 
-let tickers = null; // Initialize tickers to null for clarity
 function sanitizePostData(postData) {
   try {
     logger.info(`sanitizePostData called`);
@@ -83,7 +82,7 @@ export async function submitPost(postData) {
     }
 
     let { ticker, condition, price, futureDate, reasoning } =
-      sanitizePostData(postData);
+      sanitizePostData(postData); // keeps html tags that are considered safe
     ticker = ticker.toUpperCase();
 
     if (!ticker || typeof ticker !== "string" || ticker.trim() === "") {

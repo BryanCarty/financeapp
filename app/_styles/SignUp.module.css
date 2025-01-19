@@ -37,7 +37,7 @@
   border: 5px solid #353535;
   border-radius: 15px;
   background-color: #f7f7f7;
-
+  margin-top: 50px;
   width: 90%;
 }
 
@@ -103,6 +103,9 @@
   align-items: center;
   max-width: 700px;
   width: 30%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 5px;
 }
 
 .subSection {
@@ -201,6 +204,11 @@
   z-index: 9999; /* Ensures it stays on top of other content */
 }
 
+.moreMargin {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+
 .checkboxContainer {
   margin: 10px;
   width: 90%;
@@ -236,18 +244,29 @@
     font-size: 30px;
   }
   .formInput {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     font-size: 15px;
-    padding: 0px;
+    padding: 2px;
     padding-left: 5px;
   }
+
+  .dateOfBirthContainer {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+  }
+
   .dateOfBirthField {
     margin-top: 5px;
     font-size: 15px; /* Increases text size */
+    text-align: center;
+    margin-left: 0px;
   }
   .checkboxContainer {
-    margin: 0px;
+    margin-top: 5px;
     font-size: 12px;
   }
   .error {
@@ -259,18 +278,106 @@
 }
 
 /* Small Devices (576px to 767px) */
-@media (min-width: 576px) and (max-width: 767px) {
+@media (min-width: 576px) and (max-width: 767px) and (orientation: portrait) {
   /* Styles for small devices (mobile phones in landscape mode) */
+  /* Styles for extra small devices (mobile phones in portrait mode) */
+  .mainSection {
+    width: 95%;
+  }
+  .loginButton {
+    font-size: 15px;
+  }
+  .heading {
+    font-size: 30px;
+  }
+  .formInput {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    padding: 2px;
+    padding-left: 5px;
+  }
+
+  .dateOfBirthContainer {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+  }
+
+  .dateOfBirthField {
+    margin-top: 5px;
+    font-size: 15px; /* Increases text size */
+    text-align: center;
+    margin-left: 0px;
+  }
+  .checkboxContainer {
+    margin-top: 5px;
+    font-size: 12px;
+  }
+  .error {
+    margin-top: 2px;
+    color: rgb(187, 75, 75);
+    text-align: center;
+    font-size: 10px;
+  }
+}
+/* Small Devices (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) and (orientation: landscape) {
+  /* Styles for small devices (mobile phones in landscape mode) */
+
+  .error {
+    margin-top: 1px;
+    color: rgb(187, 75, 75);
+    font-size: 10px;
+  }
+  .form {
+    padding: 0px 3px 3px 3px;
+  }
+  .heading {
+    font-size: 18px;
+  }
   .mainSection {
     width: 70%;
   }
   .loginButton {
-    font-size: 20px;
+    font-size: 12px;
+    margin: 0px;
+    padding: 2px 4px;
+  }
+  .formInput {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 10px;
+    padding: 0px;
+    padding-left: 3px;
+    height: 18px;
+  }
+
+  .dateOfBirthContainer {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    align-items: center;
+    text-align: center;
+    padding: 3px;
+  }
+
+  .dateOfBirthField {
+    margin-top: 3px;
+    font-size: 12px; /* Increases text size */
+    text-align: center;
+    margin-left: 0px;
+  }
+  .checkboxContainer {
+    margin: 0px;
+    margin-bottom: 8px;
+    font-size: 10px;
   }
 }
 
 /* Medium Devices (768px to 991px) */
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 768px) and (max-width: 991px) and (orientation: portrait) {
   /* Styles for medium devices (tablets in portrait mode) */
   .mainSection {
     width: 55%;
@@ -280,11 +387,98 @@
   }
 }
 
+@media (min-width: 768px) and (max-width: 991px) and (orientation: landscape) {
+  /* Styles for medium devices (tablets in portrait mode) */
+
+  .error {
+    margin-top: 1px;
+    color: rgb(187, 75, 75);
+    font-size: 8px;
+  }
+  .form {
+    padding: 0px 3px 3px 3px;
+  }
+  .heading {
+    font-size: 17px;
+  }
+  .mainSection {
+    width: 70%;
+  }
+  .loginButton {
+    font-size: 15px;
+    margin: 0px;
+    padding: 2px 4px;
+  }
+  .formInput {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-size: 15px;
+    padding: 1px;
+    padding-left: 3px;
+    height: 18px;
+  }
+
+  .dateOfBirthContainer {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    align-items: center;
+    text-align: center;
+    padding: 3px;
+  }
+
+  .dateOfBirthField {
+    margin-top: 3px;
+    font-size: 10px; /* Increases text size */
+    text-align: center;
+    margin-left: 0px;
+  }
+  .checkboxContainer {
+    margin: 0px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+}
+
 /* Large Devices (992px to 1199px) */
 @media (min-width: 992px) and (max-width: 1199px) {
   /* Styles for large devices (tablets in landscape mode or small laptops) */
   .mainSection {
     width: 50%;
+  }
+
+  .heading {
+    font-size: 25px;
+  }
+  .formInput {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    padding: 2px;
+    padding-left: 5px;
+  }
+
+  .dateOfBirthContainer {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+  }
+
+  .dateOfBirthField {
+    margin-top: 5px;
+    font-size: 15px; /* Increases text size */
+    text-align: center;
+    margin-left: 0px;
+  }
+  .checkboxContainer {
+    margin-top: 5px;
+    font-size: 12px;
+  }
+  .error {
+    margin-top: 1px;
+    color: rgb(187, 75, 75);
+    font-size: 9px;
   }
 }
 
@@ -292,7 +486,36 @@
 @media (min-width: 1200px) and (max-width: 1919px) {
   /* Styles for extra large devices (large laptops and desktops) */
   .mainSection {
-    width: 40%;
+    width: 50%;
+  }
+  .formInput {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    padding: 2px;
+    padding-left: 5px;
+  }
+
+  .dateOfBirthContainer {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+  }
+
+  .dateOfBirthField {
+    margin-top: 5px;
+    font-size: 15px; /* Increases text size */
+    text-align: center;
+    margin-left: 0px;
+  }
+  .checkboxContainer {
+    margin-top: 5px;
+    font-size: 12px;
+  }
+  .heading {
+    font-size: 25px;
   }
 }
 
@@ -300,3 +523,10 @@
 @media (min-width: 1920px) {
   /* Styles for ultra-wide devices (4K monitors and above) */
 }
+
+/*
+- Less than 575 assume portrait
+- in between, need to check orientation!
+- Greater than 1200 assume landscape
+
+*/

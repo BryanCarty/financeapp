@@ -26,7 +26,7 @@ export function middleware(request) {
   // Determine if we are in development mode
   const isDev = process.env.NODE_ENV === "development";
 
-  let scriptSrc = `'self' 'nonce-${nonce}' 'strict-dynamic'`;
+  let scriptSrc = `'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-inline' https: http:`;
   let styleSrc = `'self' https://fonts.googleapis.com`;
   let upgradeInsecureRequests = "upgrade-insecure-requests";
   let connectSrc = "'self' http://localhost:3000";
@@ -60,6 +60,8 @@ export function middleware(request) {
     block-all-mixed-content;
     ${upgradeInsecureRequests};
     script-src-attr 'none';
+
+
     `;
 
   // Replace newline characters and spaces
@@ -83,10 +85,10 @@ export function middleware(request) {
   requestHeaders.set("X-Frame-Options", "DENY");
 
   // X-Content-Type-Options: Prevents browsers from MIME-sniffing, which helps protect against certain types of attacks where files are interpreted as the wrong type
-  //requestHeaders.set("X-Content-Type-Options", "nosniff");
+  requestHeaders.set("X-Content-Type-Options", "nosniff");
 
   // Referrer-Policy: Controls the amount of referrer information sent with requests, preventing leakage of sensitive URLs
-  requestHeaders.set("Referrer-Policy", "no-referrer-when-downgrade");
+  requestHeaders.set("Referrer-Policy", "strict-origin-when-cross-origin");
 
   // Permissions-Policy: Restricts the use of certain browser features (like geolocation, camera, etc.) to enhance security and privacy
   requestHeaders.set(
@@ -128,8 +130,8 @@ export function middleware(request) {
     "max-age=31536000; includeSubDomains;"
   );
   response.headers.set("X-Frame-Options", "DENY");
-  //response.headers.set("X-Content-Type-Options", "nosniff");
-  response.headers.set("Referrer-Policy", "no-referrer-when-downgrade");
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set(
     "Permissions-Policy",
     "geolocation=(), microphone=(), camera=()"
