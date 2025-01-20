@@ -21,6 +21,7 @@ export default function Footer() {
         </div>
         <div className={styles.rightFooter}>
           <Link
+            aria-label="terms and conditions page"
             className={`${styles.link} ${courierPrime.className}`}
             href="/terms-and-conditions"
             onClick={(e) => setLoading(true)}
@@ -29,6 +30,7 @@ export default function Footer() {
           </Link>{" "}
           |{" "}
           <Link
+            aria-label="privacy policy page"
             className={`${styles.link} ${courierPrime.className}`}
             href="/privacy-policy"
             onClick={(e) => setLoading(true)}
@@ -37,6 +39,7 @@ export default function Footer() {
           </Link>{" "}
           |{" "}
           <Link
+            aria-label="about page"
             className={`${styles.link} ${courierPrime.className}`}
             href="/about"
             onClick={(e) => setLoading(true)}

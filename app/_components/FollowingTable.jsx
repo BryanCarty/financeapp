@@ -175,6 +175,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
               {item.is_following ? (
                 <td>
                   <button
+                    aria-label="unfollow button"
                     className={`${styles.followBtn} ${courierPrime.className}`}
                     onClick={() =>
                       handleUnfollowClick({
@@ -189,6 +190,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
               ) : (
                 <td>
                   <button
+                    aria-label="follow button"
                     className={`${styles.followBtn} ${courierPrime.className}`}
                     onClick={() =>
                       handleFollowClick({
@@ -221,12 +223,14 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
             </label>
             <div className={styles.modalActions}>
               <button
+                aria-label="cancel button"
                 className={`${styles.btn} ${courierPrime.className}`}
                 onClick={handleCancel}
               >
                 Cancel
               </button>
               <button
+                aria-label="confirm button"
                 className={`${styles.btn} ${courierPrime.className}`}
                 onClick={handleConfirmFollow}
               >
@@ -242,12 +246,14 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
             <h3>UnFollow {selectedUnfollowProfile.name}</h3>
             <div className={styles.modalActions}>
               <button
+                aria-label="cancel button"
                 className={`${styles.btn} ${courierPrime.className}`}
                 onClick={handleCancel}
               >
                 Cancel
               </button>
               <button
+                aria-label="confirm button"
                 className={`${styles.btn} ${courierPrime.className}`}
                 onClick={handleConfirmUnfollow}
               >

@@ -13,6 +13,7 @@ export default function Error({ error, reset }) {
       <div className={`${styles.container} ${courierPrime.className}`}>
         <h2 className={styles.heading}>Page Not Found!</h2>
         <button
+          aria-label="Return home button"
           className={`${styles.button} ${courierPrime.className}`}
           onClick={() => router.push("/")}
         >

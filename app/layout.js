@@ -44,6 +44,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preload" href="/images/background.svg" as="image" />
+      </head>
       <body>{children}</body>
     </html>
   );

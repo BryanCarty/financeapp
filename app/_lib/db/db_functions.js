@@ -1162,7 +1162,7 @@ LIMIT 10;
 
 export async function getLatestFeed(pageNumber) {
   try {
-    const postsPerPage = 10;
+    const postsPerPage = 7;
     const offset = (pageNumber - 1) * postsPerPage;
 
     const results = (
@@ -1213,7 +1213,7 @@ export async function getLatestFeed(pageNumber) {
 
 export async function getTrendingFeed(pageNumber) {
   try {
-    const postsPerPage = 10;
+    const postsPerPage = 7;
     const offset = (pageNumber - 1) * postsPerPage;
 
     const results = (
@@ -1277,7 +1277,7 @@ LIMIT $1 OFFSET $2;
 
 export async function getPersonalFeed(yourUserId, pageNumber) {
   try {
-    const postsPerPage = 10;
+    const postsPerPage = 7;
     const offset = (pageNumber - 1) * postsPerPage;
     const results = (
       await pool.query(
@@ -1342,7 +1342,7 @@ export async function getPersonalFeed(yourUserId, pageNumber) {
 
 export async function getMyPosts(userId, pageNumber) {
   try {
-    const postsPerPage = 10;
+    const postsPerPage = 7;
     const offset = (pageNumber - 1) * postsPerPage;
 
     const results = (

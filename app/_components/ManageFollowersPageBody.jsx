@@ -175,6 +175,7 @@ export default function ({ isLoggedIn }) {
             </div>
           </div>
           <button
+            aria-label="logout button"
             onClick={logoutUser}
             className={`${styles.logoutButton} ${courierPrime.className}`}
           >

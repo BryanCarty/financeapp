@@ -79,7 +79,11 @@ export default function Comment({
             rows="6"
             aria-label="Comment Input"
             value={editText}
-            onChange={handleCommentChange}
+            onChange={(e) => {
+              if (e.target.value.length <= 1000) {
+                handleCommentChange(e);
+              }
+            }}
           ></textarea>
         ) : (
           <div className={`${styles.commentBody} ${courierPrime.className}`}>
@@ -114,11 +118,12 @@ export default function Comment({
       </div>
       {showDeleteModal && (
         <div className={styles.modal}>
-          <div className={styles.modalContent}>
+          <div className={`${styles.modalContent} ${courierPrime.className}`}>
             <h3>Delete Comment</h3>
 
             <div className={styles.modalActions}>
               <button
+                aria-label="cancel button"
                 className={`${styles.btn} ${courierPrime.className}`}
                 onClick={() => {
                   setShowDeleteModal(null);
@@ -127,6 +132,7 @@ export default function Comment({
                 Cancel
               </button>
               <button
+                aria-label="confirm button"
                 className={`${styles.btn} ${courierPrime.className}`}
                 onClick={deleteComment}
               >

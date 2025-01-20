@@ -59,6 +59,7 @@ export default function ConscensusSearch({ onSearchChange }) {
         onChange={handleDateChange}
       />
       <button
+        aria-label="search button"
         onClick={handleSearch}
         className={`${styles.searchButton} ${courierPrime.className}`}
       >

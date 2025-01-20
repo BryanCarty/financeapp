@@ -14,6 +14,7 @@ export default function PostModalButton({ id }) {
   return (
     <>
       <button
+        aria-label="post button"
         onClick={openModal}
         className={`${styles.postButton} ${courierPrime.className} ${mobileStyle}`}
       >

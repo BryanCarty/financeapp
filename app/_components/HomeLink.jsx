@@ -9,6 +9,7 @@ export default function HomeLink({ handleLinkClick }) {
   if (currentPath !== "/") {
     return (
       <Link
+        aria-label="home page"
         className={`${styles.navButton} ${courierPrime.className}`}
         href="/"
         onClick={(e) => handleLinkClick("/")}

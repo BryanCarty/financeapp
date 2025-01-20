@@ -180,6 +180,7 @@ export default function PostModal({ isOpen, onClose, data }) {
         </div>
         <div className={styles.buttonContainerStyle}>
           <button
+            aria-label="cancel button"
             onClick={onClose}
             className={`${styles.buttonStyle} ${courierPrime.className}`}
             disabled={isSubmitting}
@@ -187,6 +188,7 @@ export default function PostModal({ isOpen, onClose, data }) {
             Cancel
           </button>
           <button
+            aria-label="post button"
             className={`${styles.buttonStyle} ${courierPrime.className}`}
             onClick={handleSubmit}
             disabled={isSubmitting}

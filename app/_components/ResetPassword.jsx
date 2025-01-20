@@ -55,6 +55,7 @@ export default function ResetPassword() {
           <div>
             {!pending ? (
               <button
+                aria-label="reset button"
                 disabled={pending}
                 className={`${styles.loginButton} ${courierPrime.className} ${styles.moreMargin}`}
                 type="submit"
@@ -73,12 +74,14 @@ export default function ResetPassword() {
       </div>
       <div className={styles.subSection}>
         <Link
+          aria-label="home page"
           className={`${styles.loginButton} ${courierPrime.className}`}
           href="/"
         >
           Return Home
         </Link>
         <Link
+          aria-label="login page"
           className={`${styles.loginButton} ${courierPrime.className}`}
           href="/login"
         >

@@ -168,6 +168,7 @@ export default function ArticleDynamicContent({
                 alt="CTA Image"
               />
               <button
+                aria-label="Sign up button"
                 className={`${styles.ctaButton} ${courierPrime.className}`}
                 onClick={handleSignUp}
               >
@@ -189,6 +190,7 @@ export default function ArticleDynamicContent({
             </p>
             <div className={styles.modalActions}>
               <button
+                aria-label="Cancel button"
                 className={`${styles.btn} ${courierPrime.className}`}
                 onClick={() => {
                   setDeletePostModal(null);
@@ -197,6 +199,7 @@ export default function ArticleDynamicContent({
                 Cancel
               </button>
               <button
+                aria-label="Confirm button"
                 className={`${styles.btn} ${courierPrime.className}`}
                 onClick={deletePost}
               >
@@ -268,6 +271,7 @@ export default function ArticleDynamicContent({
             }}
           ></textarea>
           <button
+            aria-label="submit button"
             className={`${styles.commentButton} ${courierPrime.className}`}
             type="button"
             onClick={handleSubmitComment}

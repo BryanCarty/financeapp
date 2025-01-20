@@ -111,6 +111,7 @@ export default function SignUpForm() {
               />
               I agree to the{" "}
               <Link
+                aria-label="terms and conditions page"
                 href="/terms-and-conditions"
                 target="_blank"
                 className={styles.link}
@@ -119,6 +120,7 @@ export default function SignUpForm() {
               </Link>{" "}
               and{" "}
               <Link
+                aria-label="privacy policy page"
                 href="/privacy-policy"
                 target="_blank"
                 className={styles.link}
@@ -132,6 +134,7 @@ export default function SignUpForm() {
           <div>
             {!pending ? (
               <button
+                aria-label="sign up button"
                 disabled={pending}
                 type="submit"
                 className={`${styles.loginButton} ${courierPrime.className}`}
@@ -150,12 +153,14 @@ export default function SignUpForm() {
       </div>
       <div className={styles.subSection}>
         <Link
+          aria-label="home page"
           className={`${styles.loginButton} ${courierPrime.className}`}
           href="/"
         >
           Return Home
         </Link>
         <Link
+          aria-label="login page"
           className={`${styles.loginButton} ${courierPrime.className}`}
           href={`/login${redirect ? `?redirect=${redirect}` : ``}`}
         >

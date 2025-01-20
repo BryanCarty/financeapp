@@ -26,6 +26,7 @@ export default function SearchBar({ onSearchChange }) {
         className={`${styles.searchInput} ${courierPrime.className}`}
       />
       <button
+        aria-label="search button"
         onClick={handleSearch}
         className={`${styles.searchButton} ${courierPrime.className}`}
       >

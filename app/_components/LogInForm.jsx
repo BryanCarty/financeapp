@@ -61,6 +61,7 @@ export default function LogInForm() {
           <div>
             {!pending ? (
               <button
+                aria-label="login button"
                 disabled={pending}
                 className={`${styles.loginButton} ${courierPrime.className} ${styles.moreMargin}`}
                 type="submit"
@@ -79,12 +80,14 @@ export default function LogInForm() {
       </div>
       <div className={styles.subSection}>
         <Link
+          aria-label="sign up page"
           className={`${styles.loginButton} ${courierPrime.className}`}
           href={`/signup${redirect ? `?redirect=${redirect}` : ``}`}
         >
           Sign up
         </Link>
         <Link
+          aria-label="forgot password page"
           className={`${styles.loginButton} ${courierPrime.className}`}
           href="/reset-password"
         >

@@ -36,6 +36,10 @@ export default function Feed({ type, setEditPostData }) {
         if (feedData.length !== 10) {
           setHasMore(false);
           setNoMorePosts(true);
+        } else {
+          //new code
+          setHasMore(true);
+          setNoMorePosts(false);
         }
       } catch (error) {
         setLoadingError("An Unexpected Error Occurred!");

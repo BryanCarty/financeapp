@@ -16,6 +16,7 @@ export default function Error({ error, reset }) {
       <div className={`${styles.container} ${courierPrime.className}`}>
         <h2 className={styles.heading}>Something went wrong!</h2>
         <button
+          aria-label="Try again button"
           className={`${styles.button} ${courierPrime.className}`}
           onClick={() => reset()}
         >

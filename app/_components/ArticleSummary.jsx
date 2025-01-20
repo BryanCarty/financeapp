@@ -62,7 +62,13 @@ export default function ArticleSummary({
   };
 
   const handleCommentClick = () => {
-    router.push(`/articles/${articleId}#comments`);
+    setLoading(true);
+    const redirectStr = `/articles/why-${ticker.toLowerCase()}-stock-will-be-${comparisonText}-${parseFloat(
+      price
+    ).toFixed(2)}-by-market-close-on-the-${formatDateToUrl(
+      expiry
+    )}-${articleId}#comments`;
+    router.push(redirectStr);
   };
 
   let glow = null;
@@ -149,9 +155,7 @@ export default function ArticleSummary({
         </div>
         <div className={`${styles.summaryBody} ${courierPrime.className}`}>
           <p className={styles.snippetText}>{snippet}</p>
-          <a href="more-content.html" className={styles.seemorebtn}>
-            See More
-          </a>
+          <p className={styles.seemorebtn}>See More</p>
         </div>
         <div className={styles.summaryFooter}>
           <div className={`${styles.leftFooter} ${courierPrime.className}`}>
@@ -244,6 +248,7 @@ export default function ArticleSummary({
             </p>
             <div className={styles.modalActions}>
               <button
+                aria-label="cancel button"
                 className={`${styles.btn} ${courierPrime.className}`}
                 onClick={() => {
                   setShowDeleteModal(null);
@@ -252,6 +257,7 @@ export default function ArticleSummary({
                 Cancel
               </button>
               <button
+                aria-label="confirm button"
                 className={`${styles.btn} ${courierPrime.className}`}
                 onClick={deletePost}
               >

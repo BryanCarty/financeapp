@@ -161,7 +161,7 @@
   background-color: #f7f7f7;
   padding: 20px;
   border-radius: 8px;
-  width: 300px;
+  width: 270px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -286,6 +286,7 @@
 @media (max-width: 400px) {
   .commentInput {
     max-width: 280px;
+    margin-top: 15px;
   }
 }
 
@@ -293,13 +294,16 @@
 @media (max-width: 575px) {
   /* Styles for extra small devices (mobile phones in portrait mode) */
   .article {
-    width: 99%;
+    width: 95%;
   }
   .articleBody {
-    font-size: 12px;
+    font-size: 11px;
   }
   .separator {
     display: none;
+  }
+  .commentInput {
+    margin-top: 15px;
   }
 }
 

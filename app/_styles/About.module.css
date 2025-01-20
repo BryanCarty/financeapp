@@ -135,6 +135,8 @@
   /* Styles for extra small devices (mobile phones in portrait mode) */
   .container {
     width: 95%;
+    margin-top: 0px;
+    margin-bottom: 0px;
   }
   .description {
     font-size: 0.75rem;

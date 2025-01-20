@@ -40,6 +40,7 @@ export default function ({ isLoggedIn }) {
       <header className={styles.pageHeader}>
         <div className={styles.leftOfHeader}>
           <Link
+            aria-label="home page"
             className={styles.logo}
             href="/"
             onClick={(e) => handleLinkClick("/")}
@@ -53,6 +54,7 @@ export default function ({ isLoggedIn }) {
         <div className={styles.rightOfHeader}>
           <HomeLink handleLinkClick={handleLinkClick} />
           <Link
+            aria-label="about page"
             className={`${styles.navButton} ${courierPrime.className}`}
             href="/about"
             onClick={(e) => handleLinkClick("/about")}
@@ -64,6 +66,7 @@ export default function ({ isLoggedIn }) {
               <PostModalButton id={"standard"} />
 
               <Link
+                aria-label="profile page"
                 className={`${styles.profileCircle} ${courierPrime.className}`}
                 href="/profile"
                 onClick={(e) => handleLinkClick("/profile")}
@@ -74,6 +77,7 @@ export default function ({ isLoggedIn }) {
           ) : (
             <>
               <Link
+                aria-label="login page"
                 className={`${styles.navButton} ${courierPrime.className}`}
                 href="/login"
                 onClick={(e) => handleLinkClick("/login")}
@@ -82,6 +86,7 @@ export default function ({ isLoggedIn }) {
               </Link>
 
               <Link
+                aria-label="sign up page"
                 className={`${styles.navButton} ${courierPrime.className} ${styles.underline}`}
                 href="/signup"
                 onClick={(e) => handleLinkClick("/signup")}
@@ -91,7 +96,11 @@ export default function ({ isLoggedIn }) {
             </>
           )}
           {/* Hamburger menu */}
-          <button className={styles.hamburger} onClick={toggleMenu}>
+          <button
+            className={styles.hamburger}
+            onClick={toggleMenu}
+            aria-label="hamburger menu"
+          >
             <span></span>
             <span></span>
             <span></span>
@@ -109,6 +118,7 @@ export default function ({ isLoggedIn }) {
             &times;
           </button>
           <Link
+            aria-label="home page"
             href="/"
             onClick={(e) => handleLinkClick("/")}
             className={`${styles.mobileLink} ${courierPrime.className}`}
@@ -116,6 +126,7 @@ export default function ({ isLoggedIn }) {
             Home
           </Link>
           <Link
+            aria-label="about page"
             href="/about"
             onClick={(e) => handleLinkClick("/about")}
             className={`${styles.mobileLink} ${courierPrime.className}`}
@@ -126,6 +137,7 @@ export default function ({ isLoggedIn }) {
           {isLoggedIn ? (
             <>
               <Link
+                aria-label="profile page"
                 href="/profile"
                 onClick={(e) => handleLinkClick("/profile")}
                 className={`${styles.mobileLink} ${courierPrime.className}`}
@@ -137,6 +149,7 @@ export default function ({ isLoggedIn }) {
           ) : (
             <>
               <Link
+                aria-label="login page"
                 href="/login"
                 onClick={(e) => handleLinkClick("/login")}
                 className={`${styles.mobileLink} ${courierPrime.className}`}
@@ -144,6 +157,7 @@ export default function ({ isLoggedIn }) {
                 Log in
               </Link>
               <Link
+                aria-label="sign up page"
                 href="/signup"
                 onClick={(e) => handleLinkClick("/signup")}
                 className={`${styles.mobileLink} ${courierPrime.className}`}

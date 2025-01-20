@@ -136,7 +136,7 @@ export default function ArticleHeader({
       </div>
       <div className={styles.summaryFooter}>
         <div className={`${styles.leftFooter} ${courierPrime.className}`}>
-          Agree: {agreeCount} | Disagree: {disagreeCount} | Status:
+          Agree:{agreeCount} | Disagree:{disagreeCount} | Status:
           <span className={color}>
             {finalResult ||
               `${livePrice?.price} (${formattedPercentageDifference}%)`}
