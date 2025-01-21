@@ -3,7 +3,7 @@ FROM node:20.18.1-alpine AS development
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package*.json package-lock.json ./
 
 RUN npm ci
 
@@ -19,7 +19,7 @@ FROM node:20.18.1-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package*.json package-lock.json ./
 
 RUN npm ci
 

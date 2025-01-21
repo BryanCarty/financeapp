@@ -192,3 +192,15 @@ docker run -d -p 3000:3000 my-dockerhub-username/my-nextjs-app:latest
 docker compose -f ... up
 docker tag compose-insights-of-a-trader:latest bryan890/insights-of-a-trader:latest
 docker push bryan890/insights-of-a-trader:latest
+
+
+
+
+
+
+
+
+
+
+Steps to get running on VM:
+docker login
