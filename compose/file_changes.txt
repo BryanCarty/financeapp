@@ -165,7 +165,7 @@ docker build -t my-nextjs-app .
 
 docker-compose build
 
- docker compose -f compose/docker-compose.yaml build
+docker compose -f compose/docker-compose.yaml build
 
 
 

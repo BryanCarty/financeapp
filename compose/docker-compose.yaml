@@ -2,17 +2,19 @@ services:
   insights-of-a-trader:
     build:
       context: ../
-      dockerfile: compose/DockerFile
+      dockerfile: compose/DockerFile.prod
+      target: production
       args:
         NEXT_PUBLIC_CLIENTVAR: "clientvar"
     ports:
       - 3000:3000
-    volumes:
-      - ../:/app
+    environment:
+      - NODE_ENV=production
     env_file:
       - ../.env.production
     depends_on:
       - db
+    restart: unless-stopped
   db:
     image: postgres:14.15
     container_name: postgres
