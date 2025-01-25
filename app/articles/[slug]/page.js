@@ -8,6 +8,7 @@ import ArticleDynamicContent from "@/app/_components/ArticleDyanmicContent";
 import { verifySession } from "@/app/_lib/sessions";
 import { logger } from "@/app/_lib/logger";
 import DOMPurify from "isomorphic-dompurify";
+import { headers } from "next/headers";
 
 function formatDateToHumanReadable(dateString, includeTime = false) {
   const date = new Date(dateString);
@@ -184,6 +185,9 @@ export default async function ArticlePage({ params }) {
     //Dp again to make sure!
     content = DOMPurify.sanitize(content);
 
+    const headersList = await headers();
+    const isTouchScreenDevice = headersList.get("touch") == "true";
+
     return (
       <div className={styles.pageBody}>
         <StandardPageHeader isLoggedIn={userId} />
@@ -208,6 +212,7 @@ export default async function ArticlePage({ params }) {
           result={true_claim}
           isPostOwner={userId.userId == author_id}
           title={resultStr}
+          isTouchScreenDevice={isTouchScreenDevice}
         />
         <Footer />
       </div>

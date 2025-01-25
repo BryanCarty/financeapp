@@ -1610,15 +1610,11 @@ export async function loadUserStats(userId) {
 
 export async function getValidTickers() {
   try {
-    const lastWeekDate = new Date();
-    lastWeekDate.setDate(lastWeekDate.getDate() - 7);
-
     const result = (
       await pool.query(
         `
-      SELECT ticker, close_price from stock_data WHERE last_updated_time >= $1;
-    `,
-        [lastWeekDate]
+      SELECT ticker, close_price from stock_data;
+    `
       )
     ).rows;
 

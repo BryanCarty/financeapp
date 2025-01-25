@@ -39,8 +39,12 @@ async function isValidTickerPrice(specificTicker, price, condition) {
   try {
     logger.info(`isValidTickerPrice called`);
     const result = await getValidTickers();
-    const entry = result.find(({ ticker }) => ticker === specificTicker);
+    console.log(result);
 
+    const entry = result.find(({ ticker }) => ticker === specificTicker);
+    if (!entry) {
+      return { validTicker: false, message: "Unrecognized Ticker" };
+    }
     let closePrice = parseFloat(entry.close_price);
 
     if (

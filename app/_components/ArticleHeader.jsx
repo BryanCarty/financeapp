@@ -26,6 +26,7 @@ export default function ArticleHeader({
   setEditPost,
   setDeletePostModal,
   scrollToComments,
+  isTouchScreenDevice,
 }) {
   const [livePrice, setLivePrice] = useState(status);
   const [tooltipVisible, setToolTipVisible] = useState(false);
@@ -92,9 +93,7 @@ export default function ArticleHeader({
     color = result ? styles.green : styles.red;
   }
 
-  const isTouchDevice =
-    "ontouchstart" in window || navigator.maxTouchPoints > 0;
-
+  /*
   <span
     className={`${styles.tooltipText} ${
       tooltipVisible
@@ -105,7 +104,7 @@ export default function ArticleHeader({
         ? styles.toolTipTextInvisibleTouch
         : styles.toolTipTextInvisible
     }`}
-  />;
+  />;*/
 
   return (
     <div className={`${styles.articleHeader} ${glow}`}>
@@ -147,8 +146,9 @@ export default function ArticleHeader({
                 i
               </span>
               <span
+                suppressHydrationWarning={true}
                 className={`${styles.tooltipText} ${
-                  isTouchDevice &&
+                  isTouchScreenDevice &&
                   (tooltipVisible
                     ? styles.toolTipTextVisible
                     : styles.toolTipTextInvisible)

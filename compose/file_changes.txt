@@ -194,6 +194,8 @@ docker tag compose-insights-of-a-trader:latest bryan890/insights-of-a-trader:lat
 docker push bryan890/insights-of-a-trader:latest
 
 
+docker compose on server. DOes not have build, instead has image: repo_location
+
 
 
 

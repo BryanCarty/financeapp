@@ -50,7 +50,7 @@ export default function Comment({
   async function deleteComment() {
     setErrorMessage("");
     let id = await removeComment(commentId);
-    console.log(`removeComment success: ${success}`);
+    console.log(`removeComment success: ${id != false}`);
     if (id) {
       setShowDeleteModal(false);
       setCommentsList((prevComments) =>

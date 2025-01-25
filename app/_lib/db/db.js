@@ -19,7 +19,10 @@ pool
     );
   })
   .catch((err) => {
-    logger.error("Failed to ping DB:", err);
+    logger.error(
+      `Failed to ping DB with user: : ${process.env.DB_USERNAME}@${process.env.DB_HOST}:${process.env.DB_PORT}`,
+      err
+    );
   });
 
 export default pool;

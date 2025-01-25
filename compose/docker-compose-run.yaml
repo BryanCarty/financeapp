@@ -1,11 +1,6 @@
 services:
   insights-of-a-trader:
-    build:
-      context: ../
-      dockerfile: compose/DockerFile.prod
-      target: production
-      args:
-        NEXT_PUBLIC_CLIENTVAR: "clientvar"
+    image: bryan890/insights-of-a-trader:latest
     ports:
       - "127.0.0.1:3000:3000"
     environment:
@@ -20,7 +15,7 @@ services:
       - "5433:5432"
     environment:
       POSTGRES_USER: application_user
-      POSTGRES_PASSWORD: jg83ng37£T£j$
+      POSTGRES_PASSWORD: jg83ng37£T£j
       POSTGRES_DB: insights-of-a-trader-db
     volumes:
       - postgres-data:/var/lib/postgresql/data

@@ -39,6 +39,7 @@ export default function ArticleDynamicContent({
   result,
   isPostOwner,
   title,
+  isTouchScreenDevice,
 }) {
   const router = useRouter();
   const currentPath = usePathname();
@@ -225,6 +226,7 @@ export default function ArticleDynamicContent({
           }}
         />
       )}
+
       <div className={styles.article}>
         <ArticleHeader
           ticker={ticker}
@@ -244,7 +246,9 @@ export default function ArticleDynamicContent({
           setEditPost={isPostOwner ? setEditPostModal : null}
           setDeletePostModal={isPostOwner ? setDeletePostModal : null}
           scrollToComments={scrollToComments}
+          isTouchScreenDevice={isTouchScreenDevice}
         />
+
         <ArticleTitle text={title} />
         <ArticleBody body={content} />
 

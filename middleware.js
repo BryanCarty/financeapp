@@ -1,5 +1,5 @@
 "use server";
-import { NextResponse } from "next/server";
+import { NextResponse, userAgent } from "next/server";
 
 export const config = {
   matcher: [
@@ -29,8 +29,12 @@ export function middleware(request) {
   let scriptSrc = `'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-inline' https: http:`;
   let styleSrc = `'self' https://fonts.googleapis.com`;
   let upgradeInsecureRequests = "upgrade-insecure-requests";
-  let connectSrc = "'self' http://localhost:3000";
-  let accessControlAllowOrigin = "http://localhost:3000";
+  let connectSrc = `'self' ${
+    isDev ? "http://localhost:3000" : process.env.DOMAIN
+  }`;
+  let accessControlAllowOrigin = isDev
+    ? "http://localhost:3000"
+    : process.env.DOMAIN;
   let workerSource = "'self'";
 
   // If in development mode, add 'unsafe-eval'
@@ -41,6 +45,9 @@ export function middleware(request) {
   } else {
     styleSrc += ` 'nonce-${nonce}'`;
   }
+
+  const { device } = userAgent(request);
+  const touchScreen = device.type === "mobile" || device.type === "tablet";
 
   const cspHeader = `
     default-src 'self';
@@ -70,6 +77,7 @@ export function middleware(request) {
     .trim();
 
   const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("touch", touchScreen ? "true" : "false");
   requestHeaders.set("x-nonce", nonce);
   requestHeaders.set(
     "Content-Security-Policy",

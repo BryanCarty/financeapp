@@ -46,7 +46,7 @@ export default function Footer() {
           >
             About
           </Link>{" "}
-          | info@insightsofatrader.com
+          | insightsofatrader@gmail.com
         </div>
       </div>
     </>
