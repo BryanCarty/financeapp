@@ -103,7 +103,6 @@ export default function ArticleDynamicContent({
         setErrorMessage("Failed to create comment.");
       }
     } catch (error) {
-      console.error(`Error submitting comment: ${error}`);
       setErrorMessage("Failed to create comment.");
     }
   };
