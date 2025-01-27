@@ -9,7 +9,7 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import ConscensusSearch from "./ConscensusSearch";
 import ConscensusCharts from "./ConscensusCharts";
 
-export default function ({ isLoggedIn }) {
+export default function ({ isLoggedIn, nonceVal }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -137,6 +137,7 @@ export default function ({ isLoggedIn }) {
             key={activeTab}
             type={activeTab}
             setEditPostData={setEditPostData}
+            nonceVal={nonceVal}
           />
         )}
         {activeTab == "leaderboard" && (

@@ -7,7 +7,11 @@ import comment from "@/app/_assets/comment.png";
 import conscensus from "@/app/_assets/conscensus.png";
 import feed from "@/app/_assets/feed.png";
 import leaderboard from "@/app/_assets/leaderboard.png";
+import { headers } from "next/headers";
 export default async function AboutPageBody() {
+  const headersList = await headers();
+  const nonceVal = headersList.get("x-nonce");
+
   return (
     <div className={`${styles.container} ${courierPrime.className}`}>
       <div className={`${styles.mainBody}`}>
@@ -67,6 +71,7 @@ export default async function AboutPageBody() {
             src={createPostImage}
             alt="Create Post"
             width={750}
+            nonce={nonceVal}
           />
         </div>
       </div>
@@ -86,6 +91,7 @@ export default async function AboutPageBody() {
             src={leaderboard}
             alt="Create Post"
             width={750}
+            nonce={nonceVal}
           />
         </div>
       </div>
@@ -105,6 +111,7 @@ export default async function AboutPageBody() {
             src={feed}
             alt="Create Post"
             width={750}
+            nonce={nonceVal}
           />
         </div>
       </div>
@@ -124,6 +131,7 @@ export default async function AboutPageBody() {
             src={conscensus}
             alt="Create Post"
             width={750}
+            nonce={nonceVal}
           />
         </div>
       </div>
@@ -142,6 +150,7 @@ export default async function AboutPageBody() {
             src={comment}
             alt="Create Post"
             width={750}
+            nonce={nonceVal}
           />
         </div>
       </div>

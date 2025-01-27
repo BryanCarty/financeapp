@@ -186,8 +186,9 @@ export async function login(state, formData) {
       redirect("/");
     }
   } catch (error) {
-    if (error.message === "NEXT_REDIRECT") throw error;
     logger.error(`An error occurred in login(): ${error}`);
+    if (error.message === "NEXT_REDIRECT") throw error;
+
     return {
       errors: { username: ["An Internal Server Error Occurred"] },
       values: extractedData,

@@ -187,6 +187,7 @@ export default async function ArticlePage({ params }) {
 
     const headersList = await headers();
     const isTouchScreenDevice = headersList.get("touch") == "true";
+    const nonce = headersList.get("x-nonce");
 
     return (
       <div className={styles.pageBody}>
@@ -213,6 +214,7 @@ export default async function ArticlePage({ params }) {
           isPostOwner={userId.userId == author_id}
           title={resultStr}
           isTouchScreenDevice={isTouchScreenDevice}
+          nonceVal={nonce}
         />
         <Footer />
       </div>

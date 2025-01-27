@@ -6,6 +6,7 @@ import { verifySession } from "../_lib/sessions";
 import { redirect } from "next/navigation";
 import styles from "@/app/_styles/PageContainer.module.css";
 import { logger } from "../_lib/logger";
+import { headers } from "next/headers";
 
 export default async function () {
   try {
@@ -14,10 +15,13 @@ export default async function () {
     if (!isLoggedIn) {
       redirect("/login?redirect=/profile");
     }
+
+    let headersList = await headers();
+    let nonceVal = headersList.get("x-nonce");
     return (
       <div className={styles.pageContainer}>
         <StandardPageHeader isLoggedIn={isLoggedIn} />
-        <ManageFollowersPageBody isLoggedIn={isLoggedIn} />
+        <ManageFollowersPageBody isLoggedIn={isLoggedIn} nonceVal={nonceVal} />
         <Footer />
       </div>
     );

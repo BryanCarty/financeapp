@@ -1,17 +1,18 @@
-"use client";
+"use server";
 import styles from "@/app/_styles/Loading.module.css";
 import LoadingSquiggle from "./_components/LoadingSquiggle";
+import { logger } from "./_lib/logger";
 
-export default function Loader() {
+export default async function Loader() {
   try {
-    console.log("user accessing loading page");
+    logger.info("user accessing loading page");
     return (
       <div className={styles.loadingContainer}>
         <LoadingSquiggle />
       </div>
     );
   } catch (error) {
-    console.error(
+    logger.error(
       `An error occurred when user tried to access loading page: ${error}`
     );
   }

@@ -40,6 +40,7 @@ export default function ArticleDynamicContent({
   isPostOwner,
   title,
   isTouchScreenDevice,
+  nonceVal,
 }) {
   const router = useRouter();
   const currentPath = usePathname();
@@ -246,6 +247,7 @@ export default function ArticleDynamicContent({
           setDeletePostModal={isPostOwner ? setDeletePostModal : null}
           scrollToComments={scrollToComments}
           isTouchScreenDevice={isTouchScreenDevice}
+          nonceVal={nonceVal}
         />
 
         <ArticleTitle text={title} />

@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/nextjs";
 
 export async function register() {
+  console.log("Running instrumentation.js...");
   if (process.env.NEXT_RUNTIME === "nodejs") {
     await import("./sentry.server.config");
   }

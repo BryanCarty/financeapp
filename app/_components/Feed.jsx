@@ -7,7 +7,7 @@ import styles from "@/app/_styles/PageBody.module.css";
 import courierPrime from "./CourierPrime";
 import getPriceByTickers from "../_actions/tickers";
 
-export default function Feed({ type, setEditPostData }) {
+export default function Feed({ type, setEditPostData, nonceVal }) {
   const [feed, setFeed] = useState([]);
   const [loadingError, setLoadingError] = useState("");
   const [page, setPage] = useState(1);
@@ -149,6 +149,7 @@ export default function Feed({ type, setEditPostData }) {
             setEditPostData={article.owned_by_me ? setEditPostData : null}
             result={article.true_claim}
             setLoading={setLoading}
+            nonceVal={nonceVal}
           />
         ))}
         {hasMore && (

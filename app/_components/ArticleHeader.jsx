@@ -27,6 +27,7 @@ export default function ArticleHeader({
   setDeletePostModal,
   scrollToComments,
   isTouchScreenDevice,
+  nonceVal,
 }) {
   const [livePrice, setLivePrice] = useState(status);
   const [tooltipVisible, setToolTipVisible] = useState(false);
@@ -93,19 +94,6 @@ export default function ArticleHeader({
     color = result ? styles.green : styles.red;
   }
 
-  /*
-  <span
-    className={`${styles.tooltipText} ${
-      tooltipVisible
-        ? isTouchDevice
-          ? styles.toolTipTextVisibleTouch
-          : styles.toolTipTextVisible
-        : isTouchDevice
-        ? styles.toolTipTextInvisibleTouch
-        : styles.toolTipTextInvisible
-    }`}
-  />;*/
-
   return (
     <div className={`${styles.articleHeader} ${glow}`}>
       <div className={styles.summaryHeading}>
@@ -171,6 +159,7 @@ export default function ArticleHeader({
             priority
             width={35}
             height={35}
+            nonce={nonceVal}
           />
           <div className={styles.commentCount}>({commentCount})</div>
 

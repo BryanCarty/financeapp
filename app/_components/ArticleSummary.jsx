@@ -31,6 +31,7 @@ export default function ArticleSummary({
   setEditPostData,
   result,
   setLoading,
+  nonceVal,
 }) {
   const router = useRouter();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -200,6 +201,7 @@ export default function ArticleSummary({
                 priority
                 width={35}
                 height={35}
+                nonce={nonceVal}
               />
               <div className={styles.commentCount}>({commentCount})</div>
             </div>

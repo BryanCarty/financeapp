@@ -13,7 +13,7 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import LoadingSquiggle from "./LoadingSquiggle";
 import ErrorPopUP from "./ErrorPopUp";
 
-export default function ({ isLoggedIn }) {
+export default function ({ isLoggedIn, nonceVal }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -254,6 +254,7 @@ export default function ({ isLoggedIn }) {
             key={"myPosts"}
             type={"myPosts"}
             setEditPostData={setEditPostModalData}
+            nonceVal={nonceVal}
           />
         )}
         <div className={styles.followingContainer}>

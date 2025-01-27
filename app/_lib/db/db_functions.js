@@ -349,6 +349,7 @@ export async function createUser({
 
 export async function getUserByEmailAndPassword(email, password) {
   try {
+    logger.info(`getUserByEmailAndPassword called...`);
     // Validate email format
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return { userId: null, errors: { email: ["Invalid email"] } };
@@ -365,13 +366,16 @@ export async function getUserByEmailAndPassword(email, password) {
       )
     ).rows;
 
+    let passwordCheck = await bcrypt.compare(password, user[0].password_hash);
+
     // Check if the user exists
     if (
       user.length === 0 ||
       !user[0] ||
       !user[0].password_hash ||
-      !(await bcrypt.compare(password, user[0].password_hash))
+      !passwordCheck
     ) {
+      logger.info(`Invalid email or password detected`);
       return {
         userId: null,
         errors: { password: ["Invalid email or password"] },
@@ -379,6 +383,7 @@ export async function getUserByEmailAndPassword(email, password) {
     }
 
     // Return user ID if found
+    logger.info("Returning found user");
     return { user: user[0], errors: null };
   } catch (error) {
     // Return an error if something goes wrong
