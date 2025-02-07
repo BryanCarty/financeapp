@@ -31,7 +31,7 @@ export function middleware(request) {
     const isDev = process.env.NODE_ENV === "development";
 
     let scriptSrc = `'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-inline' https: http:`;
-    let styleSrc = `'self' https://fonts.googleapis.com`;
+    let styleSrc = `'self' https://fonts.googleapis.com 'unsafe-inline'`;
     let upgradeInsecureRequests = "upgrade-insecure-requests";
     let connectSrc = `'self' ${
       isDev ? "http://localhost:3000" : process.env.DOMAIN
@@ -44,10 +44,10 @@ export function middleware(request) {
     // If in development mode, add 'unsafe-eval'
     if (isDev) {
       scriptSrc += " 'unsafe-eval'";
-      styleSrc += " 'unsafe-inline'";
+      //styleSrc += " 'unsafe-inline'";
       upgradeInsecureRequests = "";
     } else {
-      styleSrc += ` 'nonce-${nonce}'`;
+      //styleSrc += ` 'nonce-${nonce}'`;
     }
 
     const { device } = userAgent(request);
@@ -57,7 +57,7 @@ export function middleware(request) {
     default-src 'self';
     script-src ${scriptSrc};
     style-src ${styleSrc};
-    img-src 'self';
+    img-src 'self' data:;
     font-src 'self' https://fonts.gstatic.com ;
     object-src 'none';
     frame-src 'none';
@@ -182,7 +182,6 @@ export function middleware(request) {
 
     // Cache preflight response for 24 hours (86400 seconds) // Cache's OPTIONS response
     response.headers.set("Access-Control-Max-Age", "86400");
-    console.log("Returning response from middleware...");
     return response;
   } catch (error) {
     console.error(`An unexpected error occurred from middleware: `, error);

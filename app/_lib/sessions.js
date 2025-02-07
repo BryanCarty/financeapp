@@ -41,7 +41,7 @@ export async function createSession(userId, username, email) {
       httpOnly: true,
       secure: true,
       expires: expiresAt,
-      sameSite: "lax",
+      sameSite: "strict",
       path: "/",
     });
   } catch (error) {

@@ -1,5 +1,6 @@
 "use server";
 import { logger } from "../_lib/logger";
+import DOMPurify from "isomorphic-dompurify";
 
 const MyPage = () => {
   try {
@@ -148,7 +149,9 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"><strong><bdt clas
     return (
       <div
         style={{ padding: "20px" }}
-        dangerouslySetInnerHTML={{ __html: rawHTML }}
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(rawHTML, { FORCE_BODY: true }),
+        }}
       />
     );
   } catch (error) {

@@ -39,7 +39,6 @@ async function isValidTickerPrice(specificTicker, price, condition) {
   try {
     logger.info(`isValidTickerPrice called`);
     const result = await getValidTickers();
-    console.log(result);
 
     const entry = result.find(({ ticker }) => ticker === specificTicker);
     if (!entry) {

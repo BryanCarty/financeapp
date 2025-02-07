@@ -366,15 +366,26 @@ export async function getUserByEmailAndPassword(email, password) {
       )
     ).rows;
 
+    // Check if the user exists
+    if (user.length === 0 || !user[0] || !user[0].password_hash) {
+      logger.info(`Invalid email or password detected`);
+      return {
+        userId: null,
+        errors: { password: ["Invalid email or password"] },
+      };
+    }
+
+    if (user[0].banned_status) {
+      logger.info(`Banned user attempted login: ${user[0].user_id}`);
+      return {
+        userId: null,
+        errors: { password: ["Your account is banned :("] },
+      };
+    }
+
     let passwordCheck = await bcrypt.compare(password, user[0].password_hash);
 
-    // Check if the user exists
-    if (
-      user.length === 0 ||
-      !user[0] ||
-      !user[0].password_hash ||
-      !passwordCheck
-    ) {
+    if (!passwordCheck) {
       logger.info(`Invalid email or password detected`);
       return {
         userId: null,
@@ -1314,20 +1325,7 @@ export async function getPersonalFeed(yourUserId, pageNumber) {
     WHERE followers.follower_id = $1  -- Only include posts from users you're following
      AND posts.deleted = false  -- Only include posts that don't expire before today
     GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time  -- Ensure proper grouping for aggregates
-    ORDER BY 
-        (COALESCE(
-            COUNT(DISTINCT CASE 
-                WHEN agreement_status.agreement_status = 'true' THEN (agreement_status.user_id, agreement_status.article_id)
-            END), 
-            0
-        ) + 
-        COALESCE(
-            COUNT(DISTINCT CASE 
-                WHEN agreement_status.agreement_status = 'false' THEN (agreement_status.user_id, agreement_status.article_id)
-            END), 
-            0
-        ) + 
-        COALESCE(COUNT(comments.article_id), 0)) DESC  -- Order by engagement (sum of comments + agreements + disagreements)
+    ORDER BY post_date DESC
     LIMIT $2 OFFSET $3; 
 `,
         [yourUserId, postsPerPage, offset]

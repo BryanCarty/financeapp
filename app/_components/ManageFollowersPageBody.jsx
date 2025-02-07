@@ -161,12 +161,12 @@ export default function ({ isLoggedIn, nonceVal }) {
                   readOnly
                 />
                 <span className={styles.hiddenVisually}>
-                  Pro - €8 per month, 25 Follow User Limit
+                  Pro - €5 per month, 25 Follow User Limit
                 </span>
                 <span className={styles.planDetails} aria-hidden="true">
                   <span className={styles.planType}>Pro</span>
                   <span className={styles.planCost}>
-                    €8<span className={styles.slash}>/</span>
+                    €5<span className={styles.slash}>/</span>
                     <span className={styles.planCycle}>mo</span>
                   </span>
                   <span>Can Follow 25 Users 🚀</span>

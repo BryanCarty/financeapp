@@ -5,9 +5,11 @@ import styles from "@/app/_styles/Footer.module.css";
 import courierPrime from "./CourierPrime";
 import { useState } from "react";
 import LoadingSquiggle from "./LoadingSquiggle";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
   const [loading, setLoading] = useState(false);
+  const currentPath = usePathname();
   return (
     <>
       {loading && (
@@ -42,7 +44,11 @@ export default function Footer() {
             aria-label="about page"
             className={`${styles.link} ${courierPrime.className}`}
             href="/about"
-            onClick={(e) => setLoading(true)}
+            onClick={(e) => {
+              if (currentPath !== "/about") {
+                setLoading(true);
+              }
+            }}
           >
             About
           </Link>{" "}
