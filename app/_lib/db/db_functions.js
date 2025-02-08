@@ -567,16 +567,17 @@ export async function getLeaderboard(myUserId) {
             (SELECT COUNT(*) 
               FROM followers f 
               WHERE f.followed_id = u.user_id) AS followers_count,
-            CASE WHEN f.follower_id IS NOT NULL THEN true ELSE false END AS is_following
+                  CASE WHEN u.user_id = $1 THEN NULL WHEN f.follower_id IS NOT NULL THEN true 
+        ELSE false  END AS is_following
             FROM users u
             LEFT JOIN followers f ON f.followed_id = u.user_id AND f.follower_id = $1
-            WHERE u.user_id != $2
             ORDER BY u.accuracy DESC, trades_count DESC
             LIMIT 10;
         `,
-          [myUserId, myUserId]
+          [myUserId]
         )
       ).rows;
+      console.log(result);
     } else {
       result = (
         await pool.query(

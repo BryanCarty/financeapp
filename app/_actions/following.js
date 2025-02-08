@@ -11,6 +11,9 @@ import { logger } from "../_lib/logger";
 export async function followUser(otherUserId, notified) {
   try {
     const { userId, username } = await verifySession();
+    if (userId == otherUserId) {
+      return { success: false, message: "Internal Server Error" };
+    }
     logger.info(`followUser called by user: ${userId}`);
     if (!userId) {
       redirect("/login");
@@ -39,6 +42,9 @@ export async function followUser(otherUserId, notified) {
 export async function unfollowUser(otherUserId) {
   try {
     const { userId, username } = await verifySession();
+    if (userId == otherUserId) {
+      return false;
+    }
     logger.info(`followUser called by user: ${userId}`);
     if (!userId) {
       redirect("/login");

@@ -41,7 +41,6 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
       );
     } catch (error) {
       setLoadingError("An Unexpected Error Occurred (Follow)");
-      console.error(`Error attempting to follow user: ${error}`);
     }
   };
 
@@ -172,7 +171,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
               <td>{item.accuracy}</td>
               <td>{item.totalTrades}</td>
               <td>{item.followers}</td>
-              {item.is_following ? (
+              {item.is_following === true ? (
                 <td>
                   <button
                     aria-label="unfollow button"
@@ -187,7 +186,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
                     Unfollow
                   </button>
                 </td>
-              ) : (
+              ) : item.is_following === false ? (
                 <td>
                   <button
                     aria-label="follow button"
@@ -202,7 +201,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
                     Follow
                   </button>
                 </td>
-              )}
+              ) : null}
             </tr>
           ))}
         </tbody>
