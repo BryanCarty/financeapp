@@ -19,6 +19,23 @@ const modules = {
   ],
 };
 
+const formats = [
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "color",
+  "clean",
+  "align",
+];
+
 export default function PostModal({ isOpen, onClose, data }) {
   if (!isOpen) return null;
 
@@ -171,6 +188,7 @@ export default function PostModal({ isOpen, onClose, data }) {
 
           <ReactQuill
             modules={modules}
+            formats={formats}
             theme="snow"
             value={value}
             onChange={setValue}

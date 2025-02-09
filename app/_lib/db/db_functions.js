@@ -577,7 +577,6 @@ export async function getLeaderboard(myUserId) {
           [myUserId]
         )
       ).rows;
-      console.log(result);
     } else {
       result = (
         await pool.query(
