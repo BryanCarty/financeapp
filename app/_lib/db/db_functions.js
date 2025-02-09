@@ -1199,16 +1199,20 @@ export async function getLatestFeed(pageNumber) {
               END), 
               0
           ) AS total_disagreements,
-          COALESCE(COUNT(comments.article_id), 0) AS total_comments, -- Add total comments count
+          COALESCE(comment_counts.total_comments, 0) AS total_comments, -- Add total comments count
           stock_data.close_price AS status,
           stock_data.last_updated_time AS stock_last_update_time
     FROM posts
     JOIN users ON posts.author_id = users.user_id
     LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
-    LEFT JOIN comments ON comments.article_id = posts.id -- Join comments table
+    LEFT JOIN (
+        SELECT article_id, COUNT(*) AS total_comments
+        FROM comments
+        GROUP BY article_id
+    ) AS comment_counts ON comment_counts.article_id = posts.id
     LEFT JOIN stock_data ON stock_data.ticker = posts.ticker -- Join stock_data table on ticker
     WHERE posts.deleted = false
-    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time -- Ensure proper grouping for aggregates
+    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time, comment_counts.total_comments -- Ensure proper grouping for aggregates
     ORDER BY post_date DESC -- Order by post_date in descending order (most recent first)
     LIMIT $1 OFFSET $2; -- Add LIMIT and OFFSET for pagination
     `,
@@ -1250,16 +1254,20 @@ SELECT posts.*,
            END), 
            0
        ) AS total_disagreements,
-       COALESCE(COUNT(comments.article_id), 0) AS total_comments, -- Add total comments count
+       COALESCE(comment_counts.total_comments, 0) AS total_comments, -- Add total comments count
        stock_data.close_price AS status,
        stock_data.last_updated_time AS stock_last_update_time
 FROM posts
 JOIN users ON posts.author_id = users.user_id
 LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
-LEFT JOIN comments ON comments.article_id = posts.id -- Join comments table
+LEFT JOIN (
+    SELECT article_id, COUNT(*) AS total_comments
+    FROM comments
+    GROUP BY article_id
+) AS comment_counts ON comment_counts.article_id = posts.id -- Join comments table
 LEFT JOIN stock_data ON stock_data.ticker = posts.ticker -- Join stock_data table on ticke
 WHERE posts.true_claim IS NULL AND posts.deleted = false -- Only include posts that don't expire before today
-GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time -- Ensure proper grouping for aggregates
+GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time, comment_counts.total_comments -- Ensure proper grouping for aggregates
 ORDER BY 
     (COALESCE(
         COUNT(DISTINCT CASE 
@@ -1273,7 +1281,7 @@ ORDER BY
         END), 
         0
     ) + 
-    COALESCE(COUNT(comments.article_id), 0)) DESC -- Order by engagement (sum of comments + agreements + disagreements)
+    COALESCE(total_comments, 0)) DESC -- Order by engagement (sum of comments + agreements + disagreements)
 LIMIT $1 OFFSET $2; 
 `,
         [postsPerPage, offset]
@@ -1313,18 +1321,22 @@ export async function getPersonalFeed(yourUserId, pageNumber) {
                END), 
                0
            ) AS total_disagreements,
-           COALESCE(COUNT(comments.article_id), 0) AS total_comments,  -- Add total comments count
+           COALESCE(comment_counts.total_comments, 0) AS total_comments, -- Add total comments count
            stock_data.close_price AS status,
            stock_data.last_updated_time AS stock_last_update_time
     FROM posts
     JOIN users ON posts.author_id = users.user_id
     LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
-    LEFT JOIN comments ON comments.article_id = posts.id  -- Join comments table
+    LEFT JOIN (
+        SELECT article_id, COUNT(*) AS total_comments
+        FROM comments
+        GROUP BY article_id
+    ) AS comment_counts ON comment_counts.article_id = posts.id -- Join comments table
     JOIN followers ON followers.followed_id = posts.author_id  -- Join followers table to get the users you're following
     LEFT JOIN stock_data ON stock_data.ticker = posts.ticker -- Join stock_data table on ticker
     WHERE followers.follower_id = $1  -- Only include posts from users you're following
      AND posts.deleted = false  -- Only include posts that don't expire before today
-    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time  -- Ensure proper grouping for aggregates
+    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time, comment_counts.total_comments  -- Ensure proper grouping for aggregates
     ORDER BY post_date DESC
     LIMIT $2 OFFSET $3; 
 `,
@@ -1366,16 +1378,20 @@ export async function getMyPosts(userId, pageNumber) {
                END), 
                0
            ) AS total_disagreements,
-           COALESCE(COUNT(comments.article_id), 0) AS total_comments, -- Add total comments count
+           COALESCE(comment_counts.total_comments, 0) AS total_comments, -- Add total comments count
            stock_data.close_price AS status,
            stock_data.last_updated_time AS stock_last_update_time
     FROM posts
     JOIN users ON posts.author_id = users.user_id
     LEFT JOIN agreement_status ON agreement_status.article_id = posts.id
-    LEFT JOIN comments ON comments.article_id = posts.id -- Join comments table
+    LEFT JOIN (
+        SELECT article_id, COUNT(*) AS total_comments
+        FROM comments
+        GROUP BY article_id
+    ) AS comment_counts ON comment_counts.article_id = posts.id
     LEFT JOIN stock_data ON stock_data.ticker = posts.ticker -- Join stock_data table on ticker
     WHERE posts.author_id = $1 AND posts.deleted = false -- Only include posts by the current user
-    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time -- Ensure proper grouping for aggregates
+    GROUP BY posts.id, users.username, users.accuracy, stock_data.close_price, stock_data.last_updated_time, comment_counts.total_comments  -- Ensure proper grouping for aggregates
     ORDER BY posts.post_date DESC -- Order by latest posts
     LIMIT $2 OFFSET $3; 
 `,
