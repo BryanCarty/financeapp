@@ -146,10 +146,15 @@ export default function Feed({ type, setEditPostData, nonceVal }) {
                   }
             }
             commentCount={article.total_comments}
-            setEditPostData={article.owned_by_me ? setEditPostData : null}
+            setEditPostData={
+              article.owned_by_me && article.true_claim === null
+                ? setEditPostData
+                : null
+            }
             result={article.true_claim}
             setLoading={setLoading}
             nonceVal={nonceVal}
+            ownedByMe={article.owned_by_me}
           />
         ))}
         {hasMore && (

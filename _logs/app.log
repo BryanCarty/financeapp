@@ -1,0 +1,536 @@
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:17:17.821Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:17:17.824Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T12:17:17.997Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:17:18.071Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:17:19.966Z"}
+{"level":"info","message":"loadTable called by user: undefined","timestamp":"2025-02-21T12:17:20.374Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T12:17:20.374Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:17:20.387Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:17:20.388Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:17:20.415Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:17:20.416Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T12:17:20.421Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:18:16.405Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T12:18:16.414Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:18:16.427Z"}
+{"level":"info","message":"login server action called","timestamp":"2025-02-21T12:18:23.731Z"}
+{"level":"info","message":"getUserByEmailAndPassword called...","timestamp":"2025-02-21T12:18:23.732Z"}
+{"level":"info","message":"Returning found user","timestamp":"2025-02-21T12:18:23.786Z"}
+{"level":"info","message":"Creating Session for: 58","timestamp":"2025-02-21T12:18:23.786Z"}
+{"level":"error","message":"An error occurred in login(): Error: NEXT_REDIRECT","timestamp":"2025-02-21T12:18:23.789Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:18:23.826Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:18:23.827Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T12:18:23.830Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:18:24.200Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T12:18:24.270Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-02-21T12:18:24.271Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:18:24.284Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-02-21T12:18:24.302Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:18:24.344Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:18:24.345Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T12:18:24.348Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:18:28.140Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:19:24.617Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:19:24.618Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:19:24.626Z"}
+{"level":"info","message":"scheduling stock feed websocket...","timestamp":"2025-02-21T12:19:24.626Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-02-21T12:19:24.626Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-02-21T12:19:24.627Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-02-21T12:19:24.633Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-02-21T12:19:24.633Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 7835.373 seconds.","timestamp":"2025-02-21T12:19:24.634Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 32195.373 seconds.","timestamp":"2025-02-21T12:19:24.635Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 60035.365 seconds.","timestamp":"2025-02-21T12:19:24.636Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:20:24.529Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:20:24.530Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:21:24.524Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:21:24.524Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:22:24.524Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:22:24.524Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:23:29.521Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:23:29.522Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:24:29.513Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:24:29.513Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:25:29.519Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:25:29.519Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:26:29.523Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:26:29.523Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:27:24.198Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:27:24.198Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:28:24.190Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:28:24.191Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:29:24.190Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:29:24.190Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:30:24.515Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:30:24.515Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:31:29.515Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:31:29.515Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:32:29.532Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:32:29.532Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:33:29.518Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:33:29.518Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:34:29.528Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:34:29.528Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:35:29.515Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:35:29.516Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:36:29.517Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:36:29.517Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:37:29.540Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:37:29.540Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:38:29.515Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:38:29.515Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:39:29.517Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:39:29.517Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:40:29.541Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:40:29.541Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:41:29.531Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:41:29.531Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:42:29.518Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:42:29.518Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:43:29.531Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:43:29.531Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:44:29.524Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:44:29.524Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:45:29.529Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:45:29.529Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:46:29.529Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:46:29.529Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:47:29.516Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:47:29.516Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:47:51.495Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:47:51.496Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T12:47:51.502Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:47:51.512Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:47:57.880Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:47:57.882Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T12:47:57.891Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:47:57.898Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:48:29.599Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:48:29.600Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:48:29.608Z"}
+{"level":"info","message":"scheduling stock feed websocket...","timestamp":"2025-02-21T12:48:29.608Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-02-21T12:48:29.609Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-02-21T12:48:29.609Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-02-21T12:48:29.611Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-02-21T12:48:29.612Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 6090.391 seconds.","timestamp":"2025-02-21T12:48:29.613Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 30450.391 seconds.","timestamp":"2025-02-21T12:48:29.613Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 58290.387 seconds.","timestamp":"2025-02-21T12:48:29.614Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:48:51.427Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:48:51.429Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T12:48:51.434Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:48:51.442Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:49:15.448Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:49:15.450Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T12:49:15.457Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:49:15.472Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:49:28.036Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:49:28.038Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T12:49:28.047Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:49:28.057Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:49:28.608Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:49:28.609Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:49:28.614Z"}
+{"level":"info","message":"scheduling stock feed websocket...","timestamp":"2025-02-21T12:49:28.614Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-02-21T12:49:28.615Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-02-21T12:49:28.615Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-02-21T12:49:28.616Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-02-21T12:49:28.616Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 6031.385 seconds.","timestamp":"2025-02-21T12:49:28.617Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 30391.385 seconds.","timestamp":"2025-02-21T12:49:28.617Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 58231.383 seconds.","timestamp":"2025-02-21T12:49:28.618Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:49:35.770Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:49:35.771Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T12:49:35.777Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:49:35.785Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:50:29.615Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:50:29.616Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:50:29.626Z"}
+{"level":"info","message":"scheduling stock feed websocket...","timestamp":"2025-02-21T12:50:29.626Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-02-21T12:50:29.626Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-02-21T12:50:29.626Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-02-21T12:50:29.628Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-02-21T12:50:29.629Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 5970.373 seconds.","timestamp":"2025-02-21T12:50:29.630Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 30330.373 seconds.","timestamp":"2025-02-21T12:50:29.630Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 58170.37 seconds.","timestamp":"2025-02-21T12:50:29.631Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:51:04.883Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:51:04.884Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T12:51:04.890Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:51:04.899Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:51:21.390Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:51:21.392Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T12:51:21.398Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:51:21.406Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T12:51:28.380Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T12:51:28.381Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T12:51:28.386Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:51:28.396Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:51:28.589Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:51:28.590Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T12:51:28.595Z"}
+{"level":"info","message":"scheduling stock feed websocket...","timestamp":"2025-02-21T12:51:28.596Z"}
+{"level":"info","message":"executing scheduleWebSocketLifecycle...","timestamp":"2025-02-21T12:51:28.596Z"}
+{"level":"info","message":"executing checkAndScheduleWebSocket...","timestamp":"2025-02-21T12:51:28.596Z"}
+{"level":"info","message":"Market is closed. Ensuring WebSocket is disconnected.","timestamp":"2025-02-21T12:51:28.598Z"}
+{"level":"info","message":"WebSocket is already disconnected.","timestamp":"2025-02-21T12:51:28.598Z"}
+{"level":"info","message":"Scheduling WebSocket connection in 5911.403 seconds.","timestamp":"2025-02-21T12:51:28.599Z"}
+{"level":"info","message":"Scheduling WebSocket disconnection in 30271.403 seconds.","timestamp":"2025-02-21T12:51:28.599Z"}
+{"level":"info","message":"Scheduling next day's stock websocket check in 58111.401 seconds.","timestamp":"2025-02-21T12:51:28.600Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:52:29.514Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:52:29.514Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:53:29.511Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:53:29.511Z"}
+{"level":"info","message":"getPriceByTickers called","timestamp":"2025-02-21T12:54:29.518Z"}
+{"level":"info","message":"executing getTickerPrices...","timestamp":"2025-02-21T12:54:29.518Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:05.811Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T13:56:05.813Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T13:56:05.986Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T13:56:06.687Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:09.705Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T13:56:10.014Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T13:56:10.013Z"}
+{"level":"error","message":"An error occurred in loadFeed(): Error: NEXT_REDIRECT","timestamp":"2025-02-21T13:56:10.015Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T13:56:10.039Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T13:56:10.039Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T13:56:10.065Z"}
+{"level":"error","message":"An error occurred in loadFeed(): Error: NEXT_REDIRECT","timestamp":"2025-02-21T13:56:10.065Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:11.030Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T13:56:11.032Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:11.035Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T13:56:11.036Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T13:56:11.046Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T13:56:11.047Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T13:56:11.062Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:11.095Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T13:56:11.096Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T13:56:11.098Z"}
+{"level":"info","message":"user accessing signup page","timestamp":"2025-02-21T13:56:14.809Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:17.222Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T13:56:17.224Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T13:56:17.232Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:17.578Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T13:56:17.649Z"}
+{"level":"info","message":"loadTable called by user: undefined","timestamp":"2025-02-21T13:56:17.650Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T13:56:17.661Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:17.688Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T13:56:17.689Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T13:56:17.692Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:19.660Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T13:56:19.663Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T13:56:19.663Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T13:56:19.695Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:19.732Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T13:56:19.734Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T13:56:19.737Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T13:56:24.660Z"}
+{"level":"info","message":"user accessing article page: Why AAPL stock will be greater than 300.00 by market close on the 10th of December 2025","timestamp":"2025-02-21T13:56:24.750Z"}
+{"level":"info","message":"fetchArticleBySlug called by user null","timestamp":"2025-02-21T13:56:24.750Z"}
+{"level":"info","message":"user accessing article page, generating metadata for: Why AAPL stock will be greater than 300.00 by market close on the 10th of December 2025","timestamp":"2025-02-21T13:56:24.751Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T13:56:24.757Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:25.771Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T13:56:25.810Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T13:56:25.811Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T13:56:25.825Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T13:56:25.856Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:25.891Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T13:56:25.892Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T13:56:25.896Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:26.877Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T13:56:26.879Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T13:56:26.879Z"}
+{"level":"error","message":"An error occurred in loadFeed(): Error: NEXT_REDIRECT","timestamp":"2025-02-21T13:56:26.880Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T13:56:26.915Z"}
+{"level":"error","message":"An error occurred in loadFeed(): Error: NEXT_REDIRECT","timestamp":"2025-02-21T13:56:26.915Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:26.926Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T13:56:26.926Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T13:56:26.930Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:26.960Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T13:56:26.961Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T13:56:26.963Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:56:26.995Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T13:56:26.996Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T13:56:26.999Z"}
+{"level":"info","message":"login server action called","timestamp":"2025-02-21T13:56:47.063Z"}
+{"level":"info","message":"getUserByEmailAndPassword called...","timestamp":"2025-02-21T13:56:47.064Z"}
+{"level":"error","message":"updateLastLoginTime : Database Error Occurred: error: date/time field value out of range: \"1740146207064\"","timestamp":"2025-02-21T13:56:47.112Z"}
+{"level":"error","message":"An unexpected error occurred in getUserByEmailAndPassword: Error: Failed to update last login time","timestamp":"2025-02-21T13:56:47.112Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T13:59:58.914Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T13:59:58.915Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T13:59:58.920Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T13:59:58.929Z"}
+{"level":"info","message":"login server action called","timestamp":"2025-02-21T14:00:09.765Z"}
+{"level":"info","message":"getUserByEmailAndPassword called...","timestamp":"2025-02-21T14:00:09.766Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:00:09.773Z"}
+{"level":"error","message":"updateLastLoginTime : Database Error Occurred: error: invalid input syntax for type timestamp: \"1740146409.766\"","timestamp":"2025-02-21T14:00:09.827Z"}
+{"level":"error","message":"An unexpected error occurred in getUserByEmailAndPassword: Error: Failed to update last login time","timestamp":"2025-02-21T14:00:09.827Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:00:22.077Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:00:22.078Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:00:22.083Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:00:22.091Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:04:17.533Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:04:17.535Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:04:17.540Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:04:17.552Z"}
+{"level":"info","message":"login server action called","timestamp":"2025-02-21T14:04:30.523Z"}
+{"level":"info","message":"getUserByEmailAndPassword called...","timestamp":"2025-02-21T14:04:30.525Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:04:30.530Z"}
+{"level":"error","message":"updateLastLoginTime : Database Error Occurred: TypeError: lastLoginTime.toISOString is not a function","timestamp":"2025-02-21T14:04:30.573Z"}
+{"level":"error","message":"An unexpected error occurred in getUserByEmailAndPassword: Error: Failed to update last login time","timestamp":"2025-02-21T14:04:30.574Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:04:51.748Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:04:51.750Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:04:51.754Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:04:51.762Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:08:11.370Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:08:11.371Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:08:11.377Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:08:11.387Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:08:50.949Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:08:50.951Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:08:51.130Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:08:51.972Z"}
+{"level":"info","message":"login server action called","timestamp":"2025-02-21T14:09:00.034Z"}
+{"level":"info","message":"getUserByEmailAndPassword called...","timestamp":"2025-02-21T14:09:00.035Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:09:00.043Z"}
+{"level":"info","message":"Returning found user","timestamp":"2025-02-21T14:09:00.093Z"}
+{"level":"info","message":"Creating Session for: 58","timestamp":"2025-02-21T14:09:00.093Z"}
+{"level":"error","message":"An error occurred in login(): Error: NEXT_REDIRECT","timestamp":"2025-02-21T14:09:00.095Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:09:02.890Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:09:02.892Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T14:09:02.899Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:09:02.924Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:09:03.268Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T14:09:03.570Z"}
+{"level":"info","message":"loadTable called by user: undefined","timestamp":"2025-02-21T14:09:03.571Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:09:03.585Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:09:03.604Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:09:03.605Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T14:09:03.608Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:09:07.640Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:10:12.451Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:10:12.453Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T14:10:12.460Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:10:12.475Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:10:32.367Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:10:34.669Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T14:10:34.752Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T14:10:34.753Z"}
+{"level":"error","message":"An error occurred in loadFeed(): Error: NEXT_REDIRECT","timestamp":"2025-02-21T14:10:34.754Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:10:34.784Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:10:34.784Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T14:10:34.814Z"}
+{"level":"error","message":"An error occurred in loadFeed(): Error: NEXT_REDIRECT","timestamp":"2025-02-21T14:10:34.814Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:10:34.831Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:10:34.832Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:10:34.836Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:10:34.903Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:10:34.904Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:10:34.908Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:10:34.974Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:10:34.975Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:10:34.978Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:11:02.823Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:12:38.876Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:12:38.877Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:12:38.892Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch","timestamp":"2025-02-21T14:12:38.893Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:12:38.893Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:12:43.991Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:12:43.994Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch","timestamp":"2025-02-21T14:12:44.189Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:12:44.189Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:12:44.190Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:13:05.121Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:13:05.122Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch","timestamp":"2025-02-21T14:13:05.138Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:13:05.139Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:13:05.139Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:13:08.108Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:13:08.109Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch","timestamp":"2025-02-21T14:13:08.284Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:13:08.284Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:13:11.522Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:13:11.522Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch","timestamp":"2025-02-21T14:13:11.533Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:13:11.533Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:13:39.427Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:13:39.428Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:13:39.436Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch","timestamp":"2025-02-21T14:13:39.437Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:13:39.437Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:13:42.086Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:13:42.087Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch","timestamp":"2025-02-21T14:13:42.161Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:13:42.161Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:14:23.103Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:14:23.104Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:14:23.117Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, Fri Feb 21 2025 14:09:00 GMT+0000 (Greenwich Mean Time), 2025-02-21 14:09:00","timestamp":"2025-02-21T14:14:23.117Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:14:23.118Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:14:25.830Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:14:25.830Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, Fri Feb 21 2025 14:09:00 GMT+0000 (Greenwich Mean Time), 2025-02-21 14:09:00","timestamp":"2025-02-21T14:14:25.907Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:14:25.907Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:17.386Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:17:17.387Z"}
+{"level":"info","message":"user accessing login page, user_id: 58","timestamp":"2025-02-21T14:17:17.399Z"}
+{"level":"error","message":"an error occurred accessing login page: Error: NEXT_REDIRECT","timestamp":"2025-02-21T14:17:17.399Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:17:17.400Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:18.408Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:17:18.438Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:17:18.443Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:18.759Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:17:18.843Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:17:18.852Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-02-21T14:17:18.853Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-02-21T14:17:18.876Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:18.914Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:17:18.915Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:17:18.923Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:25.515Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:17:25.519Z"}
+{"level":"info","message":"loadTable called by user: 58","timestamp":"2025-02-21T14:17:25.520Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:25.543Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:17:25.544Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:17:25.552Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:27.064Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:27.067Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:17:27.068Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:27.111Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:17:27.112Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:17:27.116Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:31.169Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:17:31.170Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:17:31.251Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:31.826Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:31.828Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:17:31.832Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:31.861Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:17:31.861Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:17:31.866Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:32.661Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:17:32.666Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-02-21T14:17:32.666Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-02-21T14:17:32.689Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:32.716Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:17:32.717Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:17:32.722Z"}
+{"level":"info","message":"user accessing profile page, user_id: 58","timestamp":"2025-02-21T14:17:38.519Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:17:38.520Z"}
+{"level":"info","message":"user accessing profile page, user_id: 58","timestamp":"2025-02-21T14:17:38.958Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:17:38.966Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-02-21T14:17:38.971Z"}
+{"level":"info","message":"getUserStats called by user: 58","timestamp":"2025-02-21T14:17:38.988Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-02-21T14:17:39.015Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:17:39.049Z"}
+{"level":"info","message":"user accessing profile page, user_id: 58","timestamp":"2025-02-21T14:17:39.053Z"}
+{"level":"info","message":"logout server action called","timestamp":"2025-02-21T14:17:41.178Z"}
+{"level":"info","message":"logout called by user: 58","timestamp":"2025-02-21T14:17:41.183Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:41.221Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:17:41.222Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:17:41.224Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:41.253Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:17:41.256Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:44.595Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:17:44.595Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T14:17:44.748Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:45.202Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T14:17:45.206Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T14:17:45.205Z"}
+{"level":"error","message":"An error occurred in loadFeed(): Error: NEXT_REDIRECT","timestamp":"2025-02-21T14:17:45.206Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:45.245Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:17:45.246Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:17:45.248Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T14:17:45.252Z"}
+{"level":"error","message":"An error occurred in loadFeed(): Error: NEXT_REDIRECT","timestamp":"2025-02-21T14:17:45.252Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:45.280Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:17:45.281Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:17:45.283Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:17:45.321Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:17:45.322Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:17:45.327Z"}
+{"level":"info","message":"login server action called","timestamp":"2025-02-21T14:18:26.417Z"}
+{"level":"info","message":"getUserByEmailAndPassword called...","timestamp":"2025-02-21T14:18:26.418Z"}
+{"level":"info","message":"Returning found user","timestamp":"2025-02-21T14:18:26.467Z"}
+{"level":"info","message":"Creating Session for: 58","timestamp":"2025-02-21T14:18:26.467Z"}
+{"level":"error","message":"An error occurred in login(): Error: NEXT_REDIRECT","timestamp":"2025-02-21T14:18:26.469Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:18:26.498Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:18:26.499Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:18:26.507Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:18:26.883Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:18:26.890Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-02-21T14:18:26.902Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-02-21T14:18:26.921Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:18:26.962Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:18:26.962Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:18:26.971Z"}
+{"level":"info","message":"user accessing signup page","timestamp":"2025-02-21T14:18:37.119Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:18:37.121Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:18:46.445Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:18:46.453Z"}
+{"level":"info","message":"user accessing login page, user_id: 58","timestamp":"2025-02-21T14:18:46.454Z"}
+{"level":"error","message":"an error occurred accessing login page: Error: NEXT_REDIRECT","timestamp":"2025-02-21T14:18:46.454Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:18:46.506Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:18:46.512Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:18:46.861Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:18:46.938Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:18:46.945Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-02-21T14:18:46.946Z"}
+{"level":"info","message":"loadFeed called by user: 58","timestamp":"2025-02-21T14:18:46.965Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:18:47.008Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:18:47.009Z"}
+{"level":"info","message":"user accessing home page, user_id: 58","timestamp":"2025-02-21T14:18:47.014Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:18:54.591Z"}
+{"level":"info","message":"user accessing reset password page","timestamp":"2025-02-21T14:19:06.495Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:19:06.496Z"}
+{"level":"info","message":"resetPassword called","timestamp":"2025-02-21T14:19:12.230Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:19:12.236Z"}
+{"level":"info","message":"reset password email sent: 250 2.0.0 OK  1740147553 ffacd0b85a97d-38f25a0fa1esm23289558f8f.100 - gsmtp","timestamp":"2025-02-21T14:19:13.933Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:19:19.254Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:19:19.262Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, null, 2025-02-21 14:18:26","timestamp":"2025-02-21T14:19:19.263Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:19:19.263Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:20:10.286Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:20:10.288Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:20:10.290Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:20:10.291Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:20:10.306Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, null, 2025-02-21 14:18:26","timestamp":"2025-02-21T14:20:10.307Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:20:10.307Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, null, 2025-02-21 14:18:26","timestamp":"2025-02-21T14:20:10.308Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:20:10.308Z"}
+{"level":"info","message":"user accessing signup page","timestamp":"2025-02-21T14:21:19.637Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:21:21.260Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, null, 2025-02-21 14:18:26","timestamp":"2025-02-21T14:21:21.267Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T14:21:21.268Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:21:21.610Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, null, 2025-02-21 14:18:26","timestamp":"2025-02-21T14:21:21.710Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T14:21:21.710Z"}
+{"level":"info","message":"Successfully connected to DB: postgres@localhost:5432","timestamp":"2025-02-21T14:21:21.718Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, null, 2025-02-21 14:18:26","timestamp":"2025-02-21T14:21:21.719Z"}
+{"level":"info","message":"loadTable called by user: undefined","timestamp":"2025-02-21T14:21:21.719Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:21:21.739Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:21:21.739Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, null, 2025-02-21 14:18:26","timestamp":"2025-02-21T14:21:21.744Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T14:21:21.744Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:21:22.618Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, null, 2025-02-21 14:18:26","timestamp":"2025-02-21T14:21:22.622Z"}
+{"level":"info","message":"user accessing home page, user_id: undefined","timestamp":"2025-02-21T14:21:22.622Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, null, 2025-02-21 14:18:26","timestamp":"2025-02-21T14:21:22.622Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T14:21:22.622Z"}
+{"level":"error","message":"An error occurred in loadFeed(): Error: NEXT_REDIRECT","timestamp":"2025-02-21T14:21:22.623Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, null, 2025-02-21 14:18:26","timestamp":"2025-02-21T14:21:22.659Z"}
+{"level":"info","message":"loadFeed called by user: undefined","timestamp":"2025-02-21T14:21:22.659Z"}
+{"level":"error","message":"An error occurred in loadFeed(): Error: NEXT_REDIRECT","timestamp":"2025-02-21T14:21:22.659Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:21:22.664Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:21:22.665Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, null, 2025-02-21 14:18:26","timestamp":"2025-02-21T14:21:22.675Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:21:22.675Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:21:22.702Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:21:22.703Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, null, 2025-02-21 14:18:26","timestamp":"2025-02-21T14:21:22.709Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:21:22.709Z"}
+{"level":"info","message":"isAuthenticated() called","timestamp":"2025-02-21T14:21:22.745Z"}
+{"level":"info","message":"user accessing loading page","timestamp":"2025-02-21T14:21:22.746Z"}
+{"level":"error","message":"error occurred verifying session: Error: Cookie last login and db last login mismatch, null, 2025-02-21 14:18:26","timestamp":"2025-02-21T14:21:22.751Z"}
+{"level":"info","message":"user accessing login page, user_id: undefined","timestamp":"2025-02-21T14:21:22.751Z"}

@@ -32,6 +32,7 @@ export default function ArticleSummary({
   result,
   setLoading,
   nonceVal,
+  ownedByMe,
 }) {
   const router = useRouter();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -205,35 +206,42 @@ export default function ArticleSummary({
               />
               <div className={styles.commentCount}>({commentCount})</div>
             </div>
-            {setEditPostData && (
-              <div className={styles.editDeleteOption}>
-                <div className={styles.editDelBtnSpace}>|</div>
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setEditPostData({
-                      ticker,
-                      comparison,
-                      price,
-                      expiry,
-                      content,
-                      articleId,
-                    });
-                  }}
-                >
-                  Edit
-                </div>
-                <div className={styles.editDelBtnSpace}>|</div>
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowDeleteModal({ ticker, articleId });
-                  }}
-                >
-                  Delete
-                </div>
-              </div>
-            )}
+
+            <div className={styles.editDeleteOption}>
+              {setEditPostData && (
+                <>
+                  <div className={styles.editDelBtnSpace}>|</div>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setEditPostData({
+                        ticker,
+                        comparison,
+                        price,
+                        expiry,
+                        content,
+                        articleId,
+                      });
+                    }}
+                  >
+                    Edit
+                  </div>
+                </>
+              )}
+              {ownedByMe && (
+                <>
+                  <div className={styles.editDelBtnSpace}>|</div>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowDeleteModal({ ticker, articleId });
+                    }}
+                  >
+                    Delete
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

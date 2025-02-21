@@ -284,6 +284,18 @@ export async function updatePost(postData) {
       };
     }
 
+    const inputDate = new Date(futureDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (inputDate <= today) {
+      return {
+        success: false,
+        message:
+          "You can not edit a post after or on the posts expiration date",
+      };
+    }
+
     if (
       !reasoning ||
       typeof reasoning !== "string" ||

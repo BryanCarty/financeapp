@@ -211,7 +211,7 @@ export default function FollowingTable({ type, searchQuery, isLoggedIn }) {
         <div className={styles.modal}>
           <div className={styles.modalContent}>
             <h3>Follow {selectedFollowProfile.name}</h3>
-            <label>
+            <label className={styles.followInstruction}>
               Receive email alerts when {selectedFollowProfile.name} makes a
               post
               <input

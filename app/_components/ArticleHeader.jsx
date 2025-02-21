@@ -175,6 +175,10 @@ export default function ArticleHeader({
               >
                 Edit
               </div>
+            </>
+          )}
+          {setDeletePostModal && (
+            <>
               <div className={styles.editDelBtnSpace}>|</div>
               <div
                 className={styles.btn}

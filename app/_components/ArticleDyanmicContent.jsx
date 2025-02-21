@@ -243,7 +243,7 @@ export default function ArticleDynamicContent({
           commentCount={commentsList.length}
           daysUntilExpiry={daysUntilExpiry}
           result={result}
-          setEditPost={isPostOwner ? setEditPostModal : null}
+          setEditPost={isPostOwner && result === null ? setEditPostModal : null}
           setDeletePostModal={isPostOwner ? setDeletePostModal : null}
           scrollToComments={scrollToComments}
           isTouchScreenDevice={isTouchScreenDevice}

@@ -2,6 +2,7 @@
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { logger } from "./logger";
+import { fetchUserByUsedId } from "./db/db_functions";
 
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
@@ -30,11 +31,17 @@ export async function decrypt(session) {
   }
 }
 
-export async function createSession(userId, username, email) {
+export async function createSession(userId, username, email, lastLoginTime) {
   try {
     const expiresAt = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
 
-    const session = await encrypt({ userId, username, email, expiresAt });
+    const session = await encrypt({
+      userId,
+      username,
+      email,
+      lastLoginTime,
+      expiresAt,
+    });
     const cookieStore = await cookies();
 
     cookieStore.set("session", session, {
@@ -81,9 +88,27 @@ export async function verifySession() {
       !session.username ||
       !session.email ||
       !session.expiresAt ||
+      !session.lastLoginTime ||
       !session.exp
     ) {
       return false;
+    }
+
+    //Ensure lastlogin time in cookie is the same as in db
+    const user = await fetchUserByUsedId(session.userId);
+    if (!user) {
+      throw new Error("Could not fetch user by used id");
+    }
+
+    const userLastLogin = new Date(user.last_login)
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+
+    if (userLastLogin != session.lastLoginTime) {
+      throw new Error(
+        `Cookie last login and db last login mismatch, ${user.last_login}, ${session.lastLoginTime}`
+      );
     }
 
     // Get current time in Unix timestamp (seconds)

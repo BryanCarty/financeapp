@@ -299,18 +299,19 @@ export async function createUser({
   email,
   hashedPassword,
   dateOfBirth,
+  lastLoginTime,
 }) {
   try {
     // Insert user data into the 'users' table
     const user = await pool.query(
       `
         insert into users
-          (username, email, password_hash, date_of_birth)
+          (username, email, password_hash, date_of_birth, last_login)
         values
-          ($1, $2, $3, $4)
+          ($1, $2, $3, $4, $5)
         returning user_id, username, email;  -- Adjusted the returned columns to match table fields
       `,
-      [username, email, hashedPassword, dateOfBirth]
+      [username, email, hashedPassword, dateOfBirth, lastLoginTime]
     );
 
     return { userId: user.rows[0].user_id, errors: null };
@@ -347,7 +348,12 @@ export async function createUser({
   }
 }
 
-export async function getUserByEmailAndPassword(email, password) {
+//Should only be called on login
+export async function getUserByEmailAndPassword(
+  email,
+  password,
+  lastLoginTime
+) {
   try {
     logger.info(`getUserByEmailAndPassword called...`);
     // Validate email format
@@ -393,6 +399,16 @@ export async function getUserByEmailAndPassword(email, password) {
       };
     }
 
+    //Set the last login time
+    const updatedLastLoginTime = await updateLastLoginTime(
+      user[0].user_id,
+      lastLoginTime
+    );
+
+    if (!updatedLastLoginTime) {
+      throw new Error("Failed to update last login time");
+    }
+
     // Return user ID if found
     logger.info("Returning found user");
     return { user: user[0], errors: null };
@@ -408,6 +424,7 @@ export async function getUserByEmailAndPassword(email, password) {
   }
 }
 
+//Should only be called by forgotten password
 export async function getUserByEmail(email) {
   try {
     // Validate email format
@@ -432,6 +449,11 @@ export async function getUserByEmail(email) {
         userId: null,
         errors: { email: ["Unrecognized Email"] },
       };
+    }
+
+    const updatedLastLogin = await updateLastLoginTime(user[0].user_id, null);
+    if (!updatedLastLogin) {
+      throw new Error("Failed to update last login time");
     }
 
     // Return user ID if found
@@ -474,6 +496,31 @@ export async function insertResetPasswordToken(userId, resetPasswordToken) {
       success: null,
       errors: { email: ["An unexpected error occurred"] },
     };
+  }
+}
+
+export async function updateLastLoginTime(userId, lastLoginTime) {
+  try {
+    // Update the password_hash column for the given user
+    const updatedUser = (
+      await pool.query(
+        `
+        update users
+        set last_login = $1
+        where user_id = $2
+        returning user_id;  -- Returning the user ID after update
+      `,
+        [lastLoginTime, userId]
+      )
+    ).rows;
+
+    if (!updatedUser[0]?.user_id) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    logger.error(`updateLastLoginTime : Database Error Occurred: ${error}`);
+    return false;
   }
 }
 
@@ -1842,5 +1889,32 @@ export async function backupUserFollowers(userId) {
       success: false,
       message: "An error occurred while backing up the data",
     };
+  }
+}
+
+export async function fetchUserByUsedId(userId) {
+  try {
+    // Query the database safely using parameterized queries
+
+    const user = (
+      await pool.query(
+        `
+      SELECT * FROM users WHERE user_id = $1;
+    `,
+        [userId]
+      )
+    ).rows;
+
+    // Check if the user exists
+    if (user.length === 0 || !user[0]) {
+      return false;
+    }
+
+    // Return user ID if found
+    return user[0];
+  } catch (error) {
+    // Return an error if something goes wrong
+    logger.error(`An error occurred in fetchUserByUserId: ${error}`);
+    return false;
   }
 }

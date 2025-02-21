@@ -12,7 +12,7 @@ export default async function getPriceByTickers(tickers) {
     const tickerPrices = await getTickerPrices(tickers);
 
     // If websocket to receive stock data has not been started, then start it
-    if (!websocketIsRunning) {
+    if (!websocketIsRunning && process.env.STOCK_FEED_ENABLED == "true") {
       logger.info(`scheduling stock feed websocket...`);
       scheduleWebSocketLifecycle();
       websocketIsRunning = true;

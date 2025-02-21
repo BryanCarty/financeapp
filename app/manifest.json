@@ -1,0 +1,16 @@
+{
+  "name": "My Next.js Application",
+  "short_name": "Next.js App",
+  "description": "An application built with Next.js",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f7f7",
+  "theme_color": "#f7f7f7",
+  "icons": [
+    {
+      "src": "/images/icon.png",
+      "sizes": "35x35",
+      "type": "image/png"
+    }
+  ]
+}

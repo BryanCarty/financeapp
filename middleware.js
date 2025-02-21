@@ -172,10 +172,10 @@ export function middleware(request) {
     );
 
     // Allow specific headers that might be used in requests. Include any custom headers your application requires.
-    response.headers.set("Access-Control-Allow-Headers", "Content-Type"); // not sure about this one ?
+    //response.headers.set("Access-Control-Allow-Headers", "Content-Type"); // not sure about this one ?
 
-    // Indicate whether credentials (like cookies) should be allowed
-    //response.headers.set("Access-Control-Allow-Credentials", "true");
+    // Indicate whether credentials (like cookies) should be allowed - cross origin -?
+    //response.headers.set("Access-Control-Allow-Credentials", "false");
 
     // Expose specific headers to the client. This is useful if the client needs to access certain headers.
     //response.headers.set("Access-Control-Expose-Headers", "Content-Length, X-Custom-Header");

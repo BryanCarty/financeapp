@@ -33,7 +33,20 @@ export const metadata = {
     },
   },
   openGraph: {
-    images: "/icon.png",
+    title: "Insights Of A Trader",
+    description: "Welcome to Insights Of A Trader :)",
+    url: "https://insightsofatrader.com",
+    siteName: "Insights Of A Trader",
+    type: "website",
+    images: [
+      {
+        url: "https://insightsofatrader.com/images/icon.png",
+        secureUrl: "https://insightsofatrader.com/images/icon.png",
+        width: 35,
+        height: 35,
+        alt: "Preview image for Insights Of A Trader",
+      },
+    ],
   },
 };
 

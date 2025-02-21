@@ -11,6 +11,7 @@ import {
   insertResetPasswordToken,
   updatePasswordHash,
   getUserIdByToken,
+  updateLastLoginTime,
 } from "../_lib/db/db_functions";
 import bcrypt from "bcrypt";
 import { createSession, verifySession } from "../_lib/sessions";
@@ -75,12 +76,18 @@ export async function signup(state, formData) {
       };
     }
 
+    const lastLoginTime = new Date(Date.now())
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+
     const hashedPassword = await bcrypt.hash(password, 10);
     let { userId, errors } = await createUser({
       username,
       email,
       hashedPassword,
       dateOfBirth,
+      lastLoginTime,
     });
 
     if (errors) {
@@ -90,7 +97,7 @@ export async function signup(state, formData) {
       };
     }
 
-    await createSession(userId, username, email);
+    await createSession(userId, username, email, lastLoginTime);
 
     let { success, message } = await sendWelcomeEmail(email, username);
 
@@ -113,9 +120,16 @@ export async function signup(state, formData) {
 export async function logout() {
   try {
     logger.info(`logout server action called`);
+    const { userId, username } = await verifySession();
+    logger.info(`logout called by user: ${userId}`);
+    if (!userId) {
+      redirect("/login");
+    }
     await deleteSession();
+    await updateLastLoginTime(userId, null);
     redirect("/login");
   } catch (error) {
+    if (error.message === "NEXT_REDIRECT") throw error;
     logger.error(`An error occurred in logout: ${error}`);
   }
 }
@@ -169,7 +183,16 @@ export async function login(state, formData) {
       };
     }
 
-    let { user, errors } = await getUserByEmailAndPassword(email, password);
+    const lastLoginTime = new Date(Date.now())
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+
+    let { user, errors } = await getUserByEmailAndPassword(
+      email,
+      password,
+      lastLoginTime
+    );
     if (errors) {
       return {
         errors: errors,
@@ -178,7 +201,7 @@ export async function login(state, formData) {
     }
 
     logger.info("Creating Session for: " + user.user_id);
-    await createSession(user.user_id, user.username, email);
+    await createSession(user.user_id, user.username, email, lastLoginTime);
 
     if (redirectVal && redirectVal[0] == "/" && !redirectVal.includes("..")) {
       redirect(redirectVal);
