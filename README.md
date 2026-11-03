@@ -3,4 +3,4 @@ A web application for investors/traders to:
 - gain insights from other investors/traders
 
 
-[Demo](https://github.com/BryanCarty/financeapp/edit/main/download.gif)
+![Demo](download.gif)
